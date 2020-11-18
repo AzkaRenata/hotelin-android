@@ -7,20 +7,20 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.alifadepe.android_example.contract.LoginContract;
-import com.alifadepe.android_example.databinding.ActivityLoginBinding;
-import com.alifadepe.android_example.interactor.LoginInteractor;
-import com.alifadepe.android_example.presenter.LoginPresenter;
-import com.alifadepe.android_example.util.UtilProvider;
+import com.example.hotelin_android.contract.LoginContract;
+import com.example.hotelin_android.databinding.LoginActivityBinding;
+import com.example.hotelin_android.interactor.LoginInteractor;
+import com.example.hotelin_android.presenter.LoginPresenter;
+import com.example.hotelin_android.util.UtilProvider;
 
 public class LoginActivity extends AppCompatActivity implements LoginContract.View, View.OnClickListener {
     private LoginContract.Presenter presenter;
-    private ActivityLoginBinding binding;
+    private LoginActivityBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        binding = LoginActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         presenter = new LoginPresenter(this, new LoginInteractor(UtilProvider.getSharedPreferencesUtil()));
@@ -28,23 +28,23 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     }
 
     private void initView(){
-        binding.loginButton.setOnClickListener(this);
+        binding.loginBtn.setOnClickListener(this);
     }
 
     @Override
     public void startLoading() {
-        binding.progressBar.setVisibility(View.VISIBLE);
+//        binding.progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void endLoading() {
-        binding.progressBar.setVisibility(View.GONE);
+//        binding.progressBar.setVisibility(View.GONE);
     }
 
     @Override
     public void loginSuccess() {
         finish();
-        startActivity(new Intent(this, ListBookActivity.class));
+        startActivity(new Intent(this, HomeActivity.class));
     }
 
     @Override
@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == binding.loginButton.getId()){
+        if(v.getId() == binding.loginBtn.getId()){
             onButtonLoginClick();
         }
     }
