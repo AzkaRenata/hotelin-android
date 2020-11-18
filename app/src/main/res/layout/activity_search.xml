@@ -1,151 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="30dp"
-    tools:context=".MainActivity">
+<layout>
 
-    <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:layout_marginTop="20dp"
-        >
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="30dp"
+        tools:context=".MainActivity">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_location"
-            android:drawablePadding="7dp"
-            android:ems="10"
-            android:hint="Lokasi Hotel"
-            android:inputType="text"
-            android:textSize="16sp"
-            android:drawableLeft="@drawable/ic_location" />
+            android:layout_marginTop="20dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_location"
+                android:drawableLeft="@drawable/ic_location"
+                android:drawablePadding="7dp"
+                android:ems="10"
+                android:hint="Lokasi Hotel"
+                android:inputType="text"
+                android:textSize="16sp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        >
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_check_in"
-            android:drawablePadding="7dp"
-            android:ems="10"
-            android:hint="Check In"
-            android:inputType="date"
-            android:textSize="16sp"
-            android:drawableLeft="@drawable/ic_check_in" />
+            android:layout_marginTop="10dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_check_in"
+                android:drawableLeft="@drawable/ic_check_in"
+                android:drawablePadding="7dp"
+                android:ems="10"
+                android:hint="Check In"
+                android:inputType="date"
+                android:textSize="16sp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:layout_marginTop="10dp"
-        >
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_check_out"
-            android:drawablePadding="7dp"
-            android:ems="10"
-            android:hint="Check Out"
-            android:inputType="date"
-            android:textSize="16sp"
-            android:drawableLeft="@drawable/ic_check_out" />
+            android:layout_marginTop="10dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_check_out"
+                android:drawableLeft="@drawable/ic_check_out"
+                android:drawablePadding="7dp"
+                android:ems="10"
+                android:hint="Check Out"
+                android:inputType="date"
+                android:textSize="16sp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:layout_marginTop="10dp"
-        >
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_room"
-            android:drawablePadding="7dp"
-            android:ems="10"
-            android:hint="Jumlah Kamar"
-            android:inputType="number"
-            android:textSize="16sp"
-            android:drawableLeft="@drawable/ic_room" />
+            android:layout_marginTop="10dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_room"
+                android:drawableLeft="@drawable/ic_room"
+                android:drawablePadding="7dp"
+                android:ems="10"
+                android:hint="Jumlah Kamar"
+                android:inputType="number"
+                android:textSize="16sp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:layout_marginTop="10dp"
-        >
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_guest"
-            android:drawablePadding="7dp"
-            android:ems="10"
-            android:hint="Jumlah Tamu"
-            android:inputType="number"
-            android:textSize="16sp"
-            android:drawableLeft="@drawable/ic_guest" />
+            android:layout_marginTop="10dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_guest"
+                android:drawableLeft="@drawable/ic_guest"
+                android:drawablePadding="7dp"
+                android:ems="10"
+                android:hint="Jumlah Tamu"
+                android:inputType="number"
+                android:textSize="16sp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:layout_marginTop="5dp"
-    >
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_price"
-            android:drawablePadding="7dp"
-            android:ems="10"
-            android:hint="Harga"
-            android:inputType="number"
-            android:textSize="16sp"
-            android:drawableLeft="@drawable/ic_price" />
+            android:layout_marginTop="5dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_price"
+                android:drawableLeft="@drawable/ic_price"
+                android:drawablePadding="7dp"
+                android:ems="10"
+                android:hint="Harga"
+                android:inputType="number"
+                android:textSize="16sp" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Search"
-        android:textSize="22sp"
-        android:textColor="#ffffff"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/button_color"
+        </com.google.android.material.textfield.TextInputLayout>
 
-    >
-
-    </Button>
-
-</LinearLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/button_color"
+            android:text="Search"
+            android:textColor="#ffffff"
+            android:textSize="22sp" />
+    </LinearLayout>
+</layout>
