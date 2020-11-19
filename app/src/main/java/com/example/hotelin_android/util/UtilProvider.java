@@ -3,7 +3,7 @@ package com.example.hotelin_android.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.alifadepe.android_example.constant.SqliteConstant;
+import com.example.hotelin_android.constant.SqliteConstant;
 
 public class UtilProvider {
     private static SharedPreferencesUtil sharedPreferencesUtil;

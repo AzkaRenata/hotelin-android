@@ -18,7 +18,7 @@ public class LoginInteractor implements LoginContract.Interactor {
 
     @Override
     public void requestLogin(String username, String password, final RequestCallback<LoginResponse> requestCallback) {
-        AndroidNetworking.post(ApiConstant.BASE_URL + "login.php")
+        AndroidNetworking.post(ApiConstant.BASE_URL + "/login")
                 .addBodyParameter("username", username)
                 .addBodyParameter("password", password)
                 .build()
