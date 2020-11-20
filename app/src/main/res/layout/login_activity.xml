@@ -52,7 +52,7 @@
             android:fontFamily="@font/semibold"
             android:inputType="textPersonName"
             android:paddingLeft="16dp"
-            android:text="Username"
+            android:hint="Username"
             android:textColor="#707070" />
 
         <RelativeLayout
@@ -68,7 +68,7 @@
             android:fontFamily="@font/semibold"
             android:inputType="textPersonName"
             android:paddingLeft="16dp"
-            android:text="Password"
+            android:hint="Password"
             android:textColor="#707070" />
 
         <TextView
@@ -113,12 +113,15 @@
                 android:layout_height="wrap_content" />
 
             <TextView
+                android:id="@+id/register"
                 android:text="Register"
                 android:layout_marginTop="10dp"
                 android:textSize="16dp"
                 android:fontFamily="@font/semibold"
                 android:paddingLeft="10dp"
                 android:textColor="#5399af"
+                android:onClick="onClick"
+                android:clickable="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
