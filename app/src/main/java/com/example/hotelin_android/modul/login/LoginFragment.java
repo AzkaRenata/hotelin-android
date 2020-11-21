@@ -1,8 +1,10 @@
 package com.example.hotelin_android.modul.login;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -43,16 +45,22 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
             }
         });
 
-        tvRegister.setOnClickListener(new View.OnClickListener() {
+        tvRegister.setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
             @Override
-            public void onClick(View view) {
+            public boolean onTouch(View v, MotionEvent event) {
                 setTvRegisterClick();
+                return true;
             }
         });
 
         setTitle("Log In");
 
         return fragmentView;
+    }
+
+    public void moveToRegister(LoginContract.View v){
+        mPresenter.performMove(v);
     }
 
     public void setBtLoginClick(){
@@ -74,5 +82,10 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
     @Override
     public void redirectToList() {
 
+    }
+
+    public void redirectToRegister(){
+        Intent intent = new Intent(activity, RegisterActivity.class);
+        startActivity(intent);
     }
 }

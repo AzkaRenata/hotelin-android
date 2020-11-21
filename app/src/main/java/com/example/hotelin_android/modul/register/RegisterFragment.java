@@ -1,8 +1,10 @@
 package com.example.hotelin_android.modul.register;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -37,7 +39,7 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
         etEmail = fragmentView.findViewById(R.id.email);
         etPassword = fragmentView.findViewById(R.id.password);
         etConfirmPassword = fragmentView.findViewById(R.id.confirm_password);
-        btnRegister = fragmentView.findViewById(R.id.login_btn);
+        btnRegister = fragmentView.findViewById(R.id.register_btn);
         tvlogin = fragmentView.findViewById(R.id.login);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -47,14 +49,16 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
             }
         });
 
-        tvlogin.setOnClickListener(new View.OnClickListener() {
+        tvlogin.setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
             @Override
-            public void onClick(View view) {
+            public boolean onTouch(View v, MotionEvent event) {
                 setTvLoginClick();
+                return true;
             }
         });
 
-        setTitle("Log In");
+        setTitle("Sign Up");
 
         return fragmentView;
     }
