@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Custom">
         <activity android:name=".modul.register.RegisterActivity"></activity>
-
         <activity android:name=".modul.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

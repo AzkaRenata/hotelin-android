@@ -21,4 +21,8 @@ public class LoginActivity extends BaseFragmentHolderActivity {
         setCurrentFragment(loginFragment, false);
 
     }
+
+    void performMove(LoginContract.View v){
+
+    }
 }
