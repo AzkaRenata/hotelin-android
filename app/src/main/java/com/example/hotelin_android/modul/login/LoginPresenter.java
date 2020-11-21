@@ -14,11 +14,6 @@ public class LoginPresenter implements LoginContract.Presenter{
 
     @Override
     public void performLogin(){
-        view.redirectToList();
-    }
-
-    @Override
-    public void performMove(LoginContract.View v) {
-
+        view.redirectToHome();
     }
 }
