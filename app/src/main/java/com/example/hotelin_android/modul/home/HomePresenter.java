@@ -15,8 +15,11 @@ public class HomePresenter implements HomeContract.Presenter{
         view.redirectToList();
     }
 
+<<<<<<< Updated upstream
     @Override
     public void performMove(HomeContract.View v) {
 
     }
+=======
+>>>>>>> Stashed changes
 }

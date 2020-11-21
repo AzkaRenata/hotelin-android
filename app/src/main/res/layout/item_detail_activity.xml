@@ -111,13 +111,14 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:text="Eastin Ashta Resort Canggu"
-                android:textSize="20dp"
-                android:paddingLeft="32dp"
-                android:fontFamily="@font/bold"
-                android:textColor="#707070"
+                android:id="@+id/nama"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bold"
+                android:paddingLeft="32dp"
+                android:text="Eastin Ashta Resort Canggu"
+                android:textColor="#707070"
+                android:textSize="20dp" />
 
             <TextView
                 android:text="  Canggu, Bali"
