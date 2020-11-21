@@ -10,13 +10,4 @@ public class HomePresenter implements HomeContract.Presenter{
     @Override
     public void start() {}
 
-    @Override
-    public void performLogin(){
-        view.redirectToList();
-    }
-
-    @Override
-    public void performMove(HomeContract.View v) {
-
-    }
 }

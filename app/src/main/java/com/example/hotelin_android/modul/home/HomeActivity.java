@@ -8,23 +8,16 @@ import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragmentHolderActivity;
 
 public class HomeActivity extends BaseFragmentHolderActivity {
-    HomeFragment loginFragment;
+    HomeFragment homeFragment;
     private final int UPDATE_REQUEST = 2019;
 
     @Override
     protected void initializeFragment() {
         initializeView();
 
-        loginFragment = new HomeFragment();
-        setCurrentFragment(loginFragment, false);
 
-    }
+        homeFragment = new HomeFragment();
+        setCurrentFragment(homeFragment, false);
 
-    @Override
-    protected void initializeView() {
-        setContentView(R.layout.base_loginregister_layout);
-        tvToolbarTitle = (TextView) findViewById(R.id.tvToolbarTitle);
-        flFragmentContainer = (FrameLayout) findViewById(R.id.flFragmentContainer);
-        rlActivityFragmentHolder = (RelativeLayout) findViewById(R.id.rlActivityFragmentHolder);
     }
 }
