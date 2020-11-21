@@ -1,4 +1,4 @@
-package com.example.hotelin_android.modul.register;
+package com.example.hotelin_android.modul.home;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -15,70 +15,77 @@ import androidx.annotation.Nullable;
 
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
-import com.example.hotelin_android.modul.login.LoginActivity;
+import com.example.hotelin_android.modul.register.RegisterActivity;
 
-public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterContract.Presenter> implements RegisterContract.View {
+public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presenter> implements HomeContract.View {
     EditText etUsername;
-    EditText etEmail;
     EditText etPassword;
-    EditText etConfirmPassword;
-    Button btnRegister;
-    TextView tvlogin;
+    Button btnLogin;
+    TextView tvRegister;
 
-    public RegisterFragment() {}
+    public HomeFragment() {}
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        fragmentView = inflater.inflate(R.layout.register_activity, container, false);
-        mPresenter = new RegisterPresenter(this);
+        fragmentView = inflater.inflate(R.layout.login_activity, container, false);
+        mPresenter = new HomePresenter(this);
         mPresenter.start();
 
         etUsername = fragmentView.findViewById(R.id.username);
-        etEmail = fragmentView.findViewById(R.id.email);
         etPassword = fragmentView.findViewById(R.id.password);
-        etConfirmPassword = fragmentView.findViewById(R.id.confirm_password);
-        btnRegister = fragmentView.findViewById(R.id.register_btn);
-        tvlogin = fragmentView.findViewById(R.id.login);
+        btnLogin = fragmentView.findViewById(R.id.login_btn);
+        tvRegister = fragmentView.findViewById(R.id.register);
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setBtRegisterClick();
+                setBtLoginClick();
             }
         });
 
-        tvlogin.setOnTouchListener(new View.OnTouchListener() {
+        tvRegister.setOnTouchListener(new View.OnTouchListener() {
             @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                setTvLoginClick();
+                setTvRegisterClick();
                 return true;
             }
         });
 
+
+
         return fragmentView;
     }
 
-    public void setBtRegisterClick(){
+    public void moveToRegister(HomeContract.View v){
+        mPresenter.performMove(v);
+    }
+
+    public void setBtLoginClick(){
         String email = etUsername.getText().toString();
         String password = etPassword.getText().toString();
         mPresenter.performLogin();
     }
 
-    public void setTvLoginClick(){
-        Intent intent = new Intent(activity, LoginActivity.class);
+    public void setTvRegisterClick(){
+        Intent intent = new Intent(activity, RegisterActivity.class);
         startActivity(intent);
     }
 
     @Override
-    public void setPresenter(RegisterContract.Presenter presenter) {
+    public void setPresenter(HomeContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
     @Override
     public void redirectToList() {
 
+    }
+
+    public void redirectToRegister(){
+        Intent intent = new Intent(activity, RegisterActivity.class);
+        startActivity(intent);
     }
 }

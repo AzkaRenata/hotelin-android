@@ -35,8 +35,6 @@ public abstract class BaseFragment<T extends FragmentActivity, U extends BasePre
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        title = getResources().getString(R.string.app_name);
-        setTitle(title);
 
         return view;
     }

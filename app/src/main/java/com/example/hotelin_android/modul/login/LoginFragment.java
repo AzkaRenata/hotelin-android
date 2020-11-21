@@ -54,7 +54,7 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
             }
         });
 
-        setTitle("Log In");
+
 
         return fragmentView;
     }
