@@ -5,10 +5,10 @@ import com.example.hotelin_android.base.BaseView;
 
 public interface RegisterContract {
     interface View extends BaseView<Presenter> {
-        void redirectToList();
+        void redirectToHome();
     }
 
     interface Presenter extends BasePresenter {
-        void performLogin();
+        void performRegister();
     }
 }

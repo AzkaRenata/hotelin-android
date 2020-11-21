@@ -1,23 +1,20 @@
 package com.example.hotelin_android.modul.home;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
-import com.example.hotelin_android.modul.register.RegisterActivity;
 
 public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presenter> implements HomeContract.View {
+    EditText etSearchBar;
+    Button btSearch;
 
     public HomeFragment() {}
 
@@ -29,6 +26,8 @@ public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presen
         mPresenter = new HomePresenter(this);
         mPresenter.start();
 
+        etSearchBar = fragmentView.findViewById(R.id.search);
+        btSearch = fragmentView.findViewById(R.id.search_btn);
 
         setTitle("Hotelin");
         return fragmentView;

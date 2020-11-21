@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
+import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.modul.login.LoginActivity;
 
 public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterContract.Presenter> implements RegisterContract.View {
@@ -64,7 +65,7 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
     public void setBtRegisterClick(){
         String email = etUsername.getText().toString();
         String password = etPassword.getText().toString();
-        mPresenter.performLogin();
+        mPresenter.performRegister();
     }
 
     public void setTvLoginClick(){
@@ -78,7 +79,8 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
     }
 
     @Override
-    public void redirectToList() {
-
+    public void redirectToHome() {
+        Intent intent = new Intent(activity, HomeActivity.class);
+        startActivity(intent);
     }
 }

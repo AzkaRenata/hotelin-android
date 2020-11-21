@@ -11,8 +11,8 @@ public class RegisterPresenter implements RegisterContract.Presenter{
     public void start() {}
 
     @Override
-    public void performLogin(){
-        view.redirectToList();
+    public void performRegister(){
+        view.redirectToHome();
     }
 
 }
