@@ -1,23 +1,21 @@
-package com.example.hotelin_android.modul.login;
+package com.example.hotelin_android.modul.home;
 
-import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragmentHolderActivity;
 
-public class LoginActivity extends BaseFragmentHolderActivity {
-    LoginFragment loginFragment;
+public class HomeActivity extends BaseFragmentHolderActivity {
+    HomeFragment loginFragment;
     private final int UPDATE_REQUEST = 2019;
 
     @Override
     protected void initializeFragment() {
         initializeView();
 
-        loginFragment = new LoginFragment();
+        loginFragment = new HomeFragment();
         setCurrentFragment(loginFragment, false);
 
     }
