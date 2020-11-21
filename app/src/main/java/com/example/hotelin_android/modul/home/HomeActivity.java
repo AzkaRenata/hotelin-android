@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragmentHolderActivity;
+import android.view.View;
 
 public class HomeActivity extends BaseFragmentHolderActivity {
     HomeFragment homeFragment;
@@ -15,9 +16,16 @@ public class HomeActivity extends BaseFragmentHolderActivity {
     protected void initializeFragment() {
         initializeView();
 
-
         homeFragment = new HomeFragment();
         setCurrentFragment(homeFragment, false);
+    }
 
+
+    @Override
+    protected void initializeView() {
+        setContentView(R.layout.base_loginregister_layout);
+        tvToolbarTitle = (TextView) findViewById(R.id.tvToolbarTitle);
+        flFragmentContainer = (FrameLayout) findViewById(R.id.flFragmentContainer);
+        rlActivityFragmentHolder = (RelativeLayout) findViewById(R.id.rlActivityFragmentHolder);
     }
 }
