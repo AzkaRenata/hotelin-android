@@ -1,11 +1,8 @@
 package com.example.hotelin_android.modul.login;
 
-<<<<<<< Updated upstream
 import android.annotation.SuppressLint;
 import android.content.Intent;
-=======
 import android.app.ProgressDialog;
->>>>>>> Stashed changes
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,12 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-<<<<<<< Updated upstream
 import android.widget.TextView;
-=======
 import android.widget.Toast;
->>>>>>> Stashed changes
-
 import androidx.annotation.Nullable;
 
 import com.android.volley.AuthFailureError;
@@ -33,28 +26,26 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
-<<<<<<< Updated upstream
 import com.example.hotelin_android.modul.register.RegisterActivity;
-=======
 import com.example.hotelin_android.model.User;
+import com.example.hotelin_android.util.SharedPreferencesUtil;
 import com.example.hotelin_android.util.URL;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.sql.CallableStatement;
 import java.util.HashMap;
 import java.util.Map;
->>>>>>> Stashed changes
 
 public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Presenter> implements LoginContract.View {
-    private String usertoken;
     EditText username;
     EditText userpassword;
-
     Button btnLogin;
     TextView tvRegister;
+    private Object SharedPreferencesUtil;
+//    static SharedPreferencesUtil;
 
     public LoginFragment() {}
 
@@ -66,17 +57,10 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
         mPresenter = new LoginPresenter(this);
         mPresenter.start();
 
-<<<<<<< Updated upstream
-        etUsername = fragmentView.findViewById(R.id.username);
-        etPassword = fragmentView.findViewById(R.id.password);
-        btnLogin = fragmentView.findViewById(R.id.login_btn);
-        tvRegister = fragmentView.findViewById(R.id.register);
-=======
-        usertoken = "";
         username = fragmentView.findViewById(R.id.username);
         userpassword = fragmentView.findViewById(R.id.password);
         btnLogin = fragmentView.findViewById(R.id.login_btn);
->>>>>>> Stashed changes
+        tvRegister = fragmentView.findViewById(R.id.register);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,8 +69,6 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
                 setBtnLoginClick();
             }
         });
-
-<<<<<<< Updated upstream
         tvRegister.setOnTouchListener(new View.OnTouchListener() {
             @SuppressLint("ClickableViewAccessibility")
             @Override
@@ -95,76 +77,44 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
                 return true;
             }
         });
-
-
-
         return fragmentView;
     }
 
-    public void moveToRegister(LoginContract.View v){
-        mPresenter.performMove(v);
-    }
-
-    public void setBtLoginClick(){
-        String email = etUsername.getText().toString();
-        String password = etPassword.getText().toString();
-=======
-        setTitle("Sign in");
-        return fragmentView;
-    }
-
-    private void setBtnLoginClick() {
-        String email = username.getText().toString();
-        String password = userpassword.getText().toString();
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-
-        if (TextUtils.isEmpty(email)) {
-            username.setError("Please input your employee number");
-            userpassword.requestFocus();
-            return;
-        }
-
-        if (TextUtils.isEmpty(password)) {
-            userpassword.setError("Please input your password");
-            username.requestFocus();
-            return;
-        }
-        progressDialog.setMessage("Please wait");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-
->>>>>>> Stashed changes
+    private void setBtnLoginClick() throws JSONException {
+        loginUser();
+        getUser();
         mPresenter.performLogin();
     }
-}
 
     private void loginUser() {
         final String email = username.getText().toString();
         final String password = userpassword.getText().toString();
-        final String token = getUserToken();
+
 
         URL url = new URL();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url.getBaseUrl() + "/api/user/login",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-//                            progressDialog.dismiss();
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             Log.d("response", jsonObject.toString());
 
-
+                            if (jsonObject.getString("success").equals(201)) {
+                                JSONObject userData = jsonObject.getJSONObject("user");
+                                SharedPreferencesUtil = new SharedPreferencesUtil().setToken(jsonObject);
+                            } else if (jsonObject.getString("success").equals("false")) {
+                                Toast.makeText(getContext(), "Employee number or password is not correct", Toast.LENGTH_SHORT).show();
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
                 },
-                //jika respon error
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-//                        progressDialog.dismiss();
                         NetworkResponse errorRes = error.networkResponse;
                         String errorMsg = "";
                         if(errorRes != null && errorRes.data != null){
@@ -175,7 +125,63 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
                                 Toast.makeText(getActivity(), "Server didn't respond", Toast.LENGTH_SHORT).show();
                             }
                         }
+                        if (!errorMsg.equals("")) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(errorMsg);
+                                Toast.makeText(getActivity(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            Toast.makeText(getActivity(), "Server didn't respond", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+                )
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", email);
+                params.put("password", password);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.new RequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+    private void getUser() throws JSONException {
+        JSONObject token;
+        JSONObject jsonObject;
 
+        URL url = new URL();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url.getBaseUrl() + "/api/user/get",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(token) {
+                        try {
+                            token = jsonObject.getJSONObject("token");
+                            jsonObject = (JSONObject) SharedPreferencesUtil().getToken();
+                            Log.d("token", jsonObject.toString());
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        NetworkResponse errorRes = error.networkResponse;
+                        String errorMsg = "";
+                        if(errorRes != null && errorRes.data != null){
+                            try {
+                                errorMsg = new String(errorRes.data,"UTF-8");
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                                Toast.makeText(getActivity(), "Server didn't respond", Toast.LENGTH_SHORT).show();
+                            }
+                        }
                         if (!errorMsg.equals("")) {
                             try {
                                 JSONObject jsonObject = new JSONObject(errorMsg);
@@ -190,25 +196,25 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
 
                 })
         {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-//                getTokenFCM();
-                params.put("email", email);
-                params.put("password", password);
-//                Log.d("user_parameters", params.toString());
-//                Log.d("token_fcm", user_token);
-                return params;
-            }
+            JSONObject userData = jsonObject.getJSONObject("user");
+            User user = new User(
+                    userData.getInt("id"),
+                    userData.getString("name"),
+                    userData.getString("username"),
+                    userData.getString("email"),
+                    userData.getString("user_level"),
+                    userData.getString("gender"),
+                    userData.getString("telp"),
+                    userData.getString("user_picture"),
+                    userData.getString("email_verified_at"),
+                    userData.getString("created_at"),
+                    userData.getString("updated_at")
         };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        RequestQueue requestQueue = Volley.new RequestQueue(this);
         requestQueue.add(stringRequest);
-    }
+    };
 
-    private String getUserToken() {
-        return this.usertoken;
-    }
+
 
     public void setTvRegisterClick(){
         Intent intent = new Intent(activity, RegisterActivity.class);
@@ -222,11 +228,15 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
 
     @Override
     public void redirectToList() {
+        Intent intent = new Intent(activity, RegisterActivity.class);
+        startActivity(intent);
+    }
 
+    public void moveToRegister(LoginContract.View v){
+        mPresenter.performMove(v);
     }
 
     public void redirectToRegister(){
-        Intent intent = new Intent(activity, RegisterActivity.class);
-        startActivity(intent);
+
     }
 }
