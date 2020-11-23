@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,14 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.modul.register.RegisterActivity;
@@ -65,10 +55,10 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginUser();
-                setBtnLoginClick();
+                setBtLoginClick();
             }
         });
+
         tvRegister.setOnTouchListener(new View.OnTouchListener() {
             @SuppressLint("ClickableViewAccessibility")
             @Override
@@ -77,6 +67,7 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
                 return true;
             }
         });
+
         return fragmentView;
     }
 
@@ -214,6 +205,13 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
         requestQueue.add(stringRequest);
     };
 
+        return fragmentView;
+    }
+    public void setBtLoginClick(){
+        String email = etUsername.getText().toString();
+        String password = etPassword.getText().toString();
+        mPresenter.performLogin();
+    }
 
 
     public void setTvRegisterClick(){
@@ -227,13 +225,9 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
     }
 
     @Override
-    public void redirectToList() {
-        Intent intent = new Intent(activity, RegisterActivity.class);
+    public void redirectToHome() {
+        Intent intent = new Intent(activity, HomeActivity.class);
         startActivity(intent);
-    }
-
-    public void moveToRegister(LoginContract.View v){
-        mPresenter.performMove(v);
     }
 
     public void redirectToRegister(){
