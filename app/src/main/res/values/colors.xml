@@ -23,9 +23,9 @@
     <color name="pantone331c">#05c3de</color>
 
     <!--My Custom Color-->
-    <color name="customPrimary">#cf3f30</color>
-    <color name="customPrimaryDark">#7a111d</color>
-    <color name="customText">#de6262</color>
+    <color name="customPrimary">#5399af</color>
+    <color name="customPrimaryDark">#5399af</color>
+    <color name="customText">#5399af</color>
     <color name="customTextLight">#FFFFFF</color>
     <color name="customLightBackground">#a7e6d7</color>
     <color name="customTransparent">#8c128C7E</color>

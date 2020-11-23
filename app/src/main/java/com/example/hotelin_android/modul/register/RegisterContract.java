@@ -1,15 +1,14 @@
-package com.example.hotelin_android.modul.login;
+package com.example.hotelin_android.modul.register;
 
 import com.example.hotelin_android.base.BasePresenter;
 import com.example.hotelin_android.base.BaseView;
 
-public interface LoginContract {
+public interface RegisterContract {
     interface View extends BaseView<Presenter> {
         void redirectToHome();
-        void redirectToRegister();
     }
 
     interface Presenter extends BasePresenter {
-        void performLogin();
+        void performRegister();
     }
 }
