@@ -2,8 +2,8 @@ package com.example.hotelin_android.modul.login;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,18 +14,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.modul.register.RegisterActivity;
-import com.example.hotelin_android.model.User;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
-import com.example.hotelin_android.util.URL;
+import com.example.hotelin_android.util.VolleyService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.sql.CallableStatement;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +33,7 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
     EditText userpassword;
     Button btnLogin;
     TextView tvRegister;
+    String authToken;
     private Object SharedPreferencesUtil;
 //    static SharedPreferencesUtil;
 
@@ -73,146 +73,125 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
 
     private void setBtnLoginClick() throws JSONException {
         loginUser();
-        getUser();
-        mPresenter.performLogin();
+//        getUser();
+//        mPresenter.performLogin();
     }
 
     private void loginUser() {
-        final String email = username.getText().toString();
-        final String password = userpassword.getText().toString();
+        String email = username.getText().toString();
+        String password = userpassword.getText().toString();
 
+        Log.e("SOMETHING", email);
+        Log.e("SOMETHING", password);
 
-        URL url = new URL();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url.getBaseUrl() + "/api/user/login",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            Log.d("response", jsonObject.toString());
+        String API_LOGIN_ROUTE = "user/login";
 
-                            if (jsonObject.getString("success").equals(201)) {
-                                JSONObject userData = jsonObject.getJSONObject("user");
-                                SharedPreferencesUtil = new SharedPreferencesUtil().setToken(jsonObject);
-                            } else if (jsonObject.getString("success").equals("false")) {
-                                Toast.makeText(getContext(), "Employee number or password is not correct", Toast.LENGTH_SHORT).show();
-                            }
+        VolleyService service = new VolleyService();
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        NetworkResponse errorRes = error.networkResponse;
-                        String errorMsg = "";
-                        if(errorRes != null && errorRes.data != null){
-                            try {
-                                errorMsg = new String(errorRes.data,"UTF-8");
-                            } catch (UnsupportedEncodingException e) {
-                                e.printStackTrace();
-                                Toast.makeText(getActivity(), "Server didn't respond", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        if (!errorMsg.equals("")) {
-                            try {
-                                JSONObject jsonObject = new JSONObject(errorMsg);
-                                Toast.makeText(getActivity(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            Toast.makeText(getActivity(), "Server didn't respond", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
-                )
-        {
+        // Create Listener to respond what to do after the data has been fetched.
+        Response.Listener<JSONObject> onSuccessListener = new Response.Listener<JSONObject>() {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("email", email);
-                params.put("password", password);
-                return params;
+            public void onResponse(JSONObject response) {
+                String responseData;
+
+                try {
+                    responseData = response.getString("token");
+
+                    // TODO : Masukin token ke SharedPreferences.
+
+                    authToken = responseData;
+
+//                    Toast.makeText(activity, responseData, Toast.LENGTH_SHORT).show();
+                }
+                catch (JSONException exception) {
+                    exception.printStackTrace();
+                }
             }
         };
-        RequestQueue requestQueue = Volley.new RequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-    private void getUser() throws JSONException {
-        JSONObject token;
-        JSONObject jsonObject;
 
-        URL url = new URL();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url.getBaseUrl() + "/api/user/get",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(token) {
-                        try {
-                            token = jsonObject.getJSONObject("token");
-                            jsonObject = (JSONObject) SharedPreferencesUtil().getToken();
-                            Log.d("token", jsonObject.toString());
+        // Create Listener to respond if Volley failed to fetch data.
+        Response.ErrorListener onErrorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error.networkResponse.statusCode == 400) {
+                    Toast.makeText(activity, "Input lagi bro", Toast.LENGTH_SHORT).show();
+                }
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        NetworkResponse errorRes = error.networkResponse;
-                        String errorMsg = "";
-                        if(errorRes != null && errorRes.data != null){
-                            try {
-                                errorMsg = new String(errorRes.data,"UTF-8");
-                            } catch (UnsupportedEncodingException e) {
-                                e.printStackTrace();
-                                Toast.makeText(getActivity(), "Server didn't respond", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        if (!errorMsg.equals("")) {
-                            try {
-                                JSONObject jsonObject = new JSONObject(errorMsg);
-                                Toast.makeText(getActivity(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            Toast.makeText(getActivity(), "Server didn't respond", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                })
-        {
-            JSONObject userData = jsonObject.getJSONObject("user");
-            User user = new User(
-                    userData.getInt("id"),
-                    userData.getString("name"),
-                    userData.getString("username"),
-                    userData.getString("email"),
-                    userData.getString("user_level"),
-                    userData.getString("gender"),
-                    userData.getString("telp"),
-                    userData.getString("user_picture"),
-                    userData.getString("email_verified_at"),
-                    userData.getString("created_at"),
-                    userData.getString("updated_at")
+            }
         };
-        RequestQueue requestQueue = Volley.new RequestQueue(this);
-        requestQueue.add(stringRequest);
-    };
 
-        return fragmentView;
+        // Create Map to store POST parameters.
+        Map<String, String> postParams = new HashMap<String, String>();
+        postParams.put("email", email);
+        postParams.put("password", password);
+
+        // Create Header params
+        Map<String, String> headerParams = new HashMap<>();
+
+        // Create the service with provided details.
+        service.getService(getContext(), Request.Method.POST, API_LOGIN_ROUTE, onSuccessListener, onErrorListener, postParams, headerParams);
+
+        // Start the service
+        service.startService();
     }
+
+    private void getUser() {
+        String API_LOGIN_ROUTE = "user";
+
+        VolleyService service = new VolleyService();
+
+        // Create Listener to respond what to do after the data has been fetched.
+        Response.Listener<JSONObject> onSuccessListener = new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                String responseData;
+
+                try {
+
+                    JSONObject json = response.getJSONObject("user");
+
+                    responseData = json.getString("name");
+
+                    // TODO : Masukin token ke SharedPreferences.
+
+                    Toast.makeText(activity, responseData, Toast.LENGTH_SHORT).show();
+                }
+                catch (JSONException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        };
+
+        // Create Listener to respond if Volley failed to fetch data.
+        Response.ErrorListener onErrorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error.networkResponse.statusCode == 400) {
+                    Toast.makeText(activity, "Input lagi bro", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        };
+
+        // Create Map to store POST parameters.
+        Map<String, String> postParams = new HashMap<String, String>();
+
+        // Create Header params
+        Map<String, String> headerParams = new HashMap<>();
+//        headerParams.put("Authorization", "Bearer " + authToken);
+
+        // Create the service with provided details.
+        service.getService(getContext(), Request.Method.GET, API_LOGIN_ROUTE, onSuccessListener, onErrorListener, postParams, headerParams);
+
+        // Start the service
+        service.startService();
+    }
+
     public void setBtLoginClick(){
-        String email = etUsername.getText().toString();
-        String password = etPassword.getText().toString();
-        mPresenter.performLogin();
+        loginUser();
+//        getUser();
+//        mPresenter.performLogin();
     }
-
 
     public void setTvRegisterClick(){
         Intent intent = new Intent(activity, RegisterActivity.class);
@@ -226,8 +205,8 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
 
     @Override
     public void redirectToHome() {
-        Intent intent = new Intent(activity, HomeActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(activity, HomeActivity.class);
+//        startActivity(intent);
     }
 
     public void redirectToRegister(){
