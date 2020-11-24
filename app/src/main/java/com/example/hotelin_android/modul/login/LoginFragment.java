@@ -12,32 +12,33 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
+import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.modul.register.RegisterActivity;
-import com.example.hotelin_android.util.VolleyService;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.example.hotelin_android.modul.test.TestActivity;
+import com.example.hotelin_android.util.RequestCallback;
+import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.URL;
+import com.example.hotelin_android.util.UtilProvider;
 
 public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Presenter> implements LoginContract.View {
-    EditText username;
-    EditText userpassword;
+    EditText etEmail;
+    EditText etPassword;
     Button btnLogin;
     TextView tvRegister;
     String authToken;
-    private Object SharedPreferencesUtil;
-//    static SharedPreferencesUtil;
+    SharedPreferencesUtil sharedPreferencesUtil;
 
-    public LoginFragment() {}
+    public LoginFragment(SharedPreferencesUtil sharedPreferencesUtil) {
+        this.sharedPreferencesUtil = sharedPreferencesUtil;
+    }
 
     @Nullable
     @Override
@@ -47,8 +48,8 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
         mPresenter = new LoginPresenter(this);
         mPresenter.start();
 
-        username = fragmentView.findViewById(R.id.username);
-        userpassword = fragmentView.findViewById(R.id.password);
+        etEmail = fragmentView.findViewById(R.id.username);
+        etPassword = fragmentView.findViewById(R.id.password);
         btnLogin = fragmentView.findViewById(R.id.login_btn);
         tvRegister = fragmentView.findViewById(R.id.register);
 
@@ -71,126 +72,10 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
         return fragmentView;
     }
 
-    private void setBtnLoginClick() throws JSONException {
-        loginUser();
-//        getUser();
-//        mPresenter.performLogin();
-    }
-
-    private void loginUser() {
-        String email = username.getText().toString();
-        String password = userpassword.getText().toString();
-
-        Log.e("SOMETHING", email);
-        Log.e("SOMETHING", password);
-
-        String API_LOGIN_ROUTE = "user/login";
-
-        VolleyService service = new VolleyService();
-
-        // Create Listener to respond what to do after the data has been fetched.
-        Response.Listener<JSONObject> onSuccessListener = new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                String responseData;
-
-                try {
-                    responseData = response.getString("token");
-
-                    // TODO : Masukin token ke SharedPreferences.
-
-                    authToken = responseData;
-
-//                    Toast.makeText(activity, responseData, Toast.LENGTH_SHORT).show();
-                }
-                catch (JSONException exception) {
-                    exception.printStackTrace();
-                }
-            }
-        };
-
-        // Create Listener to respond if Volley failed to fetch data.
-        Response.ErrorListener onErrorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if (error.networkResponse.statusCode == 400) {
-                    Toast.makeText(activity, "Input lagi bro", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        };
-
-        // Create Map to store POST parameters.
-        Map<String, String> postParams = new HashMap<String, String>();
-        postParams.put("email", email);
-        postParams.put("password", password);
-
-        // Create Header params
-        Map<String, String> headerParams = new HashMap<>();
-
-        // Create the service with provided details.
-        service.getService(getContext(), Request.Method.POST, API_LOGIN_ROUTE, onSuccessListener, onErrorListener, postParams, headerParams);
-
-        // Start the service
-        service.startService();
-    }
-
-    private void getUser() {
-        String API_LOGIN_ROUTE = "user";
-
-        VolleyService service = new VolleyService();
-
-        // Create Listener to respond what to do after the data has been fetched.
-        Response.Listener<JSONObject> onSuccessListener = new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                String responseData;
-
-                try {
-
-                    JSONObject json = response.getJSONObject("user");
-
-                    responseData = json.getString("name");
-
-                    // TODO : Masukin token ke SharedPreferences.
-
-                    Toast.makeText(activity, responseData, Toast.LENGTH_SHORT).show();
-                }
-                catch (JSONException exception) {
-                    exception.printStackTrace();
-                }
-            }
-        };
-
-        // Create Listener to respond if Volley failed to fetch data.
-        Response.ErrorListener onErrorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if (error.networkResponse.statusCode == 400) {
-                    Toast.makeText(activity, "Input lagi bro", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        };
-
-        // Create Map to store POST parameters.
-        Map<String, String> postParams = new HashMap<String, String>();
-
-        // Create Header params
-        Map<String, String> headerParams = new HashMap<>();
-//        headerParams.put("Authorization", "Bearer " + authToken);
-
-        // Create the service with provided details.
-        service.getService(getContext(), Request.Method.GET, API_LOGIN_ROUTE, onSuccessListener, onErrorListener, postParams, headerParams);
-
-        // Start the service
-        service.startService();
-    }
-
     public void setBtLoginClick(){
-        loginUser();
-//        getUser();
-//        mPresenter.performLogin();
+        String email = etEmail.getText().toString();
+        String password = etPassword.getText().toString();
+        mPresenter.performLogin(email, password);
     }
 
     public void setTvRegisterClick(){
@@ -205,11 +90,53 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
 
     @Override
     public void redirectToHome() {
-//        Intent intent = new Intent(activity, HomeActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(activity, TestActivity.class);
+        startActivity(intent);
     }
 
     public void redirectToRegister(){
 
+    }
+
+    public void requestLogin(final String email, String password, final RequestCallback<LoginResponse> requestCallback){
+        Log.e("tes", "tes");
+        AndroidNetworking.post(URL.LOGIN_URL)
+                        .addBodyParameter("email", email)
+                        .addBodyParameter("password", password)
+                        .build()
+                        .getAsObject(LoginResponse.class, new ParsedRequestListener<LoginResponse>() {
+                            @Override
+                            public void onResponse(LoginResponse response) {
+                                //Log.e("tes", "tes2");
+                                Log.e("tes", email);
+                                if(response == null){
+                                    Toast.makeText(getContext(), "failed", Toast.LENGTH_SHORT);
+                                    requestCallback.requestFailed("Null Response");
+                                }else if(response.token == null){
+                                    Toast.makeText(getContext(), "failed", Toast.LENGTH_SHORT);
+                                    requestCallback.requestFailed("Wrong Email or Password");
+                                }else{
+                                    Log.e("tes", response.token);
+                                    Toast.makeText(getContext(), email, Toast.LENGTH_SHORT);
+                                    requestCallback.requestSuccess(response);
+                                }
+                            }
+
+                            @Override
+                            public void onError(ANError anError) {
+                                Log.e("tes", "tes3", anError);
+                                Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT);
+                                requestCallback.requestFailed("Wrong Email or Password");
+                            }
+                        });
+    }
+
+    public void saveToken(String token){
+        Log.e("tes", token);
+        sharedPreferencesUtil.setToken(token);
+    }
+
+    public void showFailedMessage(String message){
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.hotelin_android.modul.login;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -8,16 +9,19 @@ import android.widget.TextView;
 
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragmentHolderActivity;
+import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.UtilProvider;
 
 public class LoginActivity extends BaseFragmentHolderActivity {
     LoginFragment loginFragment;
     private final int UPDATE_REQUEST = 2019;
+    SharedPreferencesUtil sharedPreferencesUtil;
 
     @Override
     protected void initializeFragment() {
         initializeView();
-
-        loginFragment = new LoginFragment();
+        sharedPreferencesUtil = UtilProvider.getSharedPreferencesUtil();
+        loginFragment = new LoginFragment(sharedPreferencesUtil);
         setCurrentFragment(loginFragment, false);
 
     }
