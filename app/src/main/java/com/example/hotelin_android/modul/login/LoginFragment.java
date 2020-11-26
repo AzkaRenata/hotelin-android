@@ -110,14 +110,14 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
                                 //Log.e("tes", "tes2");
                                 Log.e("tes", email);
                                 if(response == null){
-                                    Toast.makeText(getContext(), "failed", Toast.LENGTH_SHORT);
+                                    Toast.makeText(getContext(), "failed", Toast.LENGTH_SHORT).show();
                                     requestCallback.requestFailed("Null Response");
                                 }else if(response.token == null){
-                                    Toast.makeText(getContext(), "failed", Toast.LENGTH_SHORT);
+                                    Toast.makeText(getContext(), "failed", Toast.LENGTH_SHORT).show();
                                     requestCallback.requestFailed("Wrong Email or Password");
                                 }else{
                                     Log.e("tes", response.token);
-                                    Toast.makeText(getContext(), email, Toast.LENGTH_SHORT);
+                                    Toast.makeText(getContext(), email, Toast.LENGTH_SHORT).show();
                                     requestCallback.requestSuccess(response);
                                 }
                             }
@@ -125,7 +125,7 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
                             @Override
                             public void onError(ANError anError) {
                                 Log.e("tes", "tes3", anError);
-                                Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT);
+                                Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
                                 requestCallback.requestFailed("Wrong Email or Password");
                             }
                         });
