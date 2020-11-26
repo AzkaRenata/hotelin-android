@@ -13,12 +13,11 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustResize"
-        android:theme="@style/Custom"
-        tools:targetApi="m">
+        android:theme="@style/Custom">
         <activity android:name=".modul.test.TestActivity" />
         <activity android:name=".modul.home.HomeActivity" />
-        <activity android:name=".modul.register.RegisterActivity" />
-        <activity android:name=".modul.login.LoginActivity">
+        <activity android:name=".modul.login.LoginActivity" />
+        <activity android:name=".modul.register.RegisterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
