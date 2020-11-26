@@ -163,14 +163,13 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
         Log.e("tes", newUser.getName());
         String username = "Username";
         AndroidNetworking.post(URL.CUSTOMER_REGISTER_URL)
-                .addBodyParameter("secondname", newUser.getUsername())
-                .addBodyParameter("firstname", newUser.getName())
-                .addBodyParameter("emails", newUser.getEmail())
+                .addBodyParameter("username", newUser.getUsername())
+                .addBodyParameter("name", newUser.getName())
+                .addBodyParameter("email", newUser.getEmail())
                 .addBodyParameter("password", newUser.getPassword())
                 .addBodyParameter("gender", newUser.getGender())
                 .addBodyParameter("telp", newUser.getTelp())
                 .addBodyParameter("address", newUser.getAddress())
-                .addBodyParameter("user_picture", null)
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsObject(RegisterResponse.class, new ParsedRequestListener<RegisterResponse>() {
