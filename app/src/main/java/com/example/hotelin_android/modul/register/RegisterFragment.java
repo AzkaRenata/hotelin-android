@@ -124,9 +124,7 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
         String telp = etTelp.getText().toString();
         String address = etAddress.getText().toString();
 
-        //User newUser = new User(username, fullname, email, password, 2, gender, telp,address, null);
-
-        User newUser = new User("ajezKarebet", "AzizKarebet", "ajezkarebet@gmail.com", "pass123", 2, "male", "0892929", "Jl. jalan jalan", null);
+        User newUser = new User(username, fullname, email, password, 2, gender, telp,address, null);
 
         Log.e("set", newUser.getName());
         Log.e("set", newUser.getUsername());
