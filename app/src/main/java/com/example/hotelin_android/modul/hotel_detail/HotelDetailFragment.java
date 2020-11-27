@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.util.SharedPreferencesUtil;
-import com.example.hotelin_android.util.URL;
+import com.example.hotelin_android.util.myURL;
 
 public class HotelDetailFragment extends BaseFragment<HotelDetailActivity, HotelDetailContract.HotelDetailPresenter> implements HotelDetailContract.HotelDetailView {
     SharedPreferencesUtil sharedPreferencesUtil;
@@ -24,7 +24,7 @@ public class HotelDetailFragment extends BaseFragment<HotelDetailActivity, Hotel
 //    ImageView hotelImageIV;
 
     HotelDetailPresenter hotelDetailPresenter;
-    int HOTEL_ID = 4;
+    int HOTEL_ID =  4;
 
     public HotelDetailFragment(SharedPreferencesUtil sharedPreferencesUtil) {
         this.sharedPreferencesUtil = sharedPreferencesUtil;
