@@ -18,7 +18,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/hotel_name_tv"
                 android:text="Create new Account"
                 android:textSize="20dp"
                 android:fontFamily="@font/bold"

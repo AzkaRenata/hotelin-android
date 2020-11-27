@@ -1,9 +1,6 @@
 package com.example.hotelin_android;
 
-import android.content.Intent;
-
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,12 +8,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.ParsedRequestListener;
-import com.example.hotelin_android.model.User;
-import com.example.hotelin_android.util.URL;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 

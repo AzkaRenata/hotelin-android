@@ -26,8 +26,7 @@ import com.example.hotelin_android.modul.register.RegisterActivity;
 import com.example.hotelin_android.modul.test.TestActivity;
 import com.example.hotelin_android.util.RequestCallback;
 import com.example.hotelin_android.util.SharedPreferencesUtil;
-import com.example.hotelin_android.util.URL;
-import com.example.hotelin_android.util.UtilProvider;
+import com.example.hotelin_android.util.myURL;
 
 public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Presenter> implements LoginContract.View {
     EditText etEmail;
@@ -107,7 +106,7 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
 
     public void requestLogin(final String email, String password, final RequestCallback<LoginResponse> requestCallback){
         Log.e("tes", "tes");
-        AndroidNetworking.post(URL.LOGIN_URL)
+        AndroidNetworking.post(myURL.LOGIN_URL)
                         .addBodyParameter("email", email)
                         .addBodyParameter("password", password)
                         .build()

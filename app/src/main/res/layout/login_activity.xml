@@ -19,7 +19,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/hotel_name_tv"
                 android:text="Welcome Back"
                 android:textSize="20dp"
                 android:fontFamily="@font/bold"
@@ -35,7 +35,7 @@
                 android:background="@drawable/bg_form"
                 android:fontFamily="@font/semibold"
                 android:inputType="textPersonName"
-                android:layout_below="@+id/title"
+                android:layout_below="@+id/hotel_name_tv"
                 android:paddingLeft="16dp"
                 android:layout_marginVertical="10dp"
                 android:hint="Username"

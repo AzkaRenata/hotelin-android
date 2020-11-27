@@ -1,6 +1,8 @@
 package com.example.hotelin_android.modul.home;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +13,14 @@ import androidx.annotation.Nullable;
 
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
+import com.example.hotelin_android.modul.search_result.SearchResultActivity;
 
 public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presenter> implements HomeContract.View {
     EditText etSearchBar;
     Button btSearch;
 
-    public HomeFragment() {}
+    public HomeFragment() {
+    }
 
     @Nullable
     @Override
@@ -30,11 +34,29 @@ public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presen
         btSearch = fragmentView.findViewById(R.id.search_btn);
 
         setTitle("Hotelin");
+        btSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setBtSearchClick();
+            }
+        });
         return fragmentView;
     }
 
     @Override
     public void setPresenter(HomeContract.Presenter presenter) {
 
+    }
+
+    public void setBtSearchClick(){
+        String location = etSearchBar.getText().toString();
+        Log.d("hotel_location", location);
+        mPresenter.search(location);
+    }
+
+    public void redirectToSearchResult(String location){
+        Intent intent = new Intent(activity, SearchResultActivity.class);
+        intent.putExtra("hotel_location", location);
+        startActivity(intent);
     }
 }
