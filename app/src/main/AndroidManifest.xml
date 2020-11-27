@@ -16,8 +16,8 @@
         android:theme="@style/Custom">
         <activity android:name=".modul.test.TestActivity" />
         <activity android:name=".modul.home.HomeActivity" />
-        <activity android:name=".modul.login.LoginActivity" />
-        <activity android:name=".modul.register.RegisterActivity">
+        <activity android:name=".modul.register.RegisterActivity" />
+        <activity android:name=".modul.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
