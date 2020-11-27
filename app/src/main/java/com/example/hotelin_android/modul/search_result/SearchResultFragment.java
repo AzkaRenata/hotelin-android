@@ -1,4 +1,4 @@
-package com.example.hotelin_android.modul.test;
+package com.example.hotelin_android.modul.search_result;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,30 +6,37 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
-import com.example.hotelin_android.model.User;
+import com.example.hotelin_android.model.Hotel;
 import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.modul.register.RegisterActivity;
 import com.example.hotelin_android.util.RequestCallback;
 import com.example.hotelin_android.util.SharedPreferencesUtil;
 import com.example.hotelin_android.util.myURL;
+import com.example.hotelin_android.util.RecyclerViewAdapterHotelList;
 
-public class TestFragment extends BaseFragment<TestActivity, TestContract.Presenter> implements TestContract.View {
-    TextView id,userName,userEmail,gender;
-    Button btnLogout;
+import java.util.List;
+
+public class SearchResultFragment extends BaseFragment<SearchResultActivity, SearchResultContract.Presenter> implements SearchResultContract.View {
     SharedPreferencesUtil sharedPreferencesUtil;
+    String hotel_location;
+    RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
-    public TestFragment(SharedPreferencesUtil sharedPreferencesUtil) {
+    public SearchResultFragment(String hotel_location, SharedPreferencesUtil sharedPreferencesUtil) {
+        this.hotel_location = hotel_location;
         this.sharedPreferencesUtil = sharedPreferencesUtil;
     }
 
@@ -37,16 +44,15 @@ public class TestFragment extends BaseFragment<TestActivity, TestContract.Presen
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        fragmentView = inflater.inflate(R.layout.test_layout, container, false);
-        mPresenter = new TestPresenter(this);
+        fragmentView = inflater.inflate(R.layout.see_all_activity, container, false);
+        mPresenter = new SearchResultPresenter(this);
         mPresenter.start();
 
-        id = fragmentView.findViewById(R.id.textViewId);
-        userName = fragmentView.findViewById(R.id.textViewUsername);
-        userEmail = fragmentView.findViewById(R.id.textViewEmail);
-        gender = fragmentView.findViewById(R.id.textViewGender);
-
-        mPresenter.showData();
+        mRecyclerView = fragmentView.findViewById(R.id.recyclerViewHotelList);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(activity);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mPresenter.getData(hotel_location);
 
         return fragmentView;
     }
@@ -61,7 +67,7 @@ public class TestFragment extends BaseFragment<TestActivity, TestContract.Presen
     }
 
     @Override
-    public void setPresenter(TestContract.Presenter presenter) {
+    public void setPresenter(SearchResultContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
@@ -80,18 +86,21 @@ public class TestFragment extends BaseFragment<TestActivity, TestContract.Presen
     }
 
     @Override
-    public void requestProfile(final RequestCallback<User> requestCallback) {
-        AndroidNetworking.get(myURL.PROFILE_URL)
+    public void searchHotel(final String hotel_location, final RequestCallback<List<Hotel>> requestCallback) {
+        AndroidNetworking.get(myURL.SEARCH_HOTEL_URL)
                 .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
+                .addQueryParameter("hotel_location", hotel_location)
+                .setTag(this)
+                .setPriority(Priority.LOW)
                 .build()
-                .getAsObject(TestResponse.class, new ParsedRequestListener<TestResponse>() {
+                .getAsObjectList(Hotel.class, new ParsedRequestListener<List<Hotel>>() {
                     @Override
-                    public void onResponse(TestResponse response) {
+                    public void onResponse(List<Hotel> response) {
                         if(response == null){
                             requestCallback.requestFailed("Null Response");
                             Log.d("tag", "response null");
                         }else{
-                            requestCallback.requestSuccess(response.user);
+                            requestCallback.requestSuccess(response);
                         }
                     }
 
@@ -103,11 +112,17 @@ public class TestFragment extends BaseFragment<TestActivity, TestContract.Presen
                 });
     }
 
-    public void setProfile(User user){
-        id.setText(String.valueOf(user.getId()));
-        userEmail.setText(user.getEmail());
-        gender.setText(user.getGender());
-        userName.setText(user.getUsername());
+    public void setResult(List<Hotel> hotels){
+        mAdapter = new RecyclerViewAdapterHotelList(hotels);
+        mRecyclerView.setAdapter(mAdapter);
+        ((RecyclerViewAdapterHotelList) mAdapter).setOnItemClickListener(new RecyclerViewAdapterHotelList.MyClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                //String id = data.get(position).getId();
+                //editTask(id);
+            }
+        });
+
     }
 
     public void showFailedMessage(String message){
