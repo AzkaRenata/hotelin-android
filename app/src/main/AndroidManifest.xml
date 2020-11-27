@@ -13,16 +13,16 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustResize"
-        android:theme="@style/Custom"
-        tools:targetApi="m">
+        android:theme="@style/Custom">
         <activity android:name=".modul.test.TestActivity" />
         <activity android:name=".modul.home.HomeActivity" />
-        <activity android:name=".modul.search_result.SearchResultActivity" />
-        <activity android:name=".modul.register.RegisterActivity" />
-        <activity android:name=".modul.login.LoginActivity">
+        <activity android:name=".modul.login.LoginActivity" >
+        </activity>
+        <activity android:name=".modul.register.RegisterActivity">
+        </activity>
+        <activity android:name=".modul.hotel_detail.HotelDetailActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

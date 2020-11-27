@@ -7,16 +7,19 @@ import android.widget.TextView;
 
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragmentHolderActivity;
+import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.UtilProvider;
 
 public class RegisterActivity extends BaseFragmentHolderActivity {
     RegisterFragment registerFragment;
     private final int UPDATE_REQUEST = 2019;
+    SharedPreferencesUtil sharedPreferencesUtil;
 
     @Override
     protected void initializeFragment() {
         initializeView();
-
-        registerFragment = new RegisterFragment();
+        sharedPreferencesUtil = UtilProvider.getSharedPreferencesUtil();
+        registerFragment = new RegisterFragment(sharedPreferencesUtil);
         setCurrentFragment(registerFragment, false);
 
     }
