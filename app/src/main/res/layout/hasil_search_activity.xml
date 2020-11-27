@@ -1,48 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/scroll1"
         android:layout_width="match_parent"
-        android:layout_height="1011dp"
-        android:layout_weight="1"
-        android:background="#FFFF"
-        android:orientation="vertical"
-        android:padding="32dp">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp">
 
-        <LinearLayout
-            android:layout_gravity="center"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="match_parent">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="20dp"
-                android:layout_margin="8dp">
+                android:layout_marginTop="20dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="300dp">
+                    android:layout_height="330dp">
 
                     <ImageView
+<<<<<<< Updated upstream
                         android:id="@+id/hotel"
                         android:src="@drawable/hotel1"
                         android:scaleType="centerCrop"
+=======
+                        android:id="@+id/hotel1"
+>>>>>>> Stashed changes
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"/>
+                        android:layout_height="200dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/hotel1" />
 
                     <TextView
+<<<<<<< Updated upstream
                         android:id="@+id/title"
                         android:layout_below="@+id/hotel"
+=======
+                        android:id="@+id/hotelName"
+                        android:layout_below="@+id/hotel1"
+>>>>>>> Stashed changes
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="10dp"
-                        android:text="Eastin Ashta Hotel"
+                        android:text="Eastin Ashta Resort"
                         android:fontFamily="@font/bold"
                         android:textColor="#707070"
                         android:textSize="16sp"
@@ -50,20 +59,31 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
+<<<<<<< Updated upstream
                         android:id="@+id/desc"
                         android:layout_below="@+id/title"
+=======
+                        android:id="@+id/location1"
+                        android:layout_below="@+id/hotelName"
+                        android:drawableStart="@drawable/place"
+>>>>>>> Stashed changes
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="10dp"
-                        android:text="Canggu, Bali"
                         android:fontFamily="@font/regular"
+                        android:text="  Canggu, Bali"
                         android:textColor="#707070"
                         android:textSize="14sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
                     <TextView
+<<<<<<< Updated upstream
                         android:id="@+id/price"
                         android:layout_below="@+id/desc"
+=======
+                        android:id="@+id/price1"
+                        android:layout_below="@+id/location1"
+>>>>>>> Stashed changes
                         android:textAlignment="textEnd"
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="10dp"
@@ -73,43 +93,34 @@
                         android:textSize="16sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
-
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="20dp" >
-        </RelativeLayout>
-        <LinearLayout
-            android:layout_gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card2"
+                android:layout_below="@id/card1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="20dp"
-                android:layout_margin="8dp">
+                android:layout_marginTop="30dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="300dp">
+                    android:layout_height="330dp">
 
                     <ImageView
                         android:id="@+id/hotel2"
-                        android:src="@drawable/hotel1"
-                        android:scaleType="centerCrop"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"/>
+                        android:layout_height="200dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/hotel1" />
 
                     <TextView
-                        android:id="@+id/title2"
+                        android:id="@+id/hotelName2"
                         android:layout_below="@+id/hotel2"
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="10dp"
-                        android:text="Eastin Ashta Hotel"
+                        android:text="Eastin Ashta Resort"
                         android:fontFamily="@font/bold"
                         android:textColor="#707070"
                         android:textSize="16sp"
@@ -117,12 +128,13 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
-                        android:id="@+id/desc2"
-                        android:layout_below="@+id/title2"
+                        android:id="@+id/location2"
+                        android:layout_below="@+id/hotelName2"
+                        android:drawableStart="@drawable/place"
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="10dp"
-                        android:text="Canggu, Bali"
                         android:fontFamily="@font/regular"
+                        android:text="  Canggu, Bali"
                         android:textColor="#707070"
                         android:textSize="14sp"
                         android:layout_width="wrap_content"
@@ -130,7 +142,7 @@
 
                     <TextView
                         android:id="@+id/price2"
-                        android:layout_below="@+id/desc2"
+                        android:layout_below="@+id/location2"
                         android:textAlignment="textEnd"
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="10dp"
@@ -140,20 +152,20 @@
                         android:textSize="16sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
+
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
-        </LinearLayout>
-    </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
 
-    <LinearLayout
-        android:background="#F6F5F4"
-        android:gravity="center"
-        android:layout_weight="2"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
+<<<<<<< Updated upstream
             android:layout_height="match_parent">
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -168,3 +180,13 @@
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
+=======
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:itemBackground="@color/colorAccent"
+            app:itemIconTint="@drawable/selector"
+            app:itemTextColor="@drawable/selector"
+            app:menu="@menu/menu_navigation" />
+    </RelativeLayout>
+</RelativeLayout>
+>>>>>>> Stashed changes
