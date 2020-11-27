@@ -21,6 +21,7 @@ import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.modul.home.HomeActivity;
+import com.example.hotelin_android.modul.hotel_detail.HotelDetailActivity;
 import com.example.hotelin_android.modul.register.RegisterActivity;
 import com.example.hotelin_android.modul.test.TestActivity;
 import com.example.hotelin_android.util.RequestCallback;
@@ -98,6 +99,12 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
 
     }
 
+    // TESTING : Redirect to Hotel Detail
+    public void redirectToHotelDetail() {
+        Intent intent = new Intent(activity, HotelDetailActivity.class);
+        startActivity(intent);
+    }
+
     public void requestLogin(final String email, String password, final RequestCallback<LoginResponse> requestCallback){
         Log.e("tes", "tes");
         AndroidNetworking.post(URL.LOGIN_URL)
@@ -118,7 +125,10 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
                                 }else{
                                     Log.e("tes", response.token);
                                     Toast.makeText(getContext(), email, Toast.LENGTH_SHORT).show();
-                                    requestCallback.requestSuccess(response);
+//                                    requestCallback.requestSuccess(response);
+
+                                    sharedPreferencesUtil.setToken(response.token);
+                                    redirectToHotelDetail();
                                 }
                             }
 
