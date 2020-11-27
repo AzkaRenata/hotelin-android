@@ -28,7 +28,7 @@ import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.modul.login.LoginActivity;
 import com.example.hotelin_android.util.RequestCallback;
 import com.example.hotelin_android.util.SharedPreferencesUtil;
-import com.example.hotelin_android.util.URL;
+import com.example.hotelin_android.util.myURL;
 
 import static com.example.hotelin_android.R.id.*;
 
@@ -146,7 +146,7 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
 
     @Override
     public void requestRegister(final User newUser, final RequestCallback<RegisterResponse> requestCallback) {
-        AndroidNetworking.post(URL.CUSTOMER_REGISTER_URL)
+        AndroidNetworking.post(myURL.CUSTOMER_REGISTER_URL)
                 .addBodyParameter("username", newUser.getUsername())
                 .addBodyParameter("name", newUser.getName())
                 .addBodyParameter("email", newUser.getEmail())
@@ -162,10 +162,8 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
                     @Override
                     public void onResponse(RegisterResponse response) {
                         if(response == null){
-                            Log.e("tes333", URL.CUSTOMER_REGISTER_URL);
                             requestCallback.requestFailed("Null Response");
                         }else {
-                            Log.e("tes555", URL.CUSTOMER_REGISTER_URL);
                             requestCallback.requestSuccess(response);
                         }
                     }
