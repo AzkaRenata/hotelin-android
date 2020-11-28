@@ -5,9 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="30dp"
-    tools:context=".MainActivity">
+    tools:context=".modul.booking.BookingActivity"
+    android:orientation="vertical">
 
 
     <androidx.cardview.widget.CardView
@@ -69,6 +69,7 @@
         >
 
         <EditText
+            android:id="@+id/pemesan_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_pemesan"
@@ -90,6 +91,7 @@
         >
 
         <EditText
+            android:id="@+id/checkIn_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_in"
@@ -111,6 +113,7 @@
         >
 
         <EditText
+            android:id="@+id/checkOut_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_out"
@@ -132,6 +135,7 @@
         >
 
         <EditText
+            android:id="@+id/telp_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_phone"
@@ -152,6 +156,7 @@
         >
 
         <EditText
+            android:id="@+id/email_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_mail"
@@ -173,6 +178,7 @@
         >
 
         <EditText
+            android:id="@+id/jumlahKamar_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_room"
@@ -186,6 +192,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
+        android:id="@+id/book_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Book"
