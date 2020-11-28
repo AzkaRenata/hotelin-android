@@ -1,9 +1,5 @@
 package com.example.hotelin_android.util;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.StrictMode;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.model.Hotel;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 public class RecyclerViewAdapterHotelList extends RecyclerView.Adapter<RecyclerViewAdapterHotelList.MyViewHolder> {
     private static List<Hotel> mDataset;
@@ -36,10 +26,10 @@ public class RecyclerViewAdapterHotelList extends RecyclerView.Adapter<RecyclerV
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            hotel_iv = (ImageView) itemView.findViewById(R.id.hotel_iv);
-            hotel_name_tv = (TextView) itemView.findViewById(R.id.hotel_name_tv);
-            hotel_location_tv = (TextView) itemView.findViewById(R.id.hotel_location);
-            hotel_price_tv = (TextView) itemView.findViewById(R.id.hotel_price);
+            hotel_iv = (ImageView) itemView.findViewById(R.id.hotel_list_item_hotel_iv);
+            hotel_name_tv = (TextView) itemView.findViewById(R.id.hotel_list_item_name_tv);
+            hotel_location_tv = (TextView) itemView.findViewById(R.id.hotel_list_item_location_tv);
+            hotel_price_tv = (TextView) itemView.findViewById(R.id.hotel_list_item_price_tv);
             //checkBox = (CheckBox) itemView.findViewById(R.id.checkBoxItem);
             itemView.setOnClickListener(this);
         }
