@@ -18,9 +18,11 @@
         <activity android:name=".modul.search_result.SearchResultActivity" />
         <activity android:name=".modul.hotel_detail.HotelDetailActivity" />
         <activity android:name=".modul.home.HomeActivity" />
+        <activity android:name=".modul.search_result.SearchResultActivity" />
+        <activity android:name=".modul.room_list.RoomListActivity" />
+        <activity android:name=".modul.booking_history.BookingHistoryActivity" />
         <activity android:name=".modul.register.RegisterActivity" />
         <activity android:name=".modul.login.LoginActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
