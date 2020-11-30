@@ -1,4 +1,4 @@
-package com.example.hotelin_android.modul.search_result;
+package com.example.hotelin_android.modul.room_list;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -18,26 +20,26 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
-import com.example.hotelin_android.model.Hotel;
+import com.example.hotelin_android.model.Room;
+import com.example.hotelin_android.model.RoomGroup;
 import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.modul.register.RegisterActivity;
-import com.example.hotelin_android.modul.room_list.RoomListActivity;
+import com.example.hotelin_android.util.RecyclerViewAdapterRoomList;
 import com.example.hotelin_android.util.RequestCallback;
 import com.example.hotelin_android.util.SharedPreferencesUtil;
 import com.example.hotelin_android.util.myURL;
-import com.example.hotelin_android.util.RecyclerViewAdapterHotelList;
 
 import java.util.List;
 
-public class SearchResultFragment extends BaseFragment<SearchResultActivity, SearchResultContract.Presenter> implements SearchResultContract.View {
+public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListContract.Presenter> implements RoomListContract.View {
     SharedPreferencesUtil sharedPreferencesUtil;
-    String hotel_location;
+    int hotel_id;
     RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    public SearchResultFragment(String hotel_location, SharedPreferencesUtil sharedPreferencesUtil) {
-        this.hotel_location = hotel_location;
+    public RoomListFragment(int hotel_id, SharedPreferencesUtil sharedPreferencesUtil) {
+        this.hotel_id = hotel_id;
         this.sharedPreferencesUtil = sharedPreferencesUtil;
     }
 
@@ -45,17 +47,16 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        fragmentView = inflater.inflate(R.layout.hotel_list, container, false);
-        mPresenter = new SearchResultPresenter(this);
+        fragmentView = inflater.inflate(R.layout.room_list, container, false);
+        mPresenter = new RoomListPresenter(this);
         mPresenter.start();
 
-        mRecyclerView = fragmentView.findViewById(R.id.recyclerViewHotelList);
+        mRecyclerView = fragmentView.findViewById(R.id.recyclerViewRoomList);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(activity);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mPresenter.getData(hotel_location);
-
-        setTitle("Hotel List");
+        mPresenter.getData(hotel_id);
+        setTitle("Room List");
         return fragmentView;
     }
 
@@ -69,7 +70,7 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
     }
 
     @Override
-    public void setPresenter(SearchResultContract.Presenter presenter) {
+    public void setPresenter(RoomListContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
@@ -80,7 +81,7 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
     }
 
     public void redirectToRoomList(int id){
-        Intent intent = new Intent(activity, RoomListActivity.class);
+        Intent intent = new Intent(activity, HomeActivity.class);
         intent.putExtra("hotel_id", id);
         startActivity(intent);
     }
@@ -90,16 +91,15 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
     }
 
     @Override
-    public void searchHotel(final String hotel_location, final RequestCallback<List<Hotel>> requestCallback) {
-        AndroidNetworking.get(myURL.SEARCH_HOTEL_URL)
+    public void searchRoom(final int hotel_id, final RequestCallback<List<Room>> requestCallback) {
+        AndroidNetworking.get(myURL.SEARCH_ROOM_URL+hotel_id)
                 .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
-                .addQueryParameter("hotel_location", hotel_location)
                 .setTag(this)
                 .setPriority(Priority.LOW)
                 .build()
-                .getAsObjectList(Hotel.class, new ParsedRequestListener<List<Hotel>>() {
+                .getAsObjectList(Room.class, new ParsedRequestListener<List<Room>>() {
                     @Override
-                    public void onResponse(List<Hotel> response) {
+                    public void onResponse(List<Room> response) {
                         if(response == null){
                             requestCallback.requestFailed("Null Response");
                             Log.d("tag", "response null");
@@ -116,14 +116,16 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
                 });
     }
 
-    public void setResult(final List<Hotel> hotels){
-        mAdapter = new RecyclerViewAdapterHotelList(hotels);
+    public void setResult(final List<RoomGroup> rooms){
+        TextView hotel_name = (TextView) fragmentView.findViewById(R.id.room_list_hotel_name_tv);
+        hotel_name.setText(rooms.get(0).getRooms().get(0).getHotel_name());
+        mAdapter = new RecyclerViewAdapterRoomList(rooms);
         mRecyclerView.setAdapter(mAdapter);
-        ((RecyclerViewAdapterHotelList) mAdapter).setOnItemClickListener(new RecyclerViewAdapterHotelList.MyClickListener() {
+        ((RecyclerViewAdapterRoomList) mAdapter).setOnItemClickListener(new RecyclerViewAdapterRoomList.MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                int id = hotels.get(position).getId();
-                redirectToRoomList(id);
+                //int id = rooms.get(position).getId();
+                //redirectToRoomList(id);
             }
         });
 
