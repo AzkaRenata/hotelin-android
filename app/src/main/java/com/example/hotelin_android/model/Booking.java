@@ -4,22 +4,62 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 public class Booking {
+    private String namaPemesan;
+    private String email;
+    private String telp;
+    private int jumlahKamar;
     private int id;
     private int user_id;
     private int room_id;
-    private int booking_status;
     private String check_in;
     private String check_out;
-    private Date booking_time;
 
-    public Booking(int id, int user_id, int room_id, int booking_status, String check_in, String check_out, Date booking_time) {
-        this.id = id;
-        this.user_id = user_id;
+    public Booking(String pemesan, String email, String jumlahKamar, int room_id, String check_in, String check_out) {
         this.room_id = room_id;
-        this.booking_status = booking_status;
         this.check_in = check_in;
         this.check_out = check_out;
-        this.booking_time = booking_time;
+    }
+
+    public Booking(int room_id, String check_in, String check_out) {
+        this.namaPemesan = namaPemesan;
+        this.email = email;
+        this.telp = telp;
+        this.jumlahKamar = jumlahKamar;
+        this.room_id = room_id;
+        this.check_in = check_in;
+        this.check_out = check_out;
+    }
+
+    public String getNamaPemesan() {
+        return namaPemesan;
+    }
+
+    public void setNamaPemesan(String namaPemesan) {
+        this.namaPemesan = namaPemesan;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelp() {
+        return telp;
+    }
+
+    public void setTelp(String telp) {
+        this.telp = telp;
+    }
+
+    public int getJumlahKamar() {
+        return jumlahKamar;
+    }
+
+    public void setJumlahKamar(int jumlahKamar) {
+        this.jumlahKamar = jumlahKamar;
     }
 
     public int getId() {
@@ -46,14 +86,6 @@ public class Booking {
         this.room_id = room_id;
     }
 
-    public int getBooking_status() {
-        return booking_status;
-    }
-
-    public void setBooking_status(int booking_status) {
-        this.booking_status = booking_status;
-    }
-
     public String getCheck_in() {
         return check_in;
     }
@@ -70,11 +102,4 @@ public class Booking {
         this.check_out = check_out;
     }
 
-    public Date getBooking_time() {
-        return booking_time;
-    }
-
-    public void setBooking_time(Date booking_time) {
-        this.booking_time = booking_time;
-    }
 }
