@@ -98,12 +98,6 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
 
     }
 
-    // TESTING : Redirect to Hotel Detail
-    public void redirectToHotelDetail() {
-        Intent intent = new Intent(activity, HotelDetailActivity.class);
-        startActivity(intent);
-    }
-
     public void requestLogin(final String email, String password, final RequestCallback<LoginResponse> requestCallback){
         Log.e("tes", "tes");
         AndroidNetworking.post(myURL.LOGIN_URL)
@@ -122,12 +116,8 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
                                     Toast.makeText(getContext(), "failed", Toast.LENGTH_SHORT).show();
                                     requestCallback.requestFailed("Wrong Email or Password");
                                 }else{
-                                    Log.e("tes", response.token);
                                     Toast.makeText(getContext(), email, Toast.LENGTH_SHORT).show();
-//                                    requestCallback.requestSuccess(response);
-
-                                    sharedPreferencesUtil.setToken(response.token);
-                                    redirectToHotelDetail();
+                                    requestCallback.requestSuccess(response);
                                 }
                             }
 

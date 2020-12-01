@@ -28,7 +28,7 @@ import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.modul.login.LoginActivity;
 import com.example.hotelin_android.util.RequestCallback;
 import com.example.hotelin_android.util.SharedPreferencesUtil;
-import com.example.hotelin_android.util.URL;
+import com.example.hotelin_android.util.myURL;
 
 import static com.example.hotelin_android.R.id.*;
 
@@ -116,7 +116,6 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
     }
 
     public void setBtRegisterClick(){
-        Log.e("tes", "tes2");
         String fullname = etFullname.getText().toString();
         String username = etUsername.getText().toString();
         String password = etPassword.getText().toString();
@@ -125,16 +124,6 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
         String address = etAddress.getText().toString();
 
         User newUser = new User(username, fullname, email, password, 2, gender, telp,address, null);
-
-        Log.e("set", newUser.getName());
-        Log.e("set", newUser.getUsername());
-        Log.e("set", newUser.getPassword());
-        Log.e("set", newUser.getEmail());
-        Log.e("set", newUser.getGender());
-        Log.e("set", newUser.getTelp());
-        Log.e("set", newUser.getAddress());
-
-        Log.e("tes", "tes3");
 
         mPresenter.performRegister(newUser);
     }
@@ -157,14 +146,12 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
 
     @Override
     public void requestRegister(final User newUser, final RequestCallback<RegisterResponse> requestCallback) {
-        Log.e("tes", URL.CUSTOMER_REGISTER_URL);
-        Log.e("tes", newUser.getName());
-        String username = "Username";
-        AndroidNetworking.post(URL.CUSTOMER_REGISTER_URL)
+        AndroidNetworking.post(myURL.CUSTOMER_REGISTER_URL)
                 .addBodyParameter("username", newUser.getUsername())
                 .addBodyParameter("name", newUser.getName())
                 .addBodyParameter("email", newUser.getEmail())
                 .addBodyParameter("password", newUser.getPassword())
+                .addBodyParameter("password_confirmation", etConfirmPassword.getText().toString())
                 .addBodyParameter("gender", newUser.getGender())
                 .addBodyParameter("telp", newUser.getTelp())
                 .addBodyParameter("address", newUser.getAddress())
@@ -175,10 +162,8 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
                     @Override
                     public void onResponse(RegisterResponse response) {
                         if(response == null){
-                            Log.e("tes", URL.CUSTOMER_REGISTER_URL);
                             requestCallback.requestFailed("Null Response");
                         }else {
-                            Log.e("tes", URL.CUSTOMER_REGISTER_URL);
                             requestCallback.requestSuccess(response);
                         }
                     }
@@ -186,15 +171,12 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
                     @Override
                     public void onError(ANError anError) {
                         if(anError.getErrorCode() == 401) {
-                            Log.e("tes", "ERROR", anError);
+                            Log.e("tesqqq", "ERROR", anError);
                             requestCallback.requestFailed("Please input a valid e-mail");
                         }else {
-                            Log.e("tes", String.valueOf(anError.getErrorCode()));
-                            Log.e("tes", anError.getErrorBody());
-                            Log.e("tes", anError.getErrorDetail());
-                            Log.e("tesuser", newUser.getUsername());
-                            Log.e("tesemail", newUser.getEmail());
-                            Log.e("tespass", newUser.getPassword());
+                            Log.e("tesww", String.valueOf(anError.getErrorCode()));
+                            Log.e("teswwwww", "fdfd" + anError.getErrorBody());
+                            Log.e("teswwww", "fdfdsasa" + anError.getErrorDetail());
                             requestCallback.requestFailed("Server Error !");
                         }
                     }
