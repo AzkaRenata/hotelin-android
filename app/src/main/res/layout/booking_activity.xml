@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".modul.booking.BookingActivity">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            tools:context=".modul.booking.BookingActivity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="30dp">
+            android:padding="60dp"
+            tools:context=".modul.booking.BookingActivity">
 
 
             <androidx.cardview.widget.CardView
-                app:cardCornerRadius="10dp"
-                app:cardElevation="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -88,6 +88,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -104,7 +105,7 @@
                     android:drawablePadding="7dp"
                     android:ems="10"
                     android:hint="Check In"
-                    android:inputType="date"
+                    android:inputType="none"
                     android:textSize="16sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -125,10 +126,11 @@
                     android:drawablePadding="7dp"
                     android:ems="10"
                     android:hint="Check Out"
-                    android:inputType="date"
+                    android:inputType="none"
                     android:textSize="16sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -137,18 +139,33 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true">
 
-                <EditText
-                    android:id="@+id/telp_et"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_phone"
-                    android:drawableLeft="@drawable/ic_phone"
-                    android:drawablePadding="7dp"
-                    android:ems="10"
-                    android:hint="No. Telp"
-                    android:inputType="number"
-                    android:textSize="16sp" />
+                    android:orientation="horizontal">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_phone"
+                        android:drawableLeft="@drawable/ic_phone"
+                        android:drawablePadding="7dp"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="10dp"
+                        android:text="+62"
+                        android:textSize="15sp"
+                        android:textColor="#000"/>
+
+                    <EditText
+                        android:id="@+id/telp_et"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="Phone"
+                        android:inputType="number"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -172,34 +189,14 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
-
-                <EditText
-                    android:id="@+id/jumlahKamar_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_room"
-                    android:drawableLeft="@drawable/ic_room"
-                    android:drawablePadding="7dp"
-                    android:ems="10"
-                    android:hint="Jumlah Kamar"
-                    android:inputType="number"
-                    android:textSize="16sp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
             <Button
-                android:id="@+id/book_btn"
+                android:id="@+id/next_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:background="@drawable/button_color"
-                android:text="Book"
+                android:text="Next"
+                android:textAllCaps="false"
                 android:textColor="#ffffff"
                 android:textSize="22sp"
 

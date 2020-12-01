@@ -59,14 +59,6 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
         return fragmentView;
     }
 
-    public void setBtLoginClick(){
-
-    }
-
-    public void setTvRegisterClick(){
-        Intent intent = new Intent(activity, RegisterActivity.class);
-        startActivity(intent);
-    }
 
     @Override
     public void setPresenter(SearchResultContract.Presenter presenter) {
@@ -79,9 +71,10 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
         startActivity(intent);
     }
 
-    public void redirectToRoomList(int id){
+    public void redirectToRoomList(int id, String hotel_name){
         Intent intent = new Intent(activity, RoomListActivity.class);
         intent.putExtra("hotel_id", id);
+        intent.putExtra("hotel_name", hotel_name);
         startActivity(intent);
     }
 
@@ -123,7 +116,8 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
             @Override
             public void onItemClick(int position, View v) {
                 int id = hotels.get(position).getId();
-                redirectToRoomList(id);
+                String hotel_name = hotels.get(position).getHotel_name();
+                redirectToRoomList(id, hotel_name);
             }
         });
 

@@ -1,8 +1,10 @@
 package com.example.hotelin_android.util;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.model.Room;
 import com.example.hotelin_android.model.RoomGroup;
+import com.example.hotelin_android.modul.previewBooking.PreviewBookingActivity;
 
 import java.util.List;
 
@@ -25,6 +28,7 @@ public class RecyclerViewAdapterRoomList extends RecyclerView.Adapter<RecyclerVi
         TextView room_fac1;
         TextView room_fac2;
         TextView room_fac3;
+        Button pilihKamar;
         //TextView hotel_price_tv;
         //CheckBox checkBox;
 
@@ -36,8 +40,11 @@ public class RecyclerViewAdapterRoomList extends RecyclerView.Adapter<RecyclerVi
             room_fac1 = (TextView) itemView.findViewById(R.id.room_list_item_fac1);
             room_fac2 = (TextView) itemView.findViewById(R.id.room_list_item_fac2);
             room_fac3 = (TextView) itemView.findViewById(R.id.room_list_item_fac3);
+            pilihKamar = (Button) itemView.findViewById(R.id.room_list_item_select_btn);
+
             //checkBox = (CheckBox) itemView.findViewById(R.id.checkBoxItem);
             itemView.setOnClickListener(this);
+            pilihKamar.setOnClickListener(this);
         }
 
         @Override

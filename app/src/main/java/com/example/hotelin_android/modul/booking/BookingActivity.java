@@ -17,8 +17,11 @@ public class BookingActivity extends BaseFragmentHolderActivity {
     @Override
     protected void initializeFragment() {
         initializeView();
+        int room_id = getIntent().getIntExtra("room_id", 1);
+        String room_type = getIntent().getStringExtra("room_type");
+        String room_price = getIntent().getStringExtra("room_price");
         sharedPreferencesUtil = UtilProvider.getSharedPreferencesUtil();
-        bookingFragment = new BookingFragment(sharedPreferencesUtil);
+        bookingFragment = new BookingFragment(sharedPreferencesUtil, room_id, room_type, room_price);
         setCurrentFragment(bookingFragment, false);
 
     }

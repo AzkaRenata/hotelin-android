@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +21,7 @@ import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.model.Room;
 import com.example.hotelin_android.model.RoomGroup;
+import com.example.hotelin_android.modul.booking.BookingActivity;
 import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.modul.register.RegisterActivity;
 import com.example.hotelin_android.util.RecyclerViewAdapterRoomList;
@@ -34,12 +34,14 @@ import java.util.List;
 public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListContract.Presenter> implements RoomListContract.View {
     SharedPreferencesUtil sharedPreferencesUtil;
     int hotel_id;
+    String hotel_name;
     RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    public RoomListFragment(int hotel_id, SharedPreferencesUtil sharedPreferencesUtil) {
+    public RoomListFragment(int hotel_id, String hotel_name, SharedPreferencesUtil sharedPreferencesUtil) {
         this.hotel_id = hotel_id;
+        this.hotel_name = hotel_name;
         this.sharedPreferencesUtil = sharedPreferencesUtil;
     }
 
@@ -57,6 +59,8 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
         mRecyclerView.setLayoutManager(mLayoutManager);
         mPresenter.getData(hotel_id);
         setTitle("Room List");
+
+
         return fragmentView;
     }
 
@@ -80,9 +84,12 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
         startActivity(intent);
     }
 
-    public void redirectToRoomList(int id){
-        Intent intent = new Intent(activity, HomeActivity.class);
-        intent.putExtra("hotel_id", id);
+    public void redirectToBooking(int id, String type, String price){
+        Intent intent = new Intent(activity, BookingActivity.class);
+        intent.putExtra("room_id", id);
+        intent.putExtra("hotel_name", hotel_name);
+        intent.putExtra("room_type", type);
+        intent.putExtra("room_price", price);
         startActivity(intent);
     }
 
@@ -124,8 +131,10 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
         ((RecyclerViewAdapterRoomList) mAdapter).setOnItemClickListener(new RecyclerViewAdapterRoomList.MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                //int id = rooms.get(position).getId();
-                //redirectToRoomList(id);
+                int id = rooms.get(position).getRooms().get(0).getId();
+                String price = rooms.get(position).getRooms().get(0).getRoom_price();
+                String type = rooms.get(position).getRooms().get(0).getRoom_type();
+                redirectToBooking(id, type, price);
             }
         });
 

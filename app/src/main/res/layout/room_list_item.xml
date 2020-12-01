@@ -94,7 +94,7 @@
             <Button
                 android:id="@+id/room_list_item_select_btn"
                 android:layout_below="@+id/room_list_item_room_price_tv"
-                android:text="Pilih Kamar"
+                android:text="Choose Room"
                 android:textSize="14dp"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center"
