@@ -154,7 +154,7 @@
                         android:paddingEnd="10dp"
                         android:text="+62"
                         android:textSize="15sp"
-                        android:textColor="#000"/>
+                        android:textColor="#919191"/>
 
                     <EditText
                         android:id="@+id/telp_et"
@@ -203,6 +203,9 @@
                 >
 
             </Button>
+
+
+
 
 
         </LinearLayout>

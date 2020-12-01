@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.hotelin_android.model.Booking;
 import com.example.hotelin_android.model.Room;
 import com.example.hotelin_android.model.RoomGroup;
+import com.example.hotelin_android.model.SuccessMessage;
 import com.example.hotelin_android.util.RequestCallback;
 
 import java.util.ArrayList;
@@ -23,15 +24,15 @@ public class PreviewBookingPresenter implements PreviewBookingContract.Presenter
     @Override
     public void performBooking(int room_id, String checkin, String checkout){
         Log.e("tes", "tes4");
-        view.requestBooking(room_id, checkin, checkout, new RequestCallback<PreviewBookingResponse>() {
+        view.requestBooking(room_id, checkin, checkout, new RequestCallback<SuccessMessage>() {
             @Override
-            public void requestSuccess(PreviewBookingResponse data) {
-                view.showSuccessMessage();
+            public void requestSuccess(SuccessMessage data) {
+                view.setResult(data);
             }
 
             @Override
             public void requestFailed(String errorMessage) {
-                view.showErrorMessage(errorMessage);
+                view.showFailedMessage(errorMessage);
             }
         });
     }

@@ -43,7 +43,6 @@ public class RecyclerViewAdapterRoomList extends RecyclerView.Adapter<RecyclerVi
             //checkBox = (CheckBox) itemView.findViewById(R.id.checkBoxItem);
             select_btn.setOnClickListener(this);
             itemView.setOnClickListener(this);
-            pilihKamar.setOnClickListener(this);
         }
 
         @Override

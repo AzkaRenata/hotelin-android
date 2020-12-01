@@ -132,7 +132,7 @@ public class BookingFragment extends BaseFragment<BookingActivity, BookingContra
                         calendar.set(Calendar.YEAR, year-1);
                         calendar.set(Calendar.MONTH, month);
                         calendar.set(Calendar.DAY_OF_MONTH, day);
-                        sCheckIn = year+"-"+month+"-"+day;
+                        sCheckOut = year+"-"+month+"-"+day;
                         Log.e("_DATE", sCheckIn);
                         CharSequence date = DateFormat.format("EEE, d MMM yyyy", calendar);
                         etCheckOut.setText(date);

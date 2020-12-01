@@ -20,6 +20,7 @@ import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.model.Booking;
+import com.example.hotelin_android.model.SuccessMessage;
 import com.example.hotelin_android.modul.booking_history.BookingHistoryActivity;
 import com.example.hotelin_android.util.RequestCallback;
 import com.example.hotelin_android.util.SharedPreferencesUtil;
@@ -66,7 +67,6 @@ public class PreviewBookingFragment extends BaseFragment<PreviewBookingActivity,
         btnBook = fragmentView.findViewById(R.id.preview_booking_book_btn);
 
 
-
         setTextView();
 
         btnBook.setOnClickListener(new View.OnClickListener() {
@@ -84,44 +84,15 @@ public class PreviewBookingFragment extends BaseFragment<PreviewBookingActivity,
         return fragmentView;
     }
 
-    public void setBtnBookClick(){
+    public void setBtnBookClick() {
         Log.d("Req", sharedPreferencesUtil.getToken());
         int room_id = booking.getRoom_id();
         String checkin = booking.getsCheck_in();
         String checkout = booking.getsCheck_out();
-        RunPost(room_id, checkin, checkout);
         mPresenter.performBooking(room_id, checkin, checkout);
     }
 
-    public void RunPost(int room_id, String checkin, String checkout){
-        Log.e("RunPost", "method jalan");
-
-        AndroidNetworking.post(myURL.BOOKING_URL)
-                .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
-                .addBodyParameter("room_id", "2")
-                .addBodyParameter("check_in", "22222")
-                .addBodyParameter("check_out", "33333")
-                .setTag("test")
-                .setPriority(Priority.MEDIUM)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // do anything with response
-                    redirectToBookingHistory();
-                    }
-                    @Override
-                    public void onError(ANError error) {
-                        // handle error
-                        Log.e("RunPost", error.toString());
-
-                    }
-                });
-        Log.e("RunPost", "method jalan22");
-
-    }
-
-    public void setTextView(){
+    public void setTextView() {
         tvNamaHotel.setText(booking.getHotel_name());
         tvTipeKamar.setText(booking.getRoom_type());
         tvHargaKamar.setText(booking.getRoom_price());
@@ -143,57 +114,56 @@ public class PreviewBookingFragment extends BaseFragment<PreviewBookingActivity,
 
 
     @Override
-    public void redirectToBookingHistory() {
+    public void redirectToBookingHistory(boolean isSuccess) {
         Intent intent = new Intent(activity, BookingHistoryActivity.class);
         startActivity(intent);
     }
 
     @Override
-    public void requestBooking(int room_id, String checkin, String checkout, final RequestCallback<PreviewBookingResponse> requestCallback) {
-        AndroidNetworking.post(myURL.BOOKING_URL)
+    public void requestBooking(final int room_id, final String checkin, final String checkout, final RequestCallback<SuccessMessage> requestCallback) {
+        AndroidNetworking.post("http://192.168.100.6:8000/api/booking")
                 .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
-                .addBodyParameter("room_id", "1")
-                .addBodyParameter("check_in", "22")
-                .addBodyParameter("check_out", "2222")
-                .setTag("test")
+                .addBodyParameter("room_id", String.valueOf(room_id))
+                .addBodyParameter("check_in", checkin)
+                .addBodyParameter("check_out", checkout)
+                .setTag(this)
                 .setPriority(Priority.MEDIUM)
                 .build()
-                .getAsObject(PreviewBookingResponse.class, new ParsedRequestListener<PreviewBookingResponse>() {
+                .getAsObject(SuccessMessage.class, new ParsedRequestListener<SuccessMessage>() {
 
                     @Override
-                    public void onResponse(PreviewBookingResponse response) {
-                        if(response == null){
+                    public void onResponse(SuccessMessage response) {
+                        if (response == null) {
                             requestCallback.requestFailed("Null Response");
-                            Log.e("ReqBook", booking.getsCheck_out());
-                            Log.e("RequestBooking", "Null bang");
-
-                        }else {
+                            Log.d("tag", "response null");
+                        } else if (response.isSuccess() == false) {
+                            requestCallback.requestFailed("Cancel Failed");
+                        } else {
                             requestCallback.requestSuccess(response);
-//                            Log.e(response.booking_time);
-                            Log.e("ReqBook", booking.getsCheck_out());
-
                         }
                     }
-                    @Override
-                    public void onError(ANError error) {
-                        // handle error
-                        Log.e("RequestBooking", error.toString());
 
+                    @Override
+                    public void onError(ANError anError) {
+                        requestCallback.requestFailed(anError.getMessage());
+                        Log.d("reqBooking", "error : " + anError.getMessage() + anError.getErrorCode());
+                        Log.e("reqBooking", "id         :" + String.valueOf(room_id));
+                        Log.e("reqBooking", "checkin    :" + checkin);
+                        Log.e("reqBooking", "checkout   :" + checkout);
                     }
                 });
     }
 
     @Override
-    public void showSuccessMessage() {
-        Toast.makeText(getContext(), "Booking Success", Toast.LENGTH_SHORT).show();
-//        Log.e("tes", "success");
-        redirectToBookingHistory();
+    public void setResult(final SuccessMessage message) {
+        Toast.makeText(getContext(), message.getMessage(), Toast.LENGTH_SHORT);
+        redirectToBookingHistory(true);
     }
 
-
     @Override
-    public void showErrorMessage(String message) {
+    public void showFailedMessage(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
         Log.e("MSG", "failed");
     }
+
 }
