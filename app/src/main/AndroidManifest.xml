@@ -19,6 +19,8 @@
         <activity android:name=".modul.search_result.SearchResultActivity" />
         <activity android:name=".modul.room_list.RoomListActivity" />
         <activity android:name=".modul.booking_history.BookingHistoryActivity" />
+        <activity android:name=".modul.cancel_detail.CancelDetailActivity" />
+        <activity android:name=".modul.cancel_booking.CancelBookingActivity" />
         <activity android:name=".modul.hotel_detail.HotelDetailActivity" />
         <activity android:name=".modul.register.RegisterActivity">
         </activity>
