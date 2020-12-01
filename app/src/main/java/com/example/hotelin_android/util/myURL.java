@@ -12,6 +12,8 @@ public class myURL {
     public final static String SEARCH_HOTEL_URL = BASE_URL + "hotel/search/location";
     public final static String SEARCH_ROOM_URL = BASE_URL + "room/hotel/";
     public final static String BOOKING_HISTORY_URL = BASE_URL + "booking/list/";
+    public final static String MY_BOOKING_URL = BASE_URL + "booking/show/";
+    public final static String CANCEL_BOOKING = BASE_URL + "booking/change-status/";
     public String getBaseUrl(){
         return this.BASE_URL;
     }

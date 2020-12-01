@@ -9,13 +9,12 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hotelin_android.R;
-import com.example.hotelin_android.model.BookingHistory;
-import com.example.hotelin_android.model.Room;
+import com.example.hotelin_android.model.Bookinghistory;
 
 import java.util.List;
 
 public class RecyclerViewAdapterBookingList extends RecyclerView.Adapter<RecyclerViewAdapterBookingList.MyViewHolder> {
-    private static List<BookingHistory> mDataset;
+    private static List<Bookinghistory> mDataset;
     private static RecyclerViewAdapterBookingList.MyClickListener myClickListener;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -47,7 +46,7 @@ public class RecyclerViewAdapterBookingList extends RecyclerView.Adapter<Recycle
         }
     }
 
-    public RecyclerViewAdapterBookingList(List<BookingHistory> myDataset) {
+    public RecyclerViewAdapterBookingList(List<Bookinghistory> myDataset) {
         mDataset = myDataset;
     }
 

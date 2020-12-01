@@ -21,10 +21,9 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
-import com.example.hotelin_android.model.BookingHistory;
-import com.example.hotelin_android.model.Room;
+import com.example.hotelin_android.model.Bookinghistory;
+import com.example.hotelin_android.modul.cancel_detail.CancelDetailActivity;
 import com.example.hotelin_android.modul.home.HomeActivity;
-import com.example.hotelin_android.modul.register.RegisterActivity;
 import com.example.hotelin_android.util.RecyclerViewAdapterBookingList;
 import com.example.hotelin_android.util.RequestCallback;
 import com.example.hotelin_android.util.SharedPreferencesUtil;
@@ -132,8 +131,10 @@ public class BookingHistoryFragment extends BaseFragment<BookingHistoryActivity,
         startActivity(intent);
     }
 
-    public void redirectToRoomList(int id){
-        Intent intent = new Intent(activity, HomeActivity.class);
+    public void redirectToCancelDetail(int id, int booking_status){
+        Intent intent = new Intent(activity, CancelDetailActivity.class);
+        intent.putExtra("booking_id", id);
+        intent.putExtra("booking_status", booking_status);
         startActivity(intent);
     }
 
@@ -142,15 +143,15 @@ public class BookingHistoryFragment extends BaseFragment<BookingHistoryActivity,
     }
 
     @Override
-    public void searchBooking(String status_id, final RequestCallback<List<BookingHistory>> requestCallback) {
+    public void searchBooking(String status_id, final RequestCallback<List<Bookinghistory>> requestCallback) {
         AndroidNetworking.get(myURL.BOOKING_HISTORY_URL+status_id)
                 .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
                 .setTag(this)
                 .setPriority(Priority.LOW)
                 .build()
-                .getAsObjectList(BookingHistory.class, new ParsedRequestListener<List<BookingHistory>>() {
+                .getAsObjectList(Bookinghistory.class, new ParsedRequestListener<List<Bookinghistory>>() {
                     @Override
-                    public void onResponse(List<BookingHistory> response) {
+                    public void onResponse(List<Bookinghistory> response) {
                         if(response == null){
                             requestCallback.requestFailed("Null Response");
                             Log.d("tag", "response null");
@@ -167,14 +168,15 @@ public class BookingHistoryFragment extends BaseFragment<BookingHistoryActivity,
                 });
     }
 
-    public void setResult(final List<BookingHistory> data){
+    public void setResult(final List<Bookinghistory> data){
         mAdapter = new RecyclerViewAdapterBookingList(data);
         mRecyclerView.setAdapter(mAdapter);
         ((RecyclerViewAdapterBookingList) mAdapter).setOnItemClickListener(new RecyclerViewAdapterBookingList.MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                //int id = rooms.get(position).getId();
-                //redirectToRoomList(id);
+                int id = data.get(position).getId();
+                int booking_status = data.get(position).getBooking_status();
+                redirectToCancelDetail(id, booking_status);
             }
         });
 

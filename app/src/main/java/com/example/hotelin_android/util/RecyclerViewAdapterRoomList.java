@@ -28,8 +28,7 @@ public class RecyclerViewAdapterRoomList extends RecyclerView.Adapter<RecyclerVi
         TextView room_fac1;
         TextView room_fac2;
         TextView room_fac3;
-        Button pilihKamar;
-        //TextView hotel_price_tv;
+        Button select_btn;
         //CheckBox checkBox;
 
         public MyViewHolder(View itemView) {
@@ -40,9 +39,9 @@ public class RecyclerViewAdapterRoomList extends RecyclerView.Adapter<RecyclerVi
             room_fac1 = (TextView) itemView.findViewById(R.id.room_list_item_fac1);
             room_fac2 = (TextView) itemView.findViewById(R.id.room_list_item_fac2);
             room_fac3 = (TextView) itemView.findViewById(R.id.room_list_item_fac3);
-            pilihKamar = (Button) itemView.findViewById(R.id.room_list_item_select_btn);
-
+            select_btn = (Button) itemView.findViewById(R.id.room_list_item_select_btn);
             //checkBox = (CheckBox) itemView.findViewById(R.id.checkBoxItem);
+            select_btn.setOnClickListener(this);
             itemView.setOnClickListener(this);
             pilihKamar.setOnClickListener(this);
         }

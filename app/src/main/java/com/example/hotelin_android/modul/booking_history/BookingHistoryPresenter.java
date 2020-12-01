@@ -1,12 +1,8 @@
 package com.example.hotelin_android.modul.booking_history;
 
-import com.example.hotelin_android.model.BookingHistory;
-import com.example.hotelin_android.model.Room;
-import com.example.hotelin_android.model.RoomGroup;
-import com.example.hotelin_android.modul.room_list.RoomListContract;
+import com.example.hotelin_android.model.Bookinghistory;
 import com.example.hotelin_android.util.RequestCallback;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BookingHistoryPresenter implements BookingHistoryContract.Presenter{
@@ -21,9 +17,9 @@ public class BookingHistoryPresenter implements BookingHistoryContract.Presenter
 
     @Override
     public void getData(String status_id){
-        view.searchBooking(status_id, new RequestCallback<List<BookingHistory>>() {
+        view.searchBooking(status_id, new RequestCallback<List<Bookinghistory>>() {
             @Override
-            public void requestSuccess(List<BookingHistory> data) {
+            public void requestSuccess(List<Bookinghistory> data) {
                 view.setResult(data);
             }
 
