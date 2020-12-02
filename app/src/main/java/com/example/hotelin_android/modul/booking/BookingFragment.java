@@ -35,7 +35,6 @@ public class BookingFragment extends BaseFragment<BookingActivity, BookingContra
     String room_type;
     String room_price;
     SharedPreferencesUtil sharedPreferencesUtil;
-    DatePickerDialog.OnDateSetListener setListener;
 
     public BookingFragment(SharedPreferencesUtil sharedPreferencesUtil, int room_id, String room_type, String room_price) {
         this.sharedPreferencesUtil = sharedPreferencesUtil;
@@ -63,13 +62,14 @@ public class BookingFragment extends BaseFragment<BookingActivity, BookingContra
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("tes", "tes1");
+//                Log.e("tes", "tes1");
                 setBtnNextClick();
             }
         });
 
         return fragmentView;
     }
+
 
     public void setBtnNextClick(){
         redirectToPreviewBooking();

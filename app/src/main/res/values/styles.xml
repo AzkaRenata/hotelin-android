@@ -53,5 +53,6 @@
         <item name="textWhiteColor">@color/myTextLight</item>
         <item name="detailBackground">@color/myLayoutColor</item>
         <item name="imageTransparentOverlay">@color/pantoneTransparent</item>
+        <item name="android:fontFamily">@font/regular</item>
     </style>
 </resources>

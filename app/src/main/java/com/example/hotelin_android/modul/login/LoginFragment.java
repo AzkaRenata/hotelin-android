@@ -20,6 +20,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
+import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.modul.previewBooking.PreviewBookingActivity;
 import com.example.hotelin_android.modul.booking.BookingActivity;
 import com.example.hotelin_android.modul.register.RegisterActivity;
@@ -78,7 +79,7 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
     }
 
     public void setTvRegisterClick(){
-        Intent intent = new Intent(activity, PreviewBookingActivity.class);
+        Intent intent = new Intent(activity, RegisterActivity.class);
         startActivity(intent);
     }
 
@@ -89,7 +90,7 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
 
     @Override
     public void redirectToHome() {
-        Intent intent = new Intent(activity, BookingActivity.class);
+        Intent intent = new Intent(activity, HomeActivity.class);
 //        activity.finish();
         startActivity(intent);
     }
