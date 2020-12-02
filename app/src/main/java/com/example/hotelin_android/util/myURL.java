@@ -8,12 +8,13 @@ public class myURL {
     public final static String PROFILE_URL = BASE_URL + "user";
     public final static String HOTEL_URL = BASE_URL + "hotel/detail/";
     public final static String BOOKING_URL = BASE_URL + "booking";
-//    public final static String CUSTOMER_REGISTER_URL = BASE_URL + "user/registerCustomer";
     public final static String SEARCH_HOTEL_URL = BASE_URL + "hotel/search/location";
     public final static String SEARCH_ROOM_URL = BASE_URL + "room/hotel/";
     public final static String BOOKING_HISTORY_URL = BASE_URL + "booking/list/";
     public final static String MY_BOOKING_URL = BASE_URL + "booking/show/";
     public final static String CANCEL_BOOKING = BASE_URL + "booking/change-status/";
+    public static final String HOTEL_DETAIL_URL = BASE_URL + "hotel/detail/";
+    public final static String UPDATE_USER_URL = PROFILE_URL + "update/";
     public String getBaseUrl(){
         return this.BASE_URL;
     }

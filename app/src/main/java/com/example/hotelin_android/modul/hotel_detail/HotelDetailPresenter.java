@@ -54,12 +54,12 @@ public class HotelDetailPresenter implements HotelDetailContract.HotelDetailPres
 
             @Override
             public void onError(ANError anError) {
-                Log.e("HotelDetailPresenter : ", "ga dapet respon om");
+                Log.e("ProfileEditPresenter : ", "ga dapet respon om");
             }
         };
 
         AndroidNetworking
-                .get(myURL.HOTEL_URL + hotelID)
+                .get(myURL.HOTEL_DETAIL_URL + hotelID)
                 .addHeaders("Authorization", "Bearer " + bearerToken)
                 .build()
                 .getAsJSONArray(requestListener);

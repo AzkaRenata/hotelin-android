@@ -27,6 +27,9 @@
         <activity android:name=".modul.search_result.SearchResultActivity" />
         <activity android:name=".modul.test.TestActivity" />
         <activity android:name=".modul.login.LoginActivity">
+        </activity>
+        <activity android:name=".modul.profile_edit.ProfileEditActivity"/>
+        <activity android:name=".modul.profile.ProfileActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

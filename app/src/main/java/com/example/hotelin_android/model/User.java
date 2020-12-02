@@ -12,6 +12,11 @@ public class User {
     private String address;
     private String user_picture;
 
+    public User(int id, String username, String name, String email, String password, int user_level, String gender, String telp, String address, String user_picture) {
+        this(username, name, email, password, user_level, gender, telp, address, user_picture);
+        this.id = id;
+    }
+
     public User(String username, String name, String email, String password, int user_level, String gender, String telp, String address, String user_picture) {
         this.name = name;
         this.username = username;
