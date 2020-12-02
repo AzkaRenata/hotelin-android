@@ -64,14 +64,6 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
         return fragmentView;
     }
 
-    public void setBtLoginClick(){
-
-    }
-
-    public void setTvRegisterClick(){
-        Intent intent = new Intent(activity, RegisterActivity.class);
-        startActivity(intent);
-    }
 
     @Override
     public void setPresenter(RoomListContract.Presenter presenter) {

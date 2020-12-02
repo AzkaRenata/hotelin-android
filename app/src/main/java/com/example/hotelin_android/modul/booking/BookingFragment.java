@@ -34,13 +34,15 @@ public class BookingFragment extends BaseFragment<BookingActivity, BookingContra
     int room_id;
     String room_type;
     String room_price;
+    String hotel_name;
     SharedPreferencesUtil sharedPreferencesUtil;
 
-    public BookingFragment(SharedPreferencesUtil sharedPreferencesUtil, int room_id, String room_type, String room_price) {
+    public BookingFragment(SharedPreferencesUtil sharedPreferencesUtil, String hotel_name, int room_id, String room_type, String room_price) {
         this.sharedPreferencesUtil = sharedPreferencesUtil;
         this.room_id = room_id;
         this.room_price = room_price;
         this.room_type = room_type;
+        this.hotel_name = hotel_name;
     }
 
     @Nullable
@@ -156,6 +158,7 @@ public class BookingFragment extends BaseFragment<BookingActivity, BookingContra
         intent.putExtra("room_price", room_price);
         intent.putExtra("sCheckin", sCheckIn);
         intent.putExtra("sCheckout", sCheckOut);
+        intent.putExtra("hotel_name", hotel_name);
         startActivity(intent);
     }
 
