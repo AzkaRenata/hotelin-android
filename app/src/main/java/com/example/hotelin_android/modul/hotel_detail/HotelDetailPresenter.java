@@ -5,7 +5,7 @@ import android.util.Log;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
-import com.example.hotelin_android.util.URL;
+import com.example.hotelin_android.util.myURL;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,7 +59,7 @@ public class HotelDetailPresenter implements HotelDetailContract.HotelDetailPres
         };
 
         AndroidNetworking
-                .get(URL.HOTEL_DETAIL_URL + hotelID)
+                .get(myURL.HOTEL_URL + hotelID)
                 .addHeaders("Authorization", "Bearer " + bearerToken)
                 .build()
                 .getAsJSONArray(requestListener);

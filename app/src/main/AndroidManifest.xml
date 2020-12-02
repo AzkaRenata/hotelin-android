@@ -2,31 +2,34 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.hotelin_android">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".Starter"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_hotelin"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_hotelin_round"
         android:supportsRtl="true"
+        android:theme="@style/Custom"
         android:usesCleartextTraffic="true"
-        android:windowSoftInputMode="adjustResize"
-        android:theme="@style/Custom">
-        <activity android:name=".modul.test.TestActivity" />
-        <activity android:name=".modul.home.HomeActivity" />
-        <activity android:name=".modul.search_result.SearchResultActivity" />
-        <activity android:name=".modul.room_list.RoomListActivity" />
+        android:windowSoftInputMode="adjustResize">
+        <activity android:name=".modul.booking.BookingActivity" />
         <activity android:name=".modul.booking_history.BookingHistoryActivity" />
         <activity android:name=".modul.cancel_detail.CancelDetailActivity" />
         <activity android:name=".modul.cancel_booking.CancelBookingActivity" />
+        <activity android:name=".modul.home.HomeActivity" />
         <activity android:name=".modul.hotel_detail.HotelDetailActivity" />
-        <activity android:name=".modul.register.RegisterActivity">
-        </activity>
+        <activity android:name=".modul.previewBooking.PreviewBookingActivity"/>
+        <activity android:name=".modul.register.RegisterActivity" />
+        <activity android:name=".modul.room_list.RoomListActivity" />
+        <activity android:name=".modul.search_result.SearchResultActivity" />
+        <activity android:name=".modul.test.TestActivity" />
         <activity android:name=".modul.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

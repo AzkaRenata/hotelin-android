@@ -13,8 +13,9 @@ public class RoomListActivity extends BaseFragmentHolderActivity {
     protected void initializeFragment() {
         initializeView();
         int hotel_id = getIntent().getIntExtra("hotel_id", 0);
+        String hotel_name = getIntent().getStringExtra("hotel_name");
         sharedPreferencesUtil = UtilProvider.getSharedPreferencesUtil();
-        roomListFragment = new RoomListFragment(hotel_id, sharedPreferencesUtil);
+        roomListFragment = new RoomListFragment(hotel_id, hotel_name, sharedPreferencesUtil);
         setCurrentFragment(roomListFragment, false);
 
     }

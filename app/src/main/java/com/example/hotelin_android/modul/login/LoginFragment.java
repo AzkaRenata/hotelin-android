@@ -21,9 +21,9 @@ import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.modul.home.HomeActivity;
-import com.example.hotelin_android.modul.hotel_detail.HotelDetailActivity;
+import com.example.hotelin_android.modul.previewBooking.PreviewBookingActivity;
+import com.example.hotelin_android.modul.booking.BookingActivity;
 import com.example.hotelin_android.modul.register.RegisterActivity;
-import com.example.hotelin_android.modul.test.TestActivity;
 import com.example.hotelin_android.util.RequestCallback;
 import com.example.hotelin_android.util.SharedPreferencesUtil;
 import com.example.hotelin_android.util.myURL;
@@ -90,7 +90,8 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
 
     @Override
     public void redirectToHome() {
-        Intent intent = new Intent(activity, TestActivity.class);
+        Intent intent = new Intent(activity, HomeActivity.class);
+//        activity.finish();
         startActivity(intent);
     }
 

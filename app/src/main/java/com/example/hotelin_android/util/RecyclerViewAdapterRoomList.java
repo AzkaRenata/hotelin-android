@@ -1,5 +1,6 @@
 package com.example.hotelin_android.util;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.model.Room;
 import com.example.hotelin_android.model.RoomGroup;
+import com.example.hotelin_android.modul.previewBooking.PreviewBookingActivity;
 
 import java.util.List;
 
