@@ -121,7 +121,7 @@ public class PreviewBookingFragment extends BaseFragment<PreviewBookingActivity,
 
     @Override
     public void requestBooking(final int room_id, final String checkin, final String checkout, final RequestCallback<SuccessMessage> requestCallback) {
-        AndroidNetworking.post("http://192.168.100.6:8000/api/booking")
+        AndroidNetworking.post(myURL.BOOKING_URL)
                 .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
                 .addBodyParameter("room_id", String.valueOf(room_id))
                 .addBodyParameter("check_in", checkin)
