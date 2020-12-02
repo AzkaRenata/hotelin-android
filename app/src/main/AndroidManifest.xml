@@ -20,7 +20,9 @@
         <activity android:name=".modul.home.HomeActivity" />
         <activity android:name=".modul.register.RegisterActivity" />
         <activity android:name=".modul.login.LoginActivity">
-
+        </activity>
+        <activity android:name=".modul.profile_edit.ProfileEditActivity"/>
+        <activity android:name=".modul.profile.ProfileActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

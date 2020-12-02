@@ -5,7 +5,7 @@ import android.util.Log;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
-import com.example.hotelin_android.util.URL;
+import com.example.hotelin_android.util.myURL;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,12 +54,12 @@ public class HotelDetailPresenter implements HotelDetailContract.HotelDetailPres
 
             @Override
             public void onError(ANError anError) {
-                Log.e("HotelDetailPresenter : ", "ga dapet respon om");
+                Log.e("ProfileEditPresenter : ", "ga dapet respon om");
             }
         };
 
         AndroidNetworking
-                .get(URL.HOTEL_DETAIL_URL + hotelID)
+                .get(myURL.HOTEL_DETAIL_URL + hotelID)
                 .addHeaders("Authorization", "Bearer " + bearerToken)
                 .build()
                 .getAsJSONArray(requestListener);
