@@ -44,15 +44,10 @@ public class CancelBookingFragment extends BaseFragment<CancelBookingActivity, C
         mPresenter = new CancelBookingPresenter(this);
         mPresenter.start();
 
-        back_btn = fragmentView.findViewById(R.id.cancel_booking_back_btn);
+
         cancel_btn = fragmentView.findViewById(R.id.cancel_booking_cancel_btn);
 
-        back_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                redirectToCancelDetail(false);
-            }
-        });
+
 
         cancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override

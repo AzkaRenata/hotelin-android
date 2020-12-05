@@ -23,6 +23,7 @@ import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.modul.previewBooking.PreviewBookingActivity;
 import com.example.hotelin_android.modul.booking.BookingActivity;
+import com.example.hotelin_android.modul.profile.ProfileActivity;
 import com.example.hotelin_android.modul.register.RegisterActivity;
 import com.example.hotelin_android.util.RequestCallback;
 import com.example.hotelin_android.util.SharedPreferencesUtil;
@@ -124,7 +125,9 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
 
                             @Override
                             public void onError(ANError anError) {
-                                Log.e("tes", "tes3", anError);
+                                Log.e("tesww", String.valueOf(anError.getErrorCode()));
+                                Log.e("teswwwww", "fdfd" + anError.getErrorBody());
+                                Log.e("teswwww", "fdfdsasa" + anError.getErrorDetail());
                                 Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
                                 requestCallback.requestFailed("Wrong Email or Password");
                             }
@@ -132,7 +135,7 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
     }
 
     public void saveToken(String token){
-        Log.e("tes", token);
+        Log.e("tes555", token);
         sharedPreferencesUtil.setToken(token);
     }
 

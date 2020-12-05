@@ -2,29 +2,38 @@ package com.example.hotelin_android.modul.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.model.User;
-import com.example.hotelin_android.modul.hotel_detail.HotelDetail;
+import com.example.hotelin_android.modul.booking_history.BookingHistoryActivity;
+import com.example.hotelin_android.modul.login.LoginActivity;
 import com.example.hotelin_android.modul.profile_edit.ProfileEditActivity;
-import com.example.hotelin_android.modul.test.TestActivity;
+import com.example.hotelin_android.modul.test.TestResponse;
+import com.example.hotelin_android.util.RequestCallback;
 import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.myURL;
 
 public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContract.ProfilePresenter> implements ProfileContract.ProfileView {
     SharedPreferencesUtil sharedPreferencesUtil;
 
-    TextView profileNameTV;
-    TextView profileEmailTV;
-    CardView editProfileCV;
+    TextView tvName;
+    TextView tvEmail;
+    CardView cvEditProfile;
+    CardView cvHistoryBooking;
+    CardView cvLogout;
 
     ProfilePresenter profilePresenter;
 
@@ -36,26 +45,39 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile_activity, container, false);
+        mPresenter = new ProfilePresenter(this);
+        mPresenter.start();
 
-        profileNameTV = view.findViewById(R.id.name_tv);
-        profileEmailTV = view.findViewById(R.id.email_tv);
-        editProfileCV = view.findViewById(R.id.editProfile_cv);
+        tvName = view.findViewById(R.id.name_tv);
+        tvEmail = view.findViewById(R.id.email_tv);
+        cvEditProfile = view.findViewById(R.id.editProfile_cv);
+        cvHistoryBooking = view.findViewById(R.id.cvHistoriBooking);
+        cvLogout = view.findViewById(R.id.cvLogout);
 
-        profilePresenter = new ProfilePresenter(this);
-
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        profilePresenter.fetchProfile("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC91c2VyXC9sb2dpbiIsImlhdCI6MTYwNjU3ODY1OCwiZXhwIjoxNjA2NTgyMjU5LCJuYmYiOjE2MDY1Nzg2NTksImp0aSI6InVWWFhTekJ1eWd3REFFNHkiLCJzdWIiOjMsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.dYgMAVqJv1YMAMw0ICClIZto1u2C5ku4bBd0_gJ3WYo");
-
-        editProfileCV.setOnClickListener(new View.OnClickListener() {
+        cvEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 redirectToEditProfile();
             }
         });
+
+        cvHistoryBooking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectToBookingHistory();
+            }
+        });
+
+        cvLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectToLogin();
+            }
+        });
+
+        mPresenter.showData();
+
+        return view;
     }
 
     private void redirectToEditProfile() {
@@ -63,14 +85,57 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
         startActivity(intent);
     }
 
+    private void redirectToBookingHistory() {
+        Intent intent = new Intent(activity, BookingHistoryActivity.class);
+        startActivity(intent);
+    }
+
+    private void redirectToLogin() {
+        Intent intent = new Intent(activity, LoginActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public void setProfileData(User user) {
-        profileNameTV.setText(user.getName());
-        profileEmailTV.setText(user.getEmail());
+        tvName.setText(user.getName());
+        tvEmail.setText(user.getEmail());
     }
 
     @Override
     public void setPresenter(ProfileContract.ProfilePresenter presenter) {
+        mPresenter = presenter;
+    }
 
+    @Override
+    public void requestProfile(final RequestCallback<User> requestCallback) {
+        AndroidNetworking.get(myURL.PROFILE_URL)
+                .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
+                .build()
+                .getAsObject(TestResponse.class, new ParsedRequestListener<TestResponse>() {
+                    @Override
+                    public void onResponse(TestResponse response) {
+                        if(response == null){
+                            requestCallback.requestFailed("Null Response");
+                            Log.d("tag", "response null");
+                        }else{
+                            requestCallback.requestSuccess(response.user);
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        requestCallback.requestFailed(anError.getMessage());
+                        Log.d("tag", "error gan" + anError.getMessage() + anError.getErrorCode());
+                    }
+                });
+    }
+
+    public void setProfile(User user){
+        tvName.setText(user.getName());
+        tvEmail.setText(user.getEmail());
+    }
+
+    public void showFailedMessage(String message){
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT);
     }
 }

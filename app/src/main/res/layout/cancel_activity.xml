@@ -75,29 +75,14 @@
         android:layout_marginTop="20dp">
 
         <Button
-            android:id="@+id/cancel_booking_back_btn"
+            android:id="@+id/cancel_booking_cancel_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kembali"
+            android:text="Cancel Booking"
             android:textSize="22sp"
             android:textColor="#ffffff"
             android:layout_margin="5dp"
             android:background="@drawable/button_color"
-            android:layout_weight="1"
-
-            >
-
-        </Button>
-
-        <Button
-            android:id="@+id/cancel_booking_cancel_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Batal"
-            android:textSize="22sp"
-            android:textColor="@color/colorAccent"
-            android:layout_margin="5dp"
-            android:background="@drawable/button_border"
             android:layout_weight="1"
 
             >
