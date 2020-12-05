@@ -18,16 +18,4 @@ public class ProfileEditActivity extends BaseFragmentHolderActivity {
 
     }
 
-    @Override
-    protected void initializeView() {
-        setContentView(R.layout.base_activity);
-//        tvToolbarTitle = (TextView) findViewById(R.id.tvToolbarTitle);
-//        flFragmentContainer = (FrameLayout) findViewById(R.id.flFragmentContainer);
-//        rlActivityFragmentHolder = (RelativeLayout) findViewById(R.id.rlActivityFragmentHolder);
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
 }

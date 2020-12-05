@@ -38,7 +38,7 @@
                 android:layout_below="@+id/hotel_name_tv"
                 android:paddingLeft="16dp"
                 android:layout_marginVertical="10dp"
-                android:hint="Username"
+                android:hint="Email"
                 android:textColor="#707070" />
 
 

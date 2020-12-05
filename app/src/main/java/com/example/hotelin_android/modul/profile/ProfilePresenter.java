@@ -8,6 +8,7 @@ import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.hotelin_android.model.User;
 import com.example.hotelin_android.modul.hotel_detail.HotelDetail;
+import com.example.hotelin_android.util.RequestCallback;
 import com.example.hotelin_android.util.myURL;
 
 import org.json.JSONArray;
@@ -26,6 +27,8 @@ public class ProfilePresenter implements ProfileContract.ProfilePresenter {
     public void start() {
 
     }
+
+
 
     @Override
     public void fetchProfile(String bearerToken) {
@@ -69,5 +72,20 @@ public class ProfilePresenter implements ProfileContract.ProfilePresenter {
                 .addHeaders("Authorization", "Bearer " + bearerToken)
                 .build()
                 .getAsJSONObject(requestListener);
+    }
+
+    @Override
+    public void showData(){
+        view.requestProfile(new RequestCallback<User>() {
+            @Override
+            public void requestSuccess(User data) {
+                view.setProfile(data);
+            }
+
+            @Override
+            public void requestFailed(String errorMessage) {
+                view.showFailedMessage(errorMessage);
+            }
+        });
     }
 }

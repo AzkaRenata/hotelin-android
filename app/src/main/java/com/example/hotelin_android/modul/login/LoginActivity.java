@@ -23,7 +23,6 @@ public class LoginActivity extends BaseFragmentHolderActivity {
         sharedPreferencesUtil = UtilProvider.getSharedPreferencesUtil();
         loginFragment = new LoginFragment(sharedPreferencesUtil);
         setCurrentFragment(loginFragment, false);
-
     }
 
     @Override

@@ -1,16 +1,21 @@
 package com.example.hotelin_android.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.hotelin_android.R;
+import com.example.hotelin_android.modul.booking_history.BookingHistoryActivity;
+import com.example.hotelin_android.modul.home.HomeActivity;
+import com.example.hotelin_android.modul.profile.ProfileActivity;
 
 
 public abstract class BaseFragment<T extends FragmentActivity, U extends BasePresenter> extends Fragment {
@@ -46,6 +51,7 @@ public abstract class BaseFragment<T extends FragmentActivity, U extends BasePre
         this.activity = (T) context;
         this.fragmentListener = (FragmentListener) context;
     }
+
 
 
 }

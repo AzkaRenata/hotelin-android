@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -8,32 +7,32 @@
     <LinearLayout
         android:id="@+id/profile_name_layout"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="100dp"
         android:paddingLeft="30dp"
         android:paddingRight="30dp">
 
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginLeft="11dp"
-            android:src="@drawable/circle_sample"/>
+            android:src="@drawable/profile_sample"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:layout_weight="1"
+            android:layout_height="100dp"
+            android:orientation="vertical"
             android:gravity="center"
-            android:orientation="vertical">
+            android:layout_weight="1"
+            android:layout_marginLeft="15dp">
 
             <TextView
                 android:id="@+id/name_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="5dp"
                 android:layout_marginLeft="7dp"
-                android:text="Username"
+                android:layout_marginTop="10dp"
+                android:text="Olivia"
                 android:textColor="#5399af"
                 android:textStyle="bold" />
 
@@ -41,11 +40,10 @@
                 android:id="@+id/email_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="5dp"
                 android:layout_marginLeft="7dp"
-                android:text="Email@email.com"
-                android:textColor="#5399af"
-                android:textStyle="bold" />
+                android:layout_marginBottom="10dp"
+                android:text="olivia@gmail.com"
+                android:textColor="#5399af" />
         </LinearLayout>
     </LinearLayout>
 
@@ -54,10 +52,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginVertical="25dp"
         android:layout_marginTop="10dp"
         android:paddingLeft="30dp"
-        android:paddingRight="30dp">
+        android:paddingRight="30dp"
+        android:background="#FFFF">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/editProfile_cv"
@@ -80,22 +78,22 @@
                     android:padding="10dp">
 
                     <TextView
-                        android:id="@+id/tvAccountInformation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_user"
                         android:drawableEnd="@drawable/ic_right"
                         android:drawablePadding="7dp"
                         android:text="Informasi Akun"
-                        android:textStyle="bold"
                         android:textColor="#5399af" />
 
                 </LinearLayout>
+
+
             </LinearLayout>
+
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cvHistoriBooking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardElevation="10dp"
@@ -117,14 +115,12 @@
                     android:padding="10dp">
 
                     <TextView
-                        android:id="@+id/tvBookingHistory"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_history"
                         android:drawableEnd="@drawable/ic_right"
                         android:drawablePadding="7dp"
                         android:text="Histori Booking"
-                        android:textStyle="bold"
                         android:textColor="#5399af" />
                 </LinearLayout>
             </LinearLayout>
@@ -132,7 +128,6 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cvLogout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardElevation="10dp"
@@ -154,14 +149,12 @@
                     android:padding="10dp">
 
                     <TextView
-                        android:id="@+id/tvLogOut"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_out"
                         android:drawableEnd="@drawable/ic_right"
                         android:drawablePadding="7dp"
                         android:text="Log Out"
-                        android:textStyle="bold"
                         android:textColor="#5399af" />
                 </LinearLayout>
             </LinearLayout>

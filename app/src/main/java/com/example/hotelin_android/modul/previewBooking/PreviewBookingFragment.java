@@ -75,12 +75,6 @@ public class PreviewBookingFragment extends BaseFragment<PreviewBookingActivity,
                 setBtnBookClick();
             }
         });
-        btnBook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setBtnBookClick();
-            }
-        });
         return fragmentView;
     }
 
@@ -101,7 +95,7 @@ public class PreviewBookingFragment extends BaseFragment<PreviewBookingActivity,
         tvTelp.setText(booking.getTelp());
         tvCheckin.setText(booking.getCheck_in());
         tvCheckout.setText(booking.getCheck_out());
-        Log.e("_DATES", booking.getsCheck_in());
+        //Log.e("_DATES", booking.getsCheck_in());
 
     }
 
@@ -146,7 +140,8 @@ public class PreviewBookingFragment extends BaseFragment<PreviewBookingActivity,
                     @Override
                     public void onError(ANError anError) {
                         requestCallback.requestFailed(anError.getMessage());
-                        Log.d("reqBooking", "error : " + anError.getMessage() + anError.getErrorCode());
+                        Log.e("reqBooking", "error : " + anError.getMessage() + anError.getErrorCode());
+                        Log.e("reqBooking", "error : " + anError.getErrorDetail());
                         Log.e("reqBooking", "id         :" + String.valueOf(room_id));
                         Log.e("reqBooking", "checkin    :" + checkin);
                         Log.e("reqBooking", "checkout   :" + checkout);
