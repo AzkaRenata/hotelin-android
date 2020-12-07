@@ -1,170 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/profile_name_layout"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp">
+        android:layout_height="210dp"
+        android:background="#5399af"/>
 
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="11dp"
-            android:src="@drawable/circle_sample"/>
+    <ScrollView
+        android:id="@+id/scroll1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
 
-            <TextView
-                android:id="@+id/name_tv"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="5dp"
-                android:layout_marginLeft="7dp"
-                android:text="Username"
-                android:textColor="#5399af"
-                android:textStyle="bold" />
+                android:layout_marginTop="30dp">
 
-            <TextView
-                android:id="@+id/email_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="5dp"
-                android:layout_marginLeft="7dp"
-                android:text="Email@email.com"
-                android:textColor="#5399af"
-                android:textStyle="bold" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:src="@drawable/hotel1"
+                    android:layout_centerHorizontal="true"
+                    android:elevation="1dp"
+                    android:layout_marginTop="34dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="380dp"
+                        android:layout_marginTop="90dp"
+                        app:contentPaddingTop="15dp"
+                        app:contentPaddingRight="15dp"
+                        app:contentPaddingLeft="15dp"
+                        app:contentPaddingBottom="15dp"
+                        app:cardCornerRadius="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/name_tv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawablePadding="7dp"
+                                android:text="Username"
+                                android:textStyle="bold"
+                                android:textAlignment="center"
+                                android:textColor="#707070"
+                                android:layout_marginTop="50dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"/>
+
+                            <TextView
+                                android:id="@+id/email_tv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawablePadding="7dp"
+                                android:text="email@email.com"
+                                android:textStyle="bold"
+                                android:textAlignment="center"
+                                android:layout_below="@+id/name_tv"
+                                android:textColor="#707070"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"/>
+
+                            <TextView
+                                android:id="@+id/tvAccountInformation"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_user"
+                                android:drawableEnd="@drawable/ic_right"
+                                android:layout_below="@+id/email_tv"
+                                android:drawablePadding="7dp"
+                                android:text="Informasi Akun"
+                                android:textStyle="bold"
+                                android:textColor="#707070"
+                                android:layout_marginTop="70dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"/>
+
+                            <TextView
+                                android:id="@+id/tvBookingHistory"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_history"
+                                android:drawableEnd="@drawable/ic_right"
+                                android:layout_below="@id/tvAccountInformation"
+                                android:drawablePadding="7dp"
+                                android:text="Histori Booking"
+                                android:textStyle="bold"
+                                android:textColor="#707070"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"/>
+
+                            <TextView
+                                android:id="@+id/tvLogOut"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tvBookingHistory"
+                                android:layout_marginTop="90dp"
+                                android:drawablePadding="7dp"
+                                android:text="Log Out"
+                                android:textAlignment="center"
+                                android:textColor="#5399af"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_below="@+id/profile_name_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginVertical="25dp"
-        android:layout_marginTop="10dp"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp">
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/editProfile_cv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:id="@+id/tvAccountInformation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_user"
-                        android:drawableEnd="@drawable/ic_right"
-                        android:drawablePadding="7dp"
-                        android:text="Informasi Akun"
-                        android:textStyle="bold"
-                        android:textColor="#5399af" />
-
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cvHistoriBooking"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardElevation="10dp"
-            app:cardCornerRadius="10dp"
-            android:layout_marginTop="15dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:id="@+id/tvBookingHistory"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_history"
-                        android:drawableEnd="@drawable/ic_right"
-                        android:drawablePadding="7dp"
-                        android:text="Histori Booking"
-                        android:textStyle="bold"
-                        android:textColor="#5399af" />
-                </LinearLayout>
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cvLogout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardElevation="10dp"
-            app:cardCornerRadius="10dp"
-            android:layout_marginTop="15dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:id="@+id/tvLogOut"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_out"
-                        android:drawableEnd="@drawable/ic_right"
-                        android:drawablePadding="7dp"
-                        android:text="Log Out"
-                        android:textStyle="bold"
-                        android:textColor="#5399af" />
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-    </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
