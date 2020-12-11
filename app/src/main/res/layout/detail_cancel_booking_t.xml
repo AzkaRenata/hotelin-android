@@ -175,7 +175,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
                 android:layout_marginVertical="5dp"
-                android:background="@color/colorAccent"/>
+                android:background="#707070"/>
 
             <RelativeLayout
                 android:id="@+id/price_layout"

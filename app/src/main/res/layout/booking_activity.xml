@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,25 +8,34 @@
     tools:context=".modul.booking.BookingActivity"
     android:paddingBottom="60dp">
 
-    <RelativeLayout
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="60dp"
-            tools:context=".modul.booking.BookingActivity">
-
-
-            <androidx.cardview.widget.CardView
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/ic_hotel"
+                android:layout_gravity="center"/>
+            
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="10dp">
-
-                <LinearLayout
+                android:layout_height="70dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_weight="1">
+                
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -50,7 +60,7 @@
                             android:layout_marginLeft="7dp"
                             android:layout_marginTop="10dp"
                             android:text="Eastin Ashta Resort Canggu"
-                            android:textColor="@color/colorPrimaryDark"
+                            android:textColor="#707070"
                             android:textStyle="bold" />
 
                         <TextView
@@ -66,149 +76,159 @@
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
-
-                <EditText
-                    android:id="@+id/pemesan_et"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_pemesan"
-                    android:drawableLeft="@drawable/ic_pemesan"
-                    android:drawablePadding="7dp"
-                    android:ems="10"
-                    android:hint="Nama Pemesan"
-                    android:inputType="text"
-                    android:textSize="16sp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Presidental Suite" />
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
+            </LinearLayout>
 
-                <EditText
-                    android:id="@+id/checkIn_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_in"
-                    android:drawableLeft="@drawable/ic_in"
-                    android:drawablePadding="7dp"
-                    android:ems="10"
-                    android:hint="Check In"
-                    android:inputType="none"
-                    android:textSize="16sp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
-
-                <EditText
-                    android:id="@+id/checkOut_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_out"
-                    android:drawableLeft="@drawable/ic_out"
-                    android:drawablePadding="7dp"
-                    android:ems="10"
-                    android:hint="Check Out"
-                    android:inputType="none"
-                    android:textSize="16sp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_phone"
-                        android:drawableLeft="@drawable/ic_phone"
-                        android:drawablePadding="7dp"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="10dp"
-                        android:text="+62"
-                        android:textSize="15sp"
-                        android:textColor="#919191"/>
-
-                    <EditText
-                        android:id="@+id/telp_et"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="Phone"
-                        android:inputType="number"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
-
-                <EditText
-                    android:id="@+id/email_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_mail"
-                    android:drawableLeft="@drawable/ic_mail"
-                    android:drawablePadding="7dp"
-                    android:ems="10"
-                    android:hint="Email"
-                    android:inputType="textEmailAddress"
-                    android:textSize="16sp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
-                android:id="@+id/next_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:background="@drawable/button_color"
-                android:text="Next"
-                android:textAllCaps="false"
-                android:textColor="#ffffff"
-                android:textSize="22sp"
-
-                >
-
-            </Button>
-
-
-
-
-
+            
         </LinearLayout>
-    </RelativeLayout>
-</ScrollView>
+
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_marginTop="20dp"
+        >
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_pemesan"
+            android:drawablePadding="7dp"
+            android:ems="10"
+            android:hint="Nama Pemesan"
+            android:inputType="text"
+            android:textSize="16sp"
+            android:drawableLeft="@drawable/ic_pemesan" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        >
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_in"
+            android:drawablePadding="7dp"
+            android:ems="10"
+            android:hint="Check In"
+            android:inputType="date"
+            android:textSize="16sp"
+            android:drawableLeft="@drawable/ic_in" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_marginTop="10dp"
+        >
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_out"
+            android:drawablePadding="7dp"
+            android:ems="10"
+            android:hint="Check Out"
+            android:inputType="date"
+            android:textSize="16sp"
+            android:drawableLeft="@drawable/ic_out" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_marginTop="10dp"
+        >
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_phone"
+            android:drawablePadding="7dp"
+            android:ems="10"
+            android:hint="No. Telp"
+            android:inputType="number"
+            android:textSize="16sp"
+            android:drawableLeft="@drawable/ic_phone" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_marginTop="5dp"
+        >
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_mail"
+            android:drawablePadding="7dp"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:textSize="16sp"
+            android:drawableLeft="@drawable/ic_mail" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_marginTop="5dp"
+        >
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_room"
+            android:drawablePadding="7dp"
+            android:ems="10"
+            android:hint="Jumlah Kamar"
+            android:inputType="number"
+            android:textSize="16sp"
+            android:drawableLeft="@drawable/ic_room" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Book"
+        android:textSize="22sp"
+        android:textColor="#ffffff"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/button_color"
+
+        >
+
+    </Button>
+
+
+
+</LinearLayout>
