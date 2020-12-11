@@ -1,8 +1,10 @@
 package com.example.hotelin_android.modul.profile_edit;
 
+import android.net.Uri;
 import android.util.Log;
 
 import com.example.hotelin_android.model.User;
+import com.example.hotelin_android.modul.test.TestResponse;
 import com.example.hotelin_android.util.RequestCallback;
 
 public class ProfileEditPresenter implements ProfileEditContract.ProfileEditPresenter {
@@ -46,6 +48,22 @@ public class ProfileEditPresenter implements ProfileEditContract.ProfileEditPres
             @Override
             public void requestFailed(String errorMessage) {
                 view.showErrorMessage(errorMessage);
+            }
+        });
+    }
+
+    @Override
+    public void performUpdatePicture(Uri imageUri) {
+        view.updatePicture(imageUri, new RequestCallback<User>() {
+
+            @Override
+            public void requestSuccess(User data) {
+                view.setResult(data);
+            }
+
+            @Override
+            public void requestFailed(String errorMessage) {
+
             }
         });
     }
