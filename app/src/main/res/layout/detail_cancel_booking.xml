@@ -65,6 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
+<<<<<<< Updated upstream
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -74,6 +75,89 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Olivia"/>
+=======
+                <LinearLayout
+                    android:id="@+id/detail_layout_left"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="140dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Nama"
+                        android:textColor="#000"/>
+                    <TextView
+                        android:id="@+id/detail_cancel_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Olivia"/>
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Email"
+                        android:textColor="#000"/>
+                    <TextView
+                        android:id="@+id/detail_cancel_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="olivia@gmail.com"/>
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Contact Person"
+                        android:textColor="#000"/>
+                    <TextView
+                        android:id="@+id/detail_cancel_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="+62 89371495125"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/detail_layout_right"
+                    android:orientation="vertical"
+                    android:layout_marginRight="20dp"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="75dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Check In"
+                        android:textColor="#000"/>
+                    <TextView
+                        android:id="@+id/detail_cancel_checkin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="03 Oct 2020"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Check Out"
+                        android:textColor="#000"/>
+                    <TextView
+                        android:id="@+id/detail_cancel_checkout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="03 Oct 2020"/>
+                </LinearLayout>
+            </RelativeLayout>
+            <View
+                android:id="@+id/br_view_2"
+                android:layout_below="@id/detail_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginVertical="5dp"
+                android:background="#707070"/>
+>>>>>>> Stashed changes
 
                 <TextView
                     android:layout_marginTop="10dp"
