@@ -30,6 +30,7 @@
                 android:layout_marginTop="30dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_photo_civ"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:src="@drawable/hotel1"
@@ -117,7 +118,7 @@
                                 android:id="@+id/tvChangePassword"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:drawableStart="@drawable/ic_changePassword"
+                                android:drawableStart="@drawable/ic_change_password"
                                 android:drawableEnd="@drawable/ic_right"
                                 android:layout_below="@id/tvBookingHistory"
                                 android:drawablePadding="7dp"

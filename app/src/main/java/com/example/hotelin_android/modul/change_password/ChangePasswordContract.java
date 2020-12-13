@@ -1,13 +1,13 @@
-package com.example.hotelin_android.modul.update_password;
+package com.example.hotelin_android.modul.change_password;
 
 import com.example.hotelin_android.base.BasePresenter;
 import com.example.hotelin_android.base.BaseView;
 import com.example.hotelin_android.model.SuccessMessage;
-import com.example.hotelin_android.model.User;
 import com.example.hotelin_android.util.RequestCallback;
 
-public interface UpdatePasswordContract {
+public interface ChangePasswordContract {
     interface View extends BaseView<Presenter> {
+        void redirectToProfile();
         void showSuccessMessage(SuccessMessage data);
         void showErrorMessage(String message);
         void updatePassword(String password, final RequestCallback<SuccessMessage> requestCallback);
@@ -16,5 +16,4 @@ public interface UpdatePasswordContract {
     interface Presenter extends BasePresenter {
         void performUpdate(String password);
     }
-
 }

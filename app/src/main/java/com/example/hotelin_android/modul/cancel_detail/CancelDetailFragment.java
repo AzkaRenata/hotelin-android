@@ -52,7 +52,7 @@ public class CancelDetailFragment extends BaseFragment<CancelDetailActivity, Can
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        fragmentView = inflater.inflate(R.layout.detail_cancel_booking, container, false);
+        fragmentView = inflater.inflate(R.layout.detail_cancel_booking_t, container, false);
         mPresenter = new CancelDetailPresenter(this);
         mPresenter.start();
         mPresenter.getData(booking_id);

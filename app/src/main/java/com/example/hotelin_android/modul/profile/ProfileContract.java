@@ -8,6 +8,10 @@ import com.example.hotelin_android.util.RequestCallback;
 
 public interface ProfileContract {
     interface ProfileView extends BaseView<ProfilePresenter> {
+        void redirectToChangePassword();
+        void redirectToLogin();
+        void redirectToBookingHistory();
+        void redirectToEditProfile();
         void setProfileData(User user);
         void requestProfile(RequestCallback<User> requestCallback);
         void setProfile(User user);
