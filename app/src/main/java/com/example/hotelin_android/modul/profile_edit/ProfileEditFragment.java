@@ -21,6 +21,9 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.androidnetworking.interfaces.UploadProgressListener;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.MemoryCategory;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.signature.ObjectKey;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.model.User;
@@ -124,12 +127,15 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
 //            Uri imageUri = data.getData();
             imageUpload = ImagePicker.Companion.getFile(data);
             civPhoto.setImageURI(Uri.parse(imageUpload.getPath()));
+//            Glide.with(fragmentView)
+//                    .load(imageUpload)
+//                    .into(civPhoto);
+        btnConfirm.setVisibility(View.VISIBLE);
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(getContext(), ImagePicker.Companion.getError(data), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getContext(), "Task Cancelled", Toast.LENGTH_SHORT).show();
         }
-        btnConfirm.setVisibility(View.VISIBLE);
 
 
     }
@@ -262,7 +268,11 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
     }
 
     public void setProfile(User user) {
-        Glide.with(fragmentView).load(myURL.getImageUrl()+user.getUser_picture()).into(civPhoto);
+        Glide.with(fragmentView)
+                .load(myURL.getImageUrl()+user.getUser_picture())
+                .signature(new ObjectKey(System.currentTimeMillis()))
+                .error(R.drawable.ic_profile_picture)
+                .into(civPhoto);
         usernameET.setText(user.getUsername());
         nameET.setText(user.getName());
         emailET.setText(user.getEmail());
@@ -292,8 +302,11 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
 
     @Override
     public void setPicture(User user) {
-//        Glide.with(fragmentView).load(myURL.getImageUrl() + user.getUser_picture()).into(civPhoto);
-        Glide.with(fragmentView).load(imageUpload.getPath()).into(civPhoto);
+        Glide.with(fragmentView)
+                .load(myURL.getImageUrl()+user.getUser_picture())
+                .error(R.drawable.ic_profile_picture)
+                .signature(new ObjectKey(System.currentTimeMillis()))
+                .into(civPhoto);
         Log.e("setPict", imageUpload.getPath());
     }
 

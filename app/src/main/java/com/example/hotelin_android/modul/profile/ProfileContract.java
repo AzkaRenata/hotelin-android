@@ -12,14 +12,12 @@ public interface ProfileContract {
         void redirectToLogin();
         void redirectToBookingHistory();
         void redirectToEditProfile();
-        void setProfileData(User user);
         void requestProfile(RequestCallback<User> requestCallback);
         void setProfile(User user);
         void showFailedMessage(String message);
     }
 
     interface ProfilePresenter extends BasePresenter {
-        void fetchProfile(String bearerToken);
         void showData();
     }
 }

@@ -1,5 +1,7 @@
 package com.example.hotelin_android.modul.change_password;
 
+import android.content.Intent;
+
 import com.example.hotelin_android.base.BaseFragmentHolderActivity;
 import com.example.hotelin_android.modul.booking.BookingFragment;
 import com.example.hotelin_android.modul.login.LoginFragment;
@@ -14,9 +16,9 @@ public class ChangePasswordActivity extends BaseFragmentHolderActivity {
     @Override
     protected void initializeFragment() {
         initializeView();
-
+        String oldPassword = getIntent().getStringExtra("oldPassword");
         sharedPreferencesUtil = UtilProvider.getSharedPreferencesUtil();
-        changePasswordFragment = new ChangePasswordFragment(sharedPreferencesUtil);
+        changePasswordFragment = new ChangePasswordFragment(sharedPreferencesUtil, oldPassword);
         setCurrentFragment(changePasswordFragment, false);
 
     }

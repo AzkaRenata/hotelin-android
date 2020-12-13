@@ -33,10 +33,12 @@ public class ChangePasswordFragment extends BaseFragment<ChangePasswordActivity,
     EditText etPasswordConfirmation;
     TextView forgotPassword;
     Button btnSave;
+    String oldPassword;
     SharedPreferencesUtil sharedPreferencesUtil;
 
-    public ChangePasswordFragment(SharedPreferencesUtil sharedPreferencesUtil) {
+    public ChangePasswordFragment(SharedPreferencesUtil sharedPreferencesUtil, String oldPassword) {
         this.sharedPreferencesUtil = sharedPreferencesUtil;
+        this.oldPassword = oldPassword;
     }
 
     @Nullable
@@ -68,10 +70,26 @@ public class ChangePasswordFragment extends BaseFragment<ChangePasswordActivity,
     }
 
     private void saveBtnClick() {
-        if (etPassword.getText().toString().equals(etPasswordConfirmation.getText().toString()))
-            mPresenter.performUpdate(etPassword.getText().toString());
+        if (etPassword.getText().toString().isEmpty() ||
+                etPasswordConfirmation.getText().toString().isEmpty()) {
+            if (etPassword.getText().toString().isEmpty())
+                Toast.makeText(getContext(), "Fill your new password", Toast.LENGTH_SHORT);
+            else if (etPasswordConfirmation.getText().toString().isEmpty())
+            Toast.makeText(getContext(), "Fill your new password confirmation", Toast.LENGTH_SHORT);
+//            else
+//                Toast.makeText(getContext(), "Fill your old Password", Toast.LENGTH_SHORT);
+        }
+//        else if (etPasswordOld.getText().toString().isEmpty())
+//            Toast.makeText(getContext(), "Fill your old Password", Toast.LENGTH_SHORT);
         else {
-            Toast.makeText(getContext(), "Password confirmation and Password must match!", Toast.LENGTH_SHORT);
+//            if (etPasswordOld.getText().toString().equals(oldPassword)) {
+                if (etPassword.getText().toString().equals(etPasswordConfirmation.getText().toString()))
+                    mPresenter.performUpdate(etPassword.getText().toString());
+                else {
+                    Toast.makeText(getContext(), "Password confirmation and Password must match!", Toast.LENGTH_SHORT);
+                }
+//            } else
+//                Toast.makeText(getContext(), "Your old password not match!", Toast.LENGTH_SHORT);
         }
     }
 
@@ -123,7 +141,7 @@ public class ChangePasswordFragment extends BaseFragment<ChangePasswordActivity,
 
     @Override
     public void showSuccessMessage(SuccessMessage data) {
-        Toast.makeText(getContext(),data.getMessage(), Toast.LENGTH_SHORT);
+        Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT);
         redirectToProfile();
     }
 

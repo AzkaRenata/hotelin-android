@@ -28,52 +28,6 @@ public class ProfilePresenter implements ProfileContract.ProfilePresenter {
 
     }
 
-
-
-    @Override
-    public void fetchProfile(String bearerToken) {
-        final User[] result = new User[1];
-
-        JSONObjectRequestListener requestListener = new JSONObjectRequestListener() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONObject userResponse = response.getJSONObject("user");
-
-                    int id = userResponse.getInt("id");
-                    int user_level = userResponse.getInt("user_level");
-
-                    String username = userResponse.getString("username");
-                    String name = userResponse.getString("name");
-                    String email = userResponse.getString("email");
-//                    String password = userResponse.getString("password");
-                    String gender = userResponse.getString("gender");
-                    String telp = userResponse.getString("telp");
-                    String address = userResponse.getString("address");
-                    String user_picture = userResponse.getString("user_picture");
-
-                    result[0] = new User(id, username, name, email, null, user_level, gender, telp, address, user_picture);
-
-                    view.setProfileData(result[0]);
-
-                }catch (JSONException exception) {
-                    exception.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onError(ANError anError) {
-                Log.e("ProfilePresenter : ", "ga dapet respon om");
-            }
-        };
-
-        AndroidNetworking
-                .get(myURL.PROFILE_URL)
-                .addHeaders("Authorization", "Bearer " + bearerToken)
-                .build()
-                .getAsJSONObject(requestListener);
-    }
-
     @Override
     public void showData(){
         view.requestProfile(new RequestCallback<User>() {

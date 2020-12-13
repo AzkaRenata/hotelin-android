@@ -3,6 +3,7 @@ package com.example.hotelin_android.modul.profile;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,10 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
+import com.bumptech.glide.annotation.GlideModule;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.module.AppGlideModule;
+import com.bumptech.glide.signature.ObjectKey;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.model.User;
@@ -25,13 +30,11 @@ import com.example.hotelin_android.modul.change_password.ChangePasswordActivity;
 import com.example.hotelin_android.modul.login.LoginActivity;
 import com.example.hotelin_android.modul.profile_edit.ProfileEditActivity;
 import com.example.hotelin_android.modul.test.TestResponse;
-import com.example.hotelin_android.modul.update_password.UpdatePasswordActivity;
 import com.example.hotelin_android.util.RequestCallback;
 import com.example.hotelin_android.util.SharedPreferencesUtil;
 import com.example.hotelin_android.util.myURL;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
 public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContract.ProfilePresenter> implements ProfileContract.ProfileView, View.OnClickListener {
     SharedPreferencesUtil sharedPreferencesUtil;
 
@@ -42,6 +45,7 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
     TextView tvChangePassword;
     TextView tvLogout;
     CircleImageView civPhoto;
+    String password;
 
     ProfilePresenter profilePresenter;
 
@@ -94,6 +98,7 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
     @Override
     public void redirectToChangePassword() {
         Intent intent = new Intent(activity, ChangePasswordActivity.class);
+        intent.putExtra("oldPassword", password);
         startActivity(intent);
     }
 
@@ -115,11 +120,6 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
         startActivity(intent);
     }
 
-    @Override
-    public void setProfileData(User user) {
-        tvName.setText(user.getName());
-        tvEmail.setText(user.getEmail());
-    }
 
     @Override
     public void setPresenter(ProfileContract.ProfilePresenter presenter) {
@@ -153,13 +153,17 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
     public void setProfile(User user){
         tvName.setText(user.getName());
         tvEmail.setText(user.getEmail());
-        Glide.with(getContext()).load(myURL.getImageUrl()+user.getUser_picture()).into(civPhoto);
-
+        Glide.with(fragmentView)
+                .load(myURL.getImageUrl()+user.getUser_picture())
+                .error(R.drawable.ic_profile_picture)
+                .signature(new ObjectKey(System.currentTimeMillis()))
+                .into(civPhoto);
+        password = user.getPassword();
     }
+
 
     public void showFailedMessage(String message){
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT);
     }
-
 
 }
