@@ -1,20 +1,25 @@
 package com.example.hotelin_android.modul.login;
 
-import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.hotelin_android.util.RequestCallback;
+import com.example.hotelin_android.util.SharedPreferencesUtil;
 
 public class LoginPresenter implements LoginContract.Presenter{
     private final LoginContract.View view;
+    private final SharedPreferencesUtil sessionRepository;                                              //new
 
-    public LoginPresenter(LoginContract.View view) {
+    public LoginPresenter(LoginContract.View view, SharedPreferencesUtil sessionRepository) {
         this.view = view;
+        this.sessionRepository = sessionRepository;                                                 //new
     }
 
     @Override
-    public void start() {}
+    public void start() {
+        if(sessionRepository.getToken() != null){                                             //new
+            view.redirectToHome();                                                               //jika sudah login langsung masuk profile
+        }
+    }
 
     @Override
     public void performLogin(String email, String password){

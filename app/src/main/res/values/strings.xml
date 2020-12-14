@@ -2,4 +2,9 @@
     <string name="app_name">Hotelin</string>
     <string name="desc">Eahtin Ashta Resort adalah akomodasi
     modern yang terletak 6 menit berjalan kaki dari Pantai Echo.</string>
+    <string name="error_email_valid">Email must valid!</string>
+    <string name="error_email_empty">Input your registered email!</string>
+    <string name="error_password_empty">input your password!</string>
+    <string name="field_empty">Field required, cannot be empty</string>
+    <string name="confirmation_password_not_match">Password confirmation and Password must match!</string>
 </resources>
