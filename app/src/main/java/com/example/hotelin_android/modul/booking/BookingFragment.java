@@ -11,13 +11,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.modul.previewBooking.PreviewBookingActivity;
-import com.example.hotelin_android.modul.test.TestActivity;
 import com.example.hotelin_android.util.SharedPreferencesUtil;
 
 import java.util.Calendar;
@@ -25,9 +25,9 @@ import java.util.Calendar;
 public class BookingFragment extends BaseFragment<BookingActivity, BookingContract.Presenter> implements BookingContract.View {
     EditText etPemesan;
     EditText etEmail;
-    EditText etCheckOut;
+    TextView tvCheckOut;
     String sCheckOut;
-    EditText etCheckIn;
+    TextView tvCheckIn;
     String sCheckIn;
     EditText etTelp;
     Button btnNext;
@@ -54,8 +54,8 @@ public class BookingFragment extends BaseFragment<BookingActivity, BookingContra
 
         etPemesan = fragmentView.findViewById(R.id.pemesan_et);
         etEmail = fragmentView.findViewById(R.id.email_et);
-        etCheckIn = fragmentView.findViewById(R.id.checkIn_et);
-        etCheckOut = fragmentView.findViewById(R.id.checkOut_et);
+        tvCheckIn = fragmentView.findViewById(R.id.checkIn_tv);
+        tvCheckOut = fragmentView.findViewById(R.id.checkOut_tv);
         etTelp = fragmentView.findViewById(R.id.telp_et);
         btnNext = fragmentView.findViewById(R.id.next_btn);
 
@@ -88,7 +88,7 @@ public class BookingFragment extends BaseFragment<BookingActivity, BookingContra
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        etCheckIn.setOnClickListener(new View.OnClickListener() {
+        tvCheckIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
@@ -104,7 +104,7 @@ public class BookingFragment extends BaseFragment<BookingActivity, BookingContra
                         calendar.set(Calendar.DAY_OF_MONTH, day);
                         sCheckIn = year+"-"+month+"-"+day;
                         CharSequence date = DateFormat.format("EEE, d MMM yyyy", calendar);
-                        etCheckIn.setText(date);
+                        tvCheckIn.setText(date);
 
                     }
                 }, year, month, day);
@@ -121,7 +121,7 @@ public class BookingFragment extends BaseFragment<BookingActivity, BookingContra
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        etCheckOut.setOnClickListener(new View.OnClickListener() {
+        tvCheckOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
@@ -137,7 +137,7 @@ public class BookingFragment extends BaseFragment<BookingActivity, BookingContra
                         sCheckOut = year+"-"+month+"-"+day;
                         Log.e("_DATE", sCheckIn);
                         CharSequence date = DateFormat.format("EEE, d MMM yyyy", calendar);
-                        etCheckOut.setText(date);
+                        tvCheckOut.setText(date);
                     }
                 }, year, month, day);
                 datePickerDialog.show();
@@ -151,8 +151,8 @@ public class BookingFragment extends BaseFragment<BookingActivity, BookingContra
         intent.putExtra("room_id", room_id);
         intent.putExtra("email",etEmail.getText().toString());
         intent.putExtra("pemesan", etPemesan.getText().toString());
-        intent.putExtra("check_in", etCheckIn.getText().toString());
-        intent.putExtra("check_out", etCheckOut.getText().toString());
+        intent.putExtra("check_in", tvCheckIn.getText().toString());
+        intent.putExtra("check_out", tvCheckOut.getText().toString());
         intent.putExtra("telp", etTelp.getText().toString());
         intent.putExtra("room_type", room_type);
         intent.putExtra("room_price", room_price);

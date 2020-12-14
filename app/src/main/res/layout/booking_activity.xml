@@ -98,8 +98,8 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true">
 
-                <EditText
-                    android:id="@+id/checkIn_et"
+                <TextView
+                    android:id="@+id/checkIn_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_in"
@@ -110,6 +110,12 @@
                     android:inputType="date"
                     android:textSize="16sp" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="2dp"
+                    android:paddingHorizontal="20dp"
+                    android:background="#848484"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -119,8 +125,8 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true">
 
-                <EditText
-                    android:id="@+id/checkOut_et"
+                <TextView
+                    android:id="@+id/checkOut_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_out"
@@ -130,6 +136,12 @@
                     android:hint="Check Out"
                     android:inputType="date"
                     android:textSize="16sp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="2dp"
+                    android:paddingHorizontal="20dp"
+                    android:background="#848484"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
