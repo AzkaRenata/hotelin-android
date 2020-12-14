@@ -45,7 +45,6 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
     TextView tvChangePassword;
     TextView tvLogout;
     CircleImageView civPhoto;
-    String password;
 
     ProfilePresenter profilePresenter;
 
@@ -57,7 +56,7 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentView = inflater.inflate(R.layout.profile_activity, container, false);
-        mPresenter = new ProfilePresenter(this);
+        mPresenter = new ProfilePresenter(this, sharedPreferencesUtil);
         mPresenter.start();
 
         tvName = fragmentView.findViewById(R.id.name_tv);
@@ -90,7 +89,7 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
                 redirectToChangePassword();
                 break;
             case R.id.tvLogOut :
-                redirectToLogin();
+                mPresenter.performLogOut();
                 break;
         }
     }
@@ -98,7 +97,6 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
     @Override
     public void redirectToChangePassword() {
         Intent intent = new Intent(activity, ChangePasswordActivity.class);
-        intent.putExtra("oldPassword", password);
         startActivity(intent);
     }
 
@@ -158,7 +156,6 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
                 .error(R.drawable.ic_profile_picture)
                 .signature(new ObjectKey(System.currentTimeMillis()))
                 .into(civPhoto);
-        password = user.getPassword();
     }
 
 

@@ -19,5 +19,6 @@ public interface ProfileContract {
 
     interface ProfilePresenter extends BasePresenter {
         void showData();
+        void performLogOut();
     }
 }

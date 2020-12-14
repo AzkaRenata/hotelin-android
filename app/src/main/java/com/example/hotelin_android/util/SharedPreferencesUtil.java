@@ -5,9 +5,11 @@ import android.util.Log;
 
 public class SharedPreferencesUtil {
     private final SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     public SharedPreferencesUtil(SharedPreferences sharedPreferences) {
         this.sharedPreferences = sharedPreferences;
+        this.editor = sharedPreferences.edit();
     }
 
     public void setToken(String token){
@@ -20,6 +22,6 @@ public class SharedPreferencesUtil {
     }
 
     public void clear(){
-        sharedPreferences.edit().clear().apply();
+        editor.putString("token", null).apply();
     }
 }
