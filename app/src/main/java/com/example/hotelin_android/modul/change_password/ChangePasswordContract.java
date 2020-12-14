@@ -10,10 +10,10 @@ public interface ChangePasswordContract {
         void redirectToProfile();
         void showSuccessMessage(SuccessMessage data);
         void showErrorMessage(String message);
-        void updatePassword(String password, final RequestCallback<SuccessMessage> requestCallback);
+        void updatePassword(String newPassword, String oldPassword, final RequestCallback<SuccessMessage> requestCallback);
     }
 
     interface Presenter extends BasePresenter {
-        void performUpdate(String password);
+        void performUpdate(String newPassword, String oldPassword);
     }
 }

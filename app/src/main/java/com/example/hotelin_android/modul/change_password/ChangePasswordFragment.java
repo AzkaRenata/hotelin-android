@@ -17,11 +17,12 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
-import com.example.hotelin_android.model.Booking;
 import com.example.hotelin_android.model.SuccessMessage;
-import com.example.hotelin_android.modul.booking_history.BookingHistoryActivity;
 import com.example.hotelin_android.modul.profile.ProfileActivity;
 import com.example.hotelin_android.util.RequestCallback;
 import com.example.hotelin_android.util.SharedPreferencesUtil;
@@ -36,9 +37,8 @@ public class ChangePasswordFragment extends BaseFragment<ChangePasswordActivity,
     String oldPassword;
     SharedPreferencesUtil sharedPreferencesUtil;
 
-    public ChangePasswordFragment(SharedPreferencesUtil sharedPreferencesUtil, String oldPassword) {
+    public ChangePasswordFragment(SharedPreferencesUtil sharedPreferencesUtil) {
         this.sharedPreferencesUtil = sharedPreferencesUtil;
-        this.oldPassword = oldPassword;
     }
 
     @Nullable
@@ -56,7 +56,7 @@ public class ChangePasswordFragment extends BaseFragment<ChangePasswordActivity,
         etPasswordConfirmation = fragmentView.findViewById(R.id.change_password_confirm_new_pass_et);
         btnSave = fragmentView.findViewById(R.id.change_password_save_btn);
 
-        etPasswordOld.setVisibility(View.GONE);
+//        etPasswordOld.setVisibility(View.GONE);
         forgotPassword.setVisibility(View.GONE);
         btnSave.setOnClickListener(this);
 
@@ -70,36 +70,28 @@ public class ChangePasswordFragment extends BaseFragment<ChangePasswordActivity,
     }
 
     private void saveBtnClick() {
-        if (etPassword.getText().toString().isEmpty() ||
-                etPasswordConfirmation.getText().toString().isEmpty()) {
-            if (etPassword.getText().toString().isEmpty())
-                Toast.makeText(getContext(), "Fill your new password", Toast.LENGTH_SHORT);
-            else if (etPasswordConfirmation.getText().toString().isEmpty())
-            Toast.makeText(getContext(), "Fill your new password confirmation", Toast.LENGTH_SHORT);
-//            else
-//                Toast.makeText(getContext(), "Fill your old Password", Toast.LENGTH_SHORT);
-        }
-//        else if (etPasswordOld.getText().toString().isEmpty())
-//            Toast.makeText(getContext(), "Fill your old Password", Toast.LENGTH_SHORT);
-        else {
-//            if (etPasswordOld.getText().toString().equals(oldPassword)) {
-                if (etPassword.getText().toString().equals(etPasswordConfirmation.getText().toString()))
-                    mPresenter.performUpdate(etPassword.getText().toString());
-                else {
-                    Toast.makeText(getContext(), "Password confirmation and Password must match!", Toast.LENGTH_SHORT);
-                }
-//            } else
-//                Toast.makeText(getContext(), "Your old password not match!", Toast.LENGTH_SHORT);
-        }
+        String oldPassword = etPasswordOld.getText().toString();
+        String newPassword = etPassword.getText().toString();
+        if (validatePassword()) mPresenter.performUpdate(newPassword, oldPassword);
+    }
+
+    private boolean validatePassword() {
+        AwesomeValidation awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+        awesomeValidation.addValidation(activity, R.id.change_password_old_pass_et, RegexTemplate.NOT_EMPTY, R.string.field_empty);
+        awesomeValidation.addValidation(activity, R.id.change_password_new_pass_et, RegexTemplate.NOT_EMPTY, R.string.field_empty);
+        awesomeValidation.addValidation(activity, R.id.change_password_confirm_new_pass_et, RegexTemplate.NOT_EMPTY, R.string.field_empty);
+        awesomeValidation.addValidation(activity, R.id.change_password_confirm_new_pass_et, etPassword.getText().toString(), R.string.confirmation_password_not_match);
+        return awesomeValidation.validate();
     }
 
 
     @Override
-    public void updatePassword(String password, final RequestCallback<SuccessMessage> requestCallback) {
+    public void updatePassword(String newPassword, String oldPassword, final RequestCallback<SuccessMessage> requestCallback) {
         AndroidNetworking.post(myURL.UPDATE_PASSWORD_URL)
                 .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
-                .addBodyParameter("password", password)
-                .addBodyParameter("password_confirmation", password)
+                .addBodyParameter("password", oldPassword)
+                .addBodyParameter("password", newPassword)
+                .addBodyParameter("password_confirmation", newPassword)
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsObject(SuccessMessage.class, new ParsedRequestListener<SuccessMessage>() {

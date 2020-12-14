@@ -16,9 +16,8 @@ public class ChangePasswordActivity extends BaseFragmentHolderActivity {
     @Override
     protected void initializeFragment() {
         initializeView();
-        String oldPassword = getIntent().getStringExtra("oldPassword");
         sharedPreferencesUtil = UtilProvider.getSharedPreferencesUtil();
-        changePasswordFragment = new ChangePasswordFragment(sharedPreferencesUtil, oldPassword);
+        changePasswordFragment = new ChangePasswordFragment(sharedPreferencesUtil);
         setCurrentFragment(changePasswordFragment, false);
 
     }
