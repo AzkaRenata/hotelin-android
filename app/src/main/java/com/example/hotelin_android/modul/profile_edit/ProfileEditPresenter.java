@@ -1,16 +1,19 @@
 package com.example.hotelin_android.modul.profile_edit;
 
+import android.net.Uri;
 import android.util.Log;
 
 import com.example.hotelin_android.model.User;
 import com.example.hotelin_android.util.RequestCallback;
 
-public class ProfileEditPresenter implements ProfileEditContract.ProfileEditPresenter {
-    ProfileEditContract.ProfileEditView view;
+import java.io.File;
+
+public class ProfileEditPresenter implements ProfileEditContract.Presenter {
+    ProfileEditContract.View view;
     String bearerToken;
 
 
-    public ProfileEditPresenter(ProfileEditContract.ProfileEditView view) {
+    public ProfileEditPresenter(ProfileEditContract.View view) {
         this.view = view;
     }
 
@@ -37,15 +40,32 @@ public class ProfileEditPresenter implements ProfileEditContract.ProfileEditPres
     @Override
     public void performRegister(User newUser){
         Log.e("tes", "tes4");
-        view.editUser(newUser, new RequestCallback<String>() {
+        view.editUser(newUser, new RequestCallback<User>() {
             @Override
-            public void requestSuccess(String message) {
+            public void requestSuccess(User user) {
                 view.showSuccessMessage();
             }
 
             @Override
             public void requestFailed(String errorMessage) {
                 view.showErrorMessage(errorMessage);
+            }
+        });
+    }
+
+    @Override
+    public void performUpdatePicture() {
+        view.updatePicture(new RequestCallback<User>() {
+
+            @Override
+            public void requestSuccess(User data) {
+                Log.e("reqSuccess", data.getUser_picture());
+                view.setPicture(data);
+            }
+
+            @Override
+            public void requestFailed(String errorMessage) {
+
             }
         });
     }

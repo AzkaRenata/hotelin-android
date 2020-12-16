@@ -4,6 +4,8 @@
     package="com.example.hotelin_android">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:name=".Starter"
@@ -28,6 +30,7 @@
         <activity android:name=".modul.test.TestActivity" />
         <activity android:name=".modul.profile_edit.ProfileEditActivity"/>
         <activity android:name=".modul.profile.ProfileActivity" />
+        <activity android:name=".modul.change_password.ChangePasswordActivity"/>
             <activity android:name=".modul.login.LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

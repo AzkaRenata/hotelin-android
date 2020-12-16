@@ -3,112 +3,144 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <ScrollView
-        android:layout_below="@+id/top_layout"
+        android:id="@+id/scroll1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:id="@+id/scroll1">
+        android:layout_below="@+id/top_layout"
+        android:layout_marginHorizontal="20dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <TextView
                 android:id="@+id/hotel_name_tv"
-                android:text="Welcome Back"
-                android:textSize="20dp"
-                android:fontFamily="@font/bold"
-                android:textColor="#707070"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:fontFamily="@font/bold"
+                android:text="Welcome Back"
+                android:textColor="#707070"
+                android:textSize="20dp" />
 
-            <EditText
-                android:id="@+id/username"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/login_email_til"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/bg_form"
-                android:fontFamily="@font/semibold"
-                android:inputType="textPersonName"
-                android:layout_below="@+id/hotel_name_tv"
-                android:paddingLeft="16dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/hotel_name_tv"
                 android:layout_marginVertical="10dp"
-                android:hint="Email"
-                android:textColor="#707070" />
+                >
 
+                <EditText
+                    android:id="@+id/login_email_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_form"
+                    android:fontFamily="@font/semibold"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:paddingLeft="16dp"
+                    android:textColor="#707070" />
 
-            <EditText
-                android:id="@+id/password"
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/outlinedTextField"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/bg_form"
-                android:fontFamily="@font/semibold"
-                android:layout_below="@+id/username"
-                android:inputType="textPassword"
-                android:paddingLeft="16dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/login_btn"
+                android:layout_marginTop="30dp"
+                app:boxBackgroundMode="outline"
+                android:backgroundTint="@color/colorAccent"
+                app:boxStrokeColor="@color/colorAccent">
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/login_password_til"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/login_email_til"
                 android:layout_marginVertical="10dp"
-                android:hint="Password"
-                android:textColor="#707070" />
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/login_password_tiet"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Password"
+                    android:layout_below="@id/login_email_et"
+                    android:background="@drawable/bg_form"
+                    android:fontFamily="@font/semibold"
+                    android:inputType="textPassword"
+                    android:paddingLeft="16dp"
+                    android:textColor="#707070" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/forgot_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/login_password_til"
+                android:layout_marginVertical="10dp"
+                android:fontFamily="@font/semibold"
                 android:text="Forgot Password?"
                 android:textAlignment="textEnd"
-                android:layout_marginVertical="10dp"
-                android:textSize="16dp"
-                android:fontFamily="@font/semibold"
                 android:textColor="#707070"
-                android:layout_below="@+id/password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:textSize="16dp" />
 
             <Button
                 android:id="@+id/login_btn"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_below="@+id/forgot_password"
                 android:layout_gravity="center"
+                android:layout_marginVertical="10dp"
                 android:background="@drawable/bg_btn"
                 android:fontFamily="@font/bold"
                 android:text="Login"
-                android:layout_below="@+id/forgot_password"
-                android:layout_marginVertical="10dp"
                 android:textColor="#ffff"
                 android:textSize="20dp" />
 
             <LinearLayout
-                android:layout_gravity="center"
-                android:layout_marginVertical="10dp"
-                android:layout_below="@+id/login_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
+                android:layout_below="@+id/login_btn"
+                android:layout_gravity="center"
+                android:layout_marginVertical="10dp">
+
                 <TextView
-                    android:text="Don't have an account?"
-                    android:textSize="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/semibold"
                     android:paddingLeft="46dp"
+                    android:text="Don't have an account?"
                     android:textColor="#707070"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textSize="16dp" />
 
                 <TextView
                     android:id="@+id/register"
-                    android:text="Register"
-                    android:textSize="16dp"
-                    android:fontFamily="@font/semibold"
-                    android:paddingLeft="10dp"
-                    android:textColor="#5399af"
-                    android:onClick="performMove"
-                    android:clickable="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:context=".modul.login.LoginActivity"
-                    />
+                    android:clickable="true"
+                    android:fontFamily="@font/semibold"
+                    android:onClick="performMove"
+                    android:paddingLeft="10dp"
+                    android:text="Register"
+                    android:textColor="#5399af"
+                    android:textSize="16dp"
+                    tools:context=".modul.login.LoginActivity" />
 
             </LinearLayout>
         </RelativeLayout>

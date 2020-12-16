@@ -1,24 +1,32 @@
 package com.example.hotelin_android.modul.profile_edit;
 
+import android.net.Uri;
+
 import com.example.hotelin_android.base.BasePresenter;
 import com.example.hotelin_android.base.BaseView;
 import com.example.hotelin_android.model.User;
+import com.example.hotelin_android.modul.home.HomeContract;
 import com.example.hotelin_android.modul.register.RegisterResponse;
 import com.example.hotelin_android.util.RequestCallback;
 
+import java.io.File;
+
 public interface ProfileEditContract {
-    interface ProfileEditView extends BaseView<ProfileEditPresenter> {
+    interface View extends BaseView<Presenter> {
         //void setProfileData(User user);
         void redirectToProfile();
         void requestProfile(RequestCallback<User> requestCallback);
         void setProfile(User user);
         void showSuccessMessage();
+        void setPicture(User user);
         void showErrorMessage(String message);
-        void editUser(User newUser, final RequestCallback<String> requestCallback);
+        void editUser(User newUser, final RequestCallback<User> requestCallback);
+        void updatePicture(RequestCallback<User> requestCallback);
     }
 
-    interface ProfileEditPresenter extends BasePresenter {
+    interface Presenter extends BasePresenter {
         void showData();
         void performRegister(User newUser);
+        void performUpdatePicture();
     }
 }
