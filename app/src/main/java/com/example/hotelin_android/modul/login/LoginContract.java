@@ -11,6 +11,7 @@ public interface LoginContract {
         void saveToken(String token);
         void requestLogin(String email, String password, final RequestCallback<LoginResponse> requestCallback);
         void showFailedMessage(String message);
+        void showSuccesMessage();
     }
 
     interface Presenter extends BasePresenter {

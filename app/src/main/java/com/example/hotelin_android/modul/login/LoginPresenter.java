@@ -29,6 +29,7 @@ public class LoginPresenter implements LoginContract.Presenter{
                 view.redirectToHome();
                 Log.e("tes", data.token);
                 view.saveToken(data.token);
+                view.showSuccesMessage();
             }
 
             @Override

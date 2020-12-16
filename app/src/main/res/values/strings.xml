@@ -7,4 +7,6 @@
     <string name="error_password_empty">input your password!</string>
     <string name="field_empty">Field required, cannot be empty</string>
     <string name="confirmation_password_not_match">Password confirmation and Password must match!</string>
+    <string name="error_database">Something went wrong</string>
+    <string name="error_emailOrPassword">Wrong Email or Password</string>
 </resources>
