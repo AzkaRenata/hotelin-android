@@ -130,7 +130,7 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
                     @Override
                     public void onResponse(LoginResponse response) {
                         //Log.e("tes", "tes2");
-                        Log.e("tes", email);
+//                        Log.e("tes", email);
                         if (response == null) {
                             Toast.makeText(getContext(), "failed", Toast.LENGTH_SHORT).show();
                             requestCallback.requestFailed("Null Response");
@@ -138,18 +138,23 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
                             Toast.makeText(getContext(), "failed", Toast.LENGTH_SHORT).show();
                             requestCallback.requestFailed("Wrong Email or Password");
                         } else {
-                            Toast.makeText(getContext(), email, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getContext(), email, Toast.LENGTH_SHORT).show();
                             requestCallback.requestSuccess(response);
                         }
                     }
 
                     @Override
                     public void onError(ANError anError) {
-                        Log.e("tesww", String.valueOf(anError.getErrorCode()));
-                        Log.e("teswwwww", "fdfd" + anError.getErrorBody());
-                        Log.e("teswwww", "fdfdsasa" + anError.getErrorDetail());
-                        Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
-                        requestCallback.requestFailed("Wrong Email or Password");
+                        if (anError.getErrorCode() == 400) {
+                            Toast.makeText(getContext(), R.string.error_emailOrPassword, Toast.LENGTH_SHORT).show();
+                        }
+                        else if (anError.getErrorCode() == 500){
+                            Toast.makeText(getContext(), R.string.error_database, Toast.LENGTH_SHORT).show();
+                            Log.e("tesww", String.valueOf(anError.getErrorCode()));
+                        }
+//                        Log.e("teswwwww", "fdfd" + anError.getErrorBody());
+//                        Log.e("teswwww", "fdfdsasa" + anError.getErrorDetail());
+//                        requestCallback.requestFailed("Wrong Email or Password");
                     }
                 });
     }
@@ -161,5 +166,9 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
 
     public void showFailedMessage(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT);
+    }
+    @Override
+    public void showSuccesMessage() {
+        Toast.makeText(getContext(), etEmail.getText(), Toast.LENGTH_SHORT).show();
     }
 }
