@@ -1,6 +1,7 @@
 package com.example.hotelin_android.modul.home;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +38,11 @@ public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presen
         btSearch = fragmentView.findViewById(R.id.search_btn);
 
         setTitle("Hotelin");
+//        if (etSearchBar.getText().toString().equalsIgnoreCase("")) {
+//            btSearch.setEnabled(false);
+//            btSearch.setTextColor(Color.BLACK);
+//        }
+//        checkBtn();
         btSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,6 +50,11 @@ public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presen
             }
         });
         return fragmentView;
+    }
+
+    private void checkBtn() {
+        if (!etSearchBar.getText().toString().equalsIgnoreCase(""))
+            btSearch.setEnabled(true);
     }
 
     @Override

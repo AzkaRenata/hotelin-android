@@ -9,16 +9,16 @@
     android:orientation="vertical">
 
     <ScrollView
-        android:layout_below="@+id/top_layout"
+        android:id="@+id/scroll1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:id="@+id/scroll1">
+        android:layout_below="@+id/top_layout"
+        android:layout_marginHorizontal="20dp">
 
         <RelativeLayout
-            android:layout_marginHorizontal="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp">
 
             <TextView
                 android:id="@+id/title"
@@ -58,11 +58,52 @@
                 android:padding="10dp"
                 android:textSize="16sp" />
 
+            <LinearLayout
+                android:id="@+id/date_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/search"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/checkIn_tv"
+                    android:layout_width="170dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rounded_border2"
+                    android:drawableStart="@drawable/ic_in"
+                    android:drawablePadding="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:ems="10"
+                    android:visibility="gone"
+                    android:hint="Check In"
+                    android:inputType="date"
+                    android:paddingTop="7dp"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/room_list_check_out_tv"
+                    android:layout_width="fill_parent"
+                    android:layout_height="35dp"
+                    android:layout_below="@id/search"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rounded_border2"
+                    android:drawableStart="@drawable/ic_out"
+                    android:drawablePadding="5dp"
+                    android:ems="10"
+                    android:visibility="gone"
+                    android:hint="Check Out"
+                    android:inputType="date"
+                    android:paddingTop="7dp"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
             <Button
                 android:id="@+id/search_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/search"
+                android:layout_below="@+id/date_ll"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/button_color"
                 android:text="Search"
