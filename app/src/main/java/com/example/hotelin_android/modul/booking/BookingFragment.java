@@ -80,7 +80,7 @@ public class BookingFragment extends BaseFragment<BookingActivity, BookingContra
     }
 
     public void initCalendar(){
-        checkInDate();
+//        checkInDate();
         checkOutDate();
     }
 
