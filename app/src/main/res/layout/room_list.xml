@@ -41,7 +41,7 @@ android:padding="10dp">
 
         <TextView
             android:id="@+id/room_list_check_in_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="110dp"
             android:layout_height="35dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/rounded_border2"
@@ -56,7 +56,7 @@ android:padding="10dp">
 
         <TextView
             android:id="@+id/room_list_check_out_tv"
-            android:layout_width="150dp"
+            android:layout_width="110dp"
             android:layout_height="35dp"
             android:layout_below="@id/search"
             android:layout_marginTop="10dp"
@@ -65,19 +65,20 @@ android:padding="10dp">
             android:drawableStart="@drawable/ic_out"
             android:drawablePadding="5dp"
             android:ems="10"
-            android:visibility="gone"
+            android:visibility="visible"
             android:hint="Check Out"
             android:inputType="date"
             android:paddingTop="7dp"
             android:textSize="16sp" />
 
         <Button
+            android:id="@+id/room_list_search_btn"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_marginTop="11dp"
             android:background="@drawable/bg_btn"
             android:layout_marginStart="5dp"
-            android:visibility="gone"
+            android:visibility="visible"
             android:text="Search"
             android:textColor="?attr/textWhiteColor"
             android:textAllCaps="false"

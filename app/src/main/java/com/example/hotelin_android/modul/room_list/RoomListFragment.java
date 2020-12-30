@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +46,7 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
     String sCheckOut;
     String sCheckIn;
     RecyclerView mRecyclerView;
+    Button btnSearch;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
@@ -73,16 +75,33 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
         tvHotelName.setText(hotel_name);
         tvCheckIn = fragmentView.findViewById(R.id.room_list_check_in_tv);
         tvCheckOut = fragmentView.findViewById(R.id.room_list_check_out_tv);
+        btnSearch = fragmentView.findViewById(R.id.room_list_search_btn);
+
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateTime();
+            }
+        });
 
         initCalendar();
+
 
         return fragmentView;
     }
 
+    private void validateTime() {
+        mPresenter.getData(hotel_id);
+    }
+
     public void initCalendar() {
         checkInDate();
-//        checkOutDate();
+        checkOutDate();
+
+
+//        mPresenter.getData(hotel_id);
     }
+
 
     public void checkInDate() {
         final Calendar calendar = Calendar.getInstance();
@@ -113,7 +132,7 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
                 datePickerDialog.show();
             }
         });
-        mPresenter.getData(hotel_id);
+//        mPresenter.getData(hotel_id);
 
 
     }
@@ -176,6 +195,34 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
     }
 
     @Override
+    public void validateRoom(int hotel_id, final RequestCallback<List<Room>> requestCallback) {
+        AndroidNetworking.post(myURL.VALIDATE_TIME + hotel_id)
+                .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
+                .addBodyParameter("check_in", sCheckIn)
+                .addBodyParameter("check_out", sCheckOut)
+                .setTag(this)
+                .setPriority(Priority.LOW)
+                .build()
+                .getAsObjectList(Room.class, new ParsedRequestListener<List<Room>>() {
+                    @Override
+                    public void onResponse(List<Room> response) {
+                        if (response == null) {
+                            requestCallback.requestFailed("Null Response");
+                            Log.d("tag", "response null");
+                        } else {
+                            requestCallback.requestSuccess(response);
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        requestCallback.requestFailed(anError.getMessage());
+                        Log.e("validateRoom", "error gan " + anError.getMessage() + anError.getErrorCode());
+                    }
+                });
+    }
+
+    //    @Override
     public void searchRoom(final int hotel_id, final RequestCallback<List<Room>> requestCallback) {
         AndroidNetworking.get(myURL.SEARCH_ROOM_URL + hotel_id)
                 .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
@@ -196,7 +243,7 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
                     @Override
                     public void onError(ANError anError) {
                         requestCallback.requestFailed(anError.getMessage());
-                        Log.d("tag", "error gan" + anError.getMessage() + anError.getErrorCode());
+                        Log.e("tag", "error gan " + anError.getMessage() + anError.getErrorCode());
                     }
                 });
     }

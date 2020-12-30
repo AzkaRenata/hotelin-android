@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hotelin_android.R;
@@ -15,6 +16,9 @@ import com.example.hotelin_android.model.Room;
 import com.example.hotelin_android.model.RoomGroup;
 
 import java.util.List;
+
+import static com.example.hotelin_android.R.color.customPrimary;
+import static com.example.hotelin_android.R.color.customTextLight;
 
 public class RecyclerViewAdapterRoomList extends RecyclerView.Adapter<RecyclerViewAdapterRoomList.MyViewHolder> {
     private static List<RoomGroup> mDataset;
@@ -29,6 +33,7 @@ public class RecyclerViewAdapterRoomList extends RecyclerView.Adapter<RecyclerVi
         TextView room_fac2;
         TextView room_fac3;
         Button select_btn;
+
         TextView check_in_tv;
         //CheckBox checkBox;
 
@@ -72,10 +77,19 @@ public class RecyclerViewAdapterRoomList extends RecyclerView.Adapter<RecyclerVi
         holder.room_price_tv.setText("Rp. "+mDataset.get(position).getRooms().get(0).getRoom_price());
         holder.room_type_tv.setText(mDataset.get(position).getRooms().get(0).getRoom_type());
 
-        if (mDataset.get(position).getRooms().get(0).getBooking_status() == 1  &&
-                mDataset.get(position).getRooms().get(0).getCheck_in().equalsIgnoreCase(sCheckIn)) {
+//        if (mDataset.get(position).getRooms().get(0).getBooking_status() == 1  &&
+//                mDataset.get(position).getRooms().get(0).getCheck_in().equalsIgnoreCase(sCheckIn)) {
+//            holder.select_btn.setEnabled(false);
+//            holder.select_btn.setTextColor(R.attr.colorPrimary);
+//        }
+
+        if (mDataset.get(position).getRooms().get(0).isIs_booked() == true) {
             holder.select_btn.setEnabled(false);
-            holder.select_btn.setTextColor(R.attr.colorPrimary);
+            holder.select_btn.setText("Full Booked");
+//            holder.select_btn.setTextColor(Color.parseColor(String.valueOf(customPrimary)));
+        } else {
+            holder.select_btn.setEnabled(true);
+//            holder.select_btn.setTextColor(Color.parseColor(String.valueOf(customTextLight)));
         }
 
         int i = 0;

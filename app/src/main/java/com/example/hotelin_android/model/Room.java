@@ -17,7 +17,32 @@ public class Room {
     private String check_in;
     private String check_out;
     private String user_id;
+    private boolean is_booked;
 
+    public boolean isIs_booked() {
+        return is_booked;
+    }
+
+    public void setIs_booked(boolean is_booked) {
+        this.is_booked = is_booked;
+    }
+
+    public Room(int id, String hotel_name, String room_type, String bed_type, String room_price, String guest_capacity, String room_picture, String facility_name, String facility_icon, int booking_status, String check_in, String check_out, String user_id, boolean is_booked) {
+        this.id = id;
+        this.hotel_name = hotel_name;
+        this.room_type = room_type;
+        this.bed_type = bed_type;
+        this.room_price = room_price;
+        this.guest_capacity = guest_capacity;
+        this.room_picture = room_picture;
+        this.facility_name = facility_name;
+        this.facility_icon = facility_icon;
+        this.booking_status = booking_status;
+        this.check_in = check_in;
+        this.check_out = check_out;
+        this.user_id = user_id;
+        this.is_booked = is_booked;
+    }
 
     public Room(int id, String hotel_name, String room_type, String bed_type,
                 String room_price, String guest_capacity, String room_picture,
