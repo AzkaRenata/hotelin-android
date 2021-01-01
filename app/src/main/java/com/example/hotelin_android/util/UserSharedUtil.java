@@ -3,11 +3,11 @@ package com.example.hotelin_android.util;
 import android.content.SharedPreferences;
 
 import com.example.hotelin_android.model.User;
+import com.example.hotelin_android.model.UserTemp;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.List;
 
 public class UserSharedUtil {
     private final SharedPreferences sharedPreferences;

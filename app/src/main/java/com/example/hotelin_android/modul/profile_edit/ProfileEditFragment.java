@@ -24,7 +24,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
-import com.example.hotelin_android.model.User;
+import com.example.hotelin_android.model.UserTemp;
 import com.example.hotelin_android.modul.profile.ProfileActivity;
 import com.example.hotelin_android.modul.test.TestResponse;
 import com.example.hotelin_android.util.RequestCallback;
@@ -56,7 +56,7 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
     String password;
     File imageUpload;
     CircleImageView civPhoto;
-    User user;
+    UserTemp userTemp;
 
     public ProfileEditFragment(TokenSharedUtil tokenSharedUtil) {
         this.tokenSharedUtil = tokenSharedUtil;
@@ -160,8 +160,8 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
         String address = addressET.getText().toString();
         String telp = telpET.getText().toString();
 
-        user = new User(username, name, email, password, 2, gender, telp, address, null);
-        mPresenter.performRegister(user);
+        userTemp = new UserTemp(username, name, email, password, 2, gender, telp, address, null);
+        mPresenter.performRegister(userTemp);
     }
 
     @Override
@@ -171,15 +171,15 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
     }
 
     @Override
-    public void editUser(final User newUser, final RequestCallback<User> requestCallback) {
+    public void editUser(final UserTemp newUserTemp, final RequestCallback<UserTemp> requestCallback) {
         AndroidNetworking.post(myURL.UPDATE_USER_URL)
                 .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
-                .addBodyParameter("username", newUser.getUsername())
-                .addBodyParameter("name", newUser.getName())
-                .addBodyParameter("email", newUser.getEmail())
-                .addBodyParameter("gender", newUser.getGender())
-                .addBodyParameter("telp", newUser.getTelp())
-                .addBodyParameter("address", newUser.getAddress())
+                .addBodyParameter("username", newUserTemp.getUsername())
+                .addBodyParameter("name", newUserTemp.getName())
+                .addBodyParameter("email", newUserTemp.getEmail())
+                .addBodyParameter("gender", newUserTemp.getGender())
+                .addBodyParameter("telp", newUserTemp.getTelp())
+                .addBodyParameter("address", newUserTemp.getAddress())
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsObject(TestResponse.class, new ParsedRequestListener<TestResponse>() {
@@ -188,7 +188,7 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
                         if (response == null) {
                             requestCallback.requestFailed("Null Response");
                         } else {
-                            requestCallback.requestSuccess(response.user);
+                            requestCallback.requestSuccess(response.userTemp);
                         }
                     }
 
@@ -208,7 +208,7 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
     }
 
     @Override
-    public void updatePicture(final RequestCallback<User> requestCallback) {
+    public void updatePicture(final RequestCallback<UserTemp> requestCallback) {
         AndroidNetworking.upload(myURL.UPDATE_USER_PICTURE_URL)
                 .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .addMultipartFile("user_picture", imageUpload)
@@ -228,7 +228,7 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
                             requestCallback.requestFailed("Null Response");
                             Log.d("tag", "response null");
                         } else {
-                            requestCallback.requestSuccess(response.user);
+                            requestCallback.requestSuccess(response.userTemp);
                         }
                     }
 
@@ -242,7 +242,7 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
 
 
     @Override
-    public void requestProfile(final RequestCallback<User> requestCallback) {
+    public void requestProfile(final RequestCallback<UserTemp> requestCallback) {
         AndroidNetworking.get(myURL.PROFILE_URL)
                 .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .build()
@@ -253,7 +253,7 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
                             requestCallback.requestFailed("Null Response");
                             Log.d("tag", "response null");
                         } else {
-                            requestCallback.requestSuccess(response.user);
+                            requestCallback.requestSuccess(response.userTemp);
                         }
                     }
 
@@ -265,26 +265,26 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
                 });
     }
 
-    public void setProfile(User user) {
+    public void setProfile(UserTemp userTemp) {
         Glide.with(fragmentView)
-                .load(myURL.getImageUrl()+user.getUser_picture())
+                .load(myURL.getImageUrl()+ userTemp.getUser_picture())
                 .signature(new ObjectKey(System.currentTimeMillis()))
                 .error(R.drawable.ic_profile_picture)
                 .into(civPhoto);
-        usernameET.setText(user.getUsername());
-        nameET.setText(user.getName());
-        emailET.setText(user.getEmail());
-        telpET.setText(user.getTelp());
-        addressET.setText(user.getAddress());
-        password = user.getPassword();
+        usernameET.setText(userTemp.getUsername());
+        nameET.setText(userTemp.getName());
+        emailET.setText(userTemp.getEmail());
+        telpET.setText(userTemp.getTelp());
+        addressET.setText(userTemp.getAddress());
+        password = userTemp.getPassword();
 
-        if (user.getGender() != null) {
-            if (user.getGender().equalsIgnoreCase("female")) {
+        if (userTemp.getGender() != null) {
+            if (userTemp.getGender().equalsIgnoreCase("female")) {
                 femaleRB.setChecked(true);
                 gender = "female";
             }
 
-            if (user.getGender().equalsIgnoreCase("male")) {
+            if (userTemp.getGender().equalsIgnoreCase("male")) {
                 maleRB.setChecked(true);
                 gender = "male";
             }
@@ -299,9 +299,9 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
     }
 
     @Override
-    public void setPicture(User user) {
+    public void setPicture(UserTemp userTemp) {
         Glide.with(fragmentView)
-                .load(myURL.getImageUrl()+user.getUser_picture())
+                .load(myURL.getImageUrl()+ userTemp.getUser_picture())
                 .error(R.drawable.ic_profile_picture)
                 .signature(new ObjectKey(System.currentTimeMillis()))
                 .into(civPhoto);

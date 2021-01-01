@@ -18,7 +18,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
-import com.example.hotelin_android.model.User;
+import com.example.hotelin_android.model.UserTemp;
 import com.example.hotelin_android.modul.booking_history.BookingHistoryActivity;
 import com.example.hotelin_android.modul.change_password.ChangePasswordActivity;
 import com.example.hotelin_android.modul.login.LoginActivity;
@@ -119,7 +119,7 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
     }
 
     @Override
-    public void requestProfile(final RequestCallback<User> requestCallback) {
+    public void requestProfile(final RequestCallback<UserTemp> requestCallback) {
         AndroidNetworking.get(myURL.PROFILE_URL)
                 .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .build()
@@ -130,7 +130,7 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
                             requestCallback.requestFailed("Null Response");
                             Log.d("tag", "response null");
                         }else{
-                            requestCallback.requestSuccess(response.user);
+                            requestCallback.requestSuccess(response.userTemp);
                         }
                     }
 
@@ -142,11 +142,11 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
                 });
     }
 
-    public void setProfile(User user){
-        tvName.setText(user.getName());
-        tvEmail.setText(user.getEmail());
+    public void setProfile(UserTemp userTemp){
+        tvName.setText(userTemp.getName());
+        tvEmail.setText(userTemp.getEmail());
         Glide.with(fragmentView)
-                .load(myURL.getImageUrl()+user.getUser_picture())
+                .load(myURL.getImageUrl()+ userTemp.getUser_picture())
                 .error(R.drawable.ic_profile_picture)
                 .signature(new ObjectKey(System.currentTimeMillis()))
                 .into(civPhoto);

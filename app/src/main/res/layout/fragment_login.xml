@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="15dp"
+    android:layout_marginHorizontal="15dp"
     android:orientation="vertical">
 
     <ScrollView
@@ -84,30 +84,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/login_btn"
-                android:layout_gravity="center"
                 android:layout_marginVertical="5dp">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/semibold"
-                    android:paddingLeft="46dp"
-                    android:text="Don't have an account?"
-                    android:textColor="#707070"
-                    android:textSize="16dp" />
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
 
-                <TextView
-                    android:id="@+id/register"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:fontFamily="@font/semibold"
-                    android:onClick="performMove"
-                    android:paddingLeft="10dp"
-                    android:text="@string/register_text"
-                    android:textColor="#5399af"
-                    android:textSize="16dp"
-                    tools:context=".modul.login.LoginActivity" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/semibold"
+                        android:paddingLeft="80dp"
+                        android:text="Belum Punya Akun?"
+                        android:textColor="#707070"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/register"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:fontFamily="@font/semibold"
+                        android:onClick="performMove"
+                        android:paddingLeft="10dp"
+                        android:text="@string/register_text"
+                        android:textColor="#5399af"
+                        android:textSize="16dp"
+                        tools:context=".modul.login.LoginActivity" />
+                </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

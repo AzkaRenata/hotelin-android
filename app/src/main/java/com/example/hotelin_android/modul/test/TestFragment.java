@@ -17,7 +17,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
-import com.example.hotelin_android.model.User;
+import com.example.hotelin_android.model.UserTemp;
 import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.modul.register.RegisterActivity;
 import com.example.hotelin_android.util.RequestCallback;
@@ -80,7 +80,7 @@ public class TestFragment extends BaseFragment<TestActivity, TestContract.Presen
     }
 
     @Override
-    public void requestProfile(final RequestCallback<User> requestCallback) {
+    public void requestProfile(final RequestCallback<UserTemp> requestCallback) {
         AndroidNetworking.get(myURL.PROFILE_URL)
                 .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .build()
@@ -91,7 +91,7 @@ public class TestFragment extends BaseFragment<TestActivity, TestContract.Presen
                             requestCallback.requestFailed("Null Response");
                             Log.d("tag", "response null");
                         }else{
-                            requestCallback.requestSuccess(response.user);
+                            requestCallback.requestSuccess(response.userTemp);
                         }
                     }
 
@@ -103,11 +103,11 @@ public class TestFragment extends BaseFragment<TestActivity, TestContract.Presen
                 });
     }
 
-    public void setProfile(User user){
-        id.setText(String.valueOf(user.getId()));
-        userEmail.setText(user.getEmail());
-        gender.setText(user.getGender());
-        userName.setText(user.getUsername());
+    public void setProfile(UserTemp userTemp){
+        id.setText(String.valueOf(userTemp.getId()));
+        userEmail.setText(userTemp.getEmail());
+        gender.setText(userTemp.getGender());
+        userName.setText(userTemp.getUsername());
     }
 
     public void showFailedMessage(String message){

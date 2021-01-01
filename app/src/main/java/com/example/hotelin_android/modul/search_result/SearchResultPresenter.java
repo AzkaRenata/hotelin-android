@@ -1,9 +1,6 @@
 package com.example.hotelin_android.modul.search_result;
 
-import android.util.Log;
-
 import com.example.hotelin_android.model.Hotel;
-import com.example.hotelin_android.model.User;
 import com.example.hotelin_android.util.RequestCallback;
 
 import java.util.List;

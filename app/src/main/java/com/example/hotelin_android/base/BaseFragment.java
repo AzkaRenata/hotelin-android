@@ -35,7 +35,6 @@ public abstract class BaseFragment<T extends FragmentActivity, U extends BasePre
         return title;
     }
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

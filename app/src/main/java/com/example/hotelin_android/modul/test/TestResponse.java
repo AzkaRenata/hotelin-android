@@ -1,9 +1,7 @@
 package com.example.hotelin_android.modul.test;
 
-import com.example.hotelin_android.model.User;
-
-import java.util.List;
+import com.example.hotelin_android.model.UserTemp;
 
 public class TestResponse {
-    public User user;
+    public UserTemp userTemp;
 }

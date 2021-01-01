@@ -1,12 +1,7 @@
 package com.example.hotelin_android.modul.room_list;
 
-import android.util.Log;
-
-import com.example.hotelin_android.model.Hotel;
 import com.example.hotelin_android.model.Room;
 import com.example.hotelin_android.model.RoomGroup;
-import com.example.hotelin_android.model.User;
-import com.example.hotelin_android.modul.room_list.RoomListContract;
 import com.example.hotelin_android.util.RequestCallback;
 
 import java.util.ArrayList;
