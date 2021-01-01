@@ -14,11 +14,13 @@ public interface RoomListContract {
     interface View extends BaseView<Presenter> {
         void redirectToHome();
         void setResult(List<RoomGroup> data);
-        void searchRoom(int location, final RequestCallback<List<Room>> requestCallback);
+//        void searchRoom(int hotel_id, final RequestCallback<List<Room>> requestCallback);
+        void validateRoom(int hotel_id, final RequestCallback<List<Room>> requestCallback);
         void showFailedMessage(String message);
     }
 
     interface Presenter extends BasePresenter {
         void getData(int hotel_id);
+//        void validateTime(int hotel_id);
     }
 }

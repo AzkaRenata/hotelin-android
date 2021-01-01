@@ -12,7 +12,7 @@ import com.example.hotelin_android.util.RequestCallback;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomListPresenter implements RoomListContract.Presenter{
+public class RoomListPresenter implements RoomListContract.Presenter {
     private final RoomListContract.View view;
 
     public RoomListPresenter(RoomListContract.View view) {
@@ -20,17 +20,18 @@ public class RoomListPresenter implements RoomListContract.Presenter{
     }
 
     @Override
-    public void start() {}
+    public void start() {
+    }
 
     @Override
-    public void getData(int hotel_id){
-        view.searchRoom(hotel_id, new RequestCallback<List<Room>>() {
+    public void getData(int hotel_id) {
+        view.validateRoom(hotel_id, new RequestCallback<List<Room>>() {
             @Override
             public void requestSuccess(List<Room> data) {
                 ArrayList<RoomGroup> result = new ArrayList<>();
-                int i=0;
-                for(Room room : data){
-                    if(i == 0){
+                int i = 0;
+                for (Room room : data) {
+                    if (i == 0) {
                         result.add(new RoomGroup());
                         result.get(0).setRoom(room);
                         i = 1;
@@ -52,4 +53,5 @@ public class RoomListPresenter implements RoomListContract.Presenter{
             }
         });
     }
+
 }

@@ -1,5 +1,6 @@
 package com.example.hotelin_android.modul.booking;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,8 +27,8 @@ public class BookingFragment extends BaseFragment<BookingActivity, BookingContra
     EditText etPemesan;
     EditText etEmail;
     TextView tvCheckOut;
-    String sCheckOut;
     TextView tvCheckIn;
+    String sCheckOut;
     String sCheckIn;
     EditText etTelp;
     Button btnNext;
@@ -37,12 +38,13 @@ public class BookingFragment extends BaseFragment<BookingActivity, BookingContra
     String hotel_name;
     SharedPreferencesUtil sharedPreferencesUtil;
 
-    public BookingFragment(SharedPreferencesUtil sharedPreferencesUtil, String hotel_name, int room_id, String room_type, String room_price) {
+    public BookingFragment(SharedPreferencesUtil sharedPreferencesUtil, String hotel_name, int room_id, String room_type, String room_price, String check_in) {
         this.sharedPreferencesUtil = sharedPreferencesUtil;
         this.room_id = room_id;
         this.room_price = room_price;
         this.room_type = room_type;
         this.hotel_name = hotel_name;
+        this.sCheckIn = check_in;
     }
 
     @Nullable
@@ -55,10 +57,11 @@ public class BookingFragment extends BaseFragment<BookingActivity, BookingContra
         etPemesan = fragmentView.findViewById(R.id.pemesan_et);
         etEmail = fragmentView.findViewById(R.id.email_et);
         tvCheckIn = fragmentView.findViewById(R.id.checkIn_tv);
-        tvCheckOut = fragmentView.findViewById(R.id.checkOut_tv);
+        tvCheckOut = fragmentView.findViewById(R.id.room_list_check_out_tv);
         etTelp = fragmentView.findViewById(R.id.telp_et);
         btnNext = fragmentView.findViewById(R.id.next_btn);
 
+        tvCheckIn.setText(sCheckIn);
         initCalendar();
 
         btnNext.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +81,7 @@ public class BookingFragment extends BaseFragment<BookingActivity, BookingContra
     }
 
     public void initCalendar(){
-        checkInDate();
+//        checkInDate();
         checkOutDate();
     }
 

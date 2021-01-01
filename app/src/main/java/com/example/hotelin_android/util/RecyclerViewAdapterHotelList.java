@@ -59,7 +59,7 @@ public class RecyclerViewAdapterHotelList extends RecyclerView.Adapter<RecyclerV
         holder.hotel_price_tv.setText("Rp. "+mDataset.get(position).getHotel_price());
 
         String url = myURL.getImageUrl()+mDataset.get(position).getHotel_picture();
-        new AsyncTaskLoadImage(holder.hotel_iv).execute(url);
+//        new AsyncTaskLoadImage(holder.hotel_iv).execute(url);
 
         final Hotel hotel = mDataset.get(position);
 
