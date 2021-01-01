@@ -27,7 +27,7 @@ import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.modul.register.RegisterActivity;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -36,26 +36,26 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
     EditText etEmail;
     TextInputLayout tilEmail;
     TextInputLayout tilPassword;
-    TextInputEditText etPassword;
+    EditText etPassword;
     Button btnLogin;
     TextView tvRegister;
     String authToken;
-    SharedPreferencesUtil sharedPreferencesUtil;
+    TokenSharedUtil tokenSharedUtil;
 
-    public LoginFragment(SharedPreferencesUtil sharedPreferencesUtil) {
-        this.sharedPreferencesUtil = sharedPreferencesUtil;
+    public LoginFragment(TokenSharedUtil tokenSharedUtil) {
+        this.tokenSharedUtil = tokenSharedUtil;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        fragmentView = inflater.inflate(R.layout.login_activity, container, false);
-        mPresenter = new LoginPresenter(this, sharedPreferencesUtil);
+        fragmentView = inflater.inflate(R.layout.fragment_login, container, false);
+        mPresenter = new LoginPresenter(this, tokenSharedUtil);
         mPresenter.start();
 
         etEmail = fragmentView.findViewById(R.id.login_email_et);
-        etPassword = fragmentView.findViewById(R.id.login_password_tiet);
+        etPassword = fragmentView.findViewById(R.id.login_password_et);
         btnLogin = fragmentView.findViewById(R.id.login_btn);
         tvRegister = fragmentView.findViewById(R.id.register);
         tilEmail = fragmentView.findViewById(R.id.login_email_til);
@@ -87,7 +87,7 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
         AwesomeValidation mAwesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
         mAwesomeValidation.addValidation(activity, R.id.login_email_et, Patterns.EMAIL_ADDRESS, R.string.error_email_valid);
         mAwesomeValidation.addValidation(activity, R.id.login_email_et, Patterns.EMAIL_ADDRESS, R.string.error_email_empty);
-        mAwesomeValidation.addValidation(activity, R.id.login_password_tiet, RegexTemplate.NOT_EMPTY, R.string.error_password_empty);
+        mAwesomeValidation.addValidation(activity, R.id.login_password_et, RegexTemplate.NOT_EMPTY, R.string.error_password_empty);
         return mAwesomeValidation.validate();
     }
 
@@ -95,7 +95,11 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
         if (validateLogin()) {
             String email = etEmail.getText().toString();
             String password = etPassword.getText().toString();
+            Log.e("COBA", email);
+            Log.e("COBA", password);
             mPresenter.performLogin(email, password);
+        }else{
+            Log.e("COBA", "TESSS");
         }
     }
 
@@ -145,6 +149,7 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
 
                     @Override
                     public void onError(ANError anError) {
+                        Log.e("teswwa", String.valueOf(anError.getErrorCode()));
                         if (anError.getErrorCode() == 400) {
                             Toast.makeText(getContext(), R.string.error_emailOrPassword, Toast.LENGTH_SHORT).show();
                         }
@@ -161,7 +166,7 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
 
     public void saveToken(String token) {
         Log.e("tes555", token);
-        sharedPreferencesUtil.setToken(token);
+        tokenSharedUtil.setToken(token);
     }
 
     public void showFailedMessage(String message) {

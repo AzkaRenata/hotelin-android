@@ -20,25 +20,24 @@ import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.model.Hotel;
 import com.example.hotelin_android.modul.home.HomeActivity;
-import com.example.hotelin_android.modul.register.RegisterActivity;
 import com.example.hotelin_android.modul.room_list.RoomListActivity;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
 import com.example.hotelin_android.util.RecyclerViewAdapterHotelList;
 
 import java.util.List;
 
 public class SearchResultFragment extends BaseFragment<SearchResultActivity, SearchResultContract.Presenter> implements SearchResultContract.View {
-    SharedPreferencesUtil sharedPreferencesUtil;
+    TokenSharedUtil tokenSharedUtil;
     String hotel_location;
     RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    public SearchResultFragment(String hotel_location, SharedPreferencesUtil sharedPreferencesUtil) {
+    public SearchResultFragment(String hotel_location, TokenSharedUtil tokenSharedUtil) {
         this.hotel_location = hotel_location;
-        this.sharedPreferencesUtil = sharedPreferencesUtil;
+        this.tokenSharedUtil = tokenSharedUtil;
     }
 
     @Nullable
@@ -79,13 +78,13 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
     }
 
     public void saveToken(String token){
-        sharedPreferencesUtil.setToken(token);
+        tokenSharedUtil.setToken(token);
     }
 
     @Override
     public void searchHotel(final String hotel_location, final RequestCallback<List<Hotel>> requestCallback) {
         AndroidNetworking.get(myURL.SEARCH_HOTEL_URL)
-                .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
+                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .addQueryParameter("hotel_location", hotel_location)
                 .setTag(this)
                 .setPriority(Priority.LOW)

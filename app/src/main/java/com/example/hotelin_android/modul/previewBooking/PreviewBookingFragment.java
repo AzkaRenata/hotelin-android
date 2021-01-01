@@ -15,7 +15,6 @@ import androidx.annotation.Nullable;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
@@ -23,11 +22,8 @@ import com.example.hotelin_android.model.Booking;
 import com.example.hotelin_android.model.SuccessMessage;
 import com.example.hotelin_android.modul.booking_history.BookingHistoryActivity;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class PreviewBookingFragment extends BaseFragment<PreviewBookingActivity, PreviewBookingContract.Presenter> implements PreviewBookingContract.View {
     Booking booking;
@@ -40,10 +36,10 @@ public class PreviewBookingFragment extends BaseFragment<PreviewBookingActivity,
     TextView tvEmail;
     TextView tvTelp;
     TextView tvCheckin;
-    SharedPreferencesUtil sharedPreferencesUtil;
+    TokenSharedUtil tokenSharedUtil;
 
-    public PreviewBookingFragment(SharedPreferencesUtil sharedPreferencesUtil, Booking booking) {
-        this.sharedPreferencesUtil = sharedPreferencesUtil;
+    public PreviewBookingFragment(TokenSharedUtil tokenSharedUtil, Booking booking) {
+        this.tokenSharedUtil = tokenSharedUtil;
         this.booking = booking;
     }
 
@@ -79,7 +75,7 @@ public class PreviewBookingFragment extends BaseFragment<PreviewBookingActivity,
     }
 
     public void setBtnBookClick() {
-        Log.d("Req", sharedPreferencesUtil.getToken());
+        Log.d("Req", tokenSharedUtil.getToken());
         int room_id = booking.getRoom_id();
         String checkin = booking.getsCheck_in();
         String checkout = booking.getsCheck_out();
@@ -116,7 +112,7 @@ public class PreviewBookingFragment extends BaseFragment<PreviewBookingActivity,
     @Override
     public void requestBooking(final int room_id, final String checkin, final String checkout, final RequestCallback<SuccessMessage> requestCallback) {
         AndroidNetworking.post(myURL.BOOKING_URL)
-                .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
+                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .addBodyParameter("room_id", String.valueOf(room_id))
                 .addBodyParameter("check_in", checkin)
                 .addBodyParameter("check_out", checkout)

@@ -25,7 +25,7 @@ import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.model.SuccessMessage;
 import com.example.hotelin_android.modul.profile.ProfileActivity;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
 
 public class ChangePasswordFragment extends BaseFragment<ChangePasswordActivity, ChangePasswordContract.Presenter> implements ChangePasswordContract.View, View.OnClickListener {
@@ -35,10 +35,10 @@ public class ChangePasswordFragment extends BaseFragment<ChangePasswordActivity,
     TextView forgotPassword;
     Button btnSave;
     String oldPassword;
-    SharedPreferencesUtil sharedPreferencesUtil;
+    TokenSharedUtil tokenSharedUtil;
 
-    public ChangePasswordFragment(SharedPreferencesUtil sharedPreferencesUtil) {
-        this.sharedPreferencesUtil = sharedPreferencesUtil;
+    public ChangePasswordFragment(TokenSharedUtil tokenSharedUtil) {
+        this.tokenSharedUtil = tokenSharedUtil;
     }
 
     @Nullable
@@ -88,7 +88,7 @@ public class ChangePasswordFragment extends BaseFragment<ChangePasswordActivity,
     @Override
     public void updatePassword(String newPassword, String oldPassword, final RequestCallback<SuccessMessage> requestCallback) {
         AndroidNetworking.post(myURL.UPDATE_PASSWORD_URL)
-                .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
+                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .addBodyParameter("password", oldPassword)
                 .addBodyParameter("password", newPassword)
                 .addBodyParameter("password_confirmation", newPassword)

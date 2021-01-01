@@ -56,6 +56,20 @@
         <item name="android:fontFamily">@font/regular</item>
     </style>
 
+    <style name="Hotelin" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/hotelinPrimary</item>
+        <item name="colorPrimaryDark">@color/hotelinPrimaryDark</item>
+        <item name="textWhiteColor">@color/myTextLight</item>
+        <item name="textSecondaryColor">@color/hotelinSecondaryText</item>
+        <item name="textDarkColor">@color/pantoneDark331c</item>
+        <item name="tabBackgroundColor">@color/hotelinText</item>
+        <item name="toolbarBackgroundColor">@color/pantone331c</item>
+        <item name="textTabColor">@color/pantoneDark331c</item>
+        <item name="detailBackground">@color/myLayoutColor</item>
+        <item name="imageTransparentOverlay">@color/pantoneTransparent</item>
+        <item name="android:fontFamily">@font/regular</item>
+    </style>
+
     <style name="datepicker" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorPrimary">@color/customPrimary</item>
         <item name="colorPrimaryDark">@color/customPrimaryDark</item>
