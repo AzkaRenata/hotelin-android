@@ -7,9 +7,9 @@
     <FrameLayout
         android:id="@+id/flFragmentContainer"
         android:layout_width="match_parent"
-        android:layout_height="590dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/toolbarLayout"
-        android:layout_marginTop="-5dp" />
+        android:layout_marginTop="-8dp"/>
 
     <include
         android:id="@+id/toolbarLayout"

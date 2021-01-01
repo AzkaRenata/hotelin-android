@@ -23,10 +23,11 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
-import com.example.hotelin_android.model.User;
+import com.example.hotelin_android.model.UserTemp;
 import com.example.hotelin_android.modul.login.LoginActivity;
 import com.example.hotelin_android.util.RequestCallback;
 import com.example.hotelin_android.util.TokenSharedUtil;
+import com.example.hotelin_android.util.UserSharedUtil;
 import com.example.hotelin_android.util.myURL;
 
 import static com.example.hotelin_android.R.id.*;
@@ -46,19 +47,25 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
     Button btnRegister;
     TextView tvLogin;
     TokenSharedUtil tokenSharedUtil;
+    UserSharedUtil userSharedUtil;
 
-    public RegisterFragment(TokenSharedUtil tokenSharedUtil) {
-        this.tokenSharedUtil = tokenSharedUtil;
+    public RegisterFragment() {
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        fragmentView = inflater.inflate(R.layout.register_activity, container, false);
+        fragmentView = inflater.inflate(R.layout.fragment_register, container, false);
         mPresenter = new RegisterPresenter(this);
         mPresenter.start();
 
+
+
+        return fragmentView;
+    }
+
+    public void setItems(){
         etUsername = fragmentView.findViewById(usernameR);
         etEmail = fragmentView.findViewById(emailR);
         etPassword = fragmentView.findViewById(passwordR);
@@ -95,8 +102,6 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
                 checkGender(group, checkedId);
             }
         });
-
-        return fragmentView;
     }
 
     public void checkGender(RadioGroup group, int checkedId){
@@ -122,9 +127,9 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
         String telp = etTelp.getText().toString();
         String address = etAddress.getText().toString();
 
-        User newUser = new User(username, fullname, email, password, 2, gender, telp,address, null);
+        UserTemp newUserTemp = new UserTemp(username, fullname, email, password, 2, gender, telp,address, null);
 
-        mPresenter.performRegister(newUser);
+        mPresenter.performRegister(newUserTemp);
     }
 
     public void setTvLoginClick(){
@@ -144,16 +149,16 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
     }
 
     @Override
-    public void requestRegister(final User newUser, final RequestCallback<RegisterResponse> requestCallback) {
+    public void requestRegister(final UserTemp newUserTemp, final RequestCallback<RegisterResponse> requestCallback) {
         AndroidNetworking.post(myURL.CUSTOMER_REGISTER_URL)
-                .addBodyParameter("username", newUser.getUsername())
-                .addBodyParameter("name", newUser.getName())
-                .addBodyParameter("email", newUser.getEmail())
-                .addBodyParameter("password", newUser.getPassword())
+                .addBodyParameter("username", newUserTemp.getUsername())
+                .addBodyParameter("name", newUserTemp.getName())
+                .addBodyParameter("email", newUserTemp.getEmail())
+                .addBodyParameter("password", newUserTemp.getPassword())
                 .addBodyParameter("password_confirmation", etConfirmPassword.getText().toString())
-                .addBodyParameter("gender", newUser.getGender())
-                .addBodyParameter("telp", newUser.getTelp())
-                .addBodyParameter("address", newUser.getAddress())
+                .addBodyParameter("gender", newUserTemp.getGender())
+                .addBodyParameter("telp", newUserTemp.getTelp())
+                .addBodyParameter("address", newUserTemp.getAddress())
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsObject(RegisterResponse.class, new ParsedRequestListener<RegisterResponse>() {

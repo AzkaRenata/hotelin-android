@@ -1,6 +1,6 @@
 package com.example.hotelin_android.modul.test;
 
-import com.example.hotelin_android.model.User;
+import com.example.hotelin_android.model.UserTemp;
 import com.example.hotelin_android.util.RequestCallback;
 
 public class TestPresenter implements TestContract.Presenter{
@@ -15,9 +15,9 @@ public class TestPresenter implements TestContract.Presenter{
 
     @Override
     public void showData(){
-        view.requestProfile(new RequestCallback<User>() {
+        view.requestProfile(new RequestCallback<UserTemp>() {
             @Override
-            public void requestSuccess(User data) {
+            public void requestSuccess(UserTemp data) {
                 view.setProfile(data);
             }
 
