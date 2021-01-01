@@ -108,7 +108,7 @@ public class RecyclerViewAdapterRoomList extends RecyclerView.Adapter<RecyclerVi
             i++;
         }
         String url = myURL.getImageUrl()+mDataset.get(position).getRooms().get(0).getRoom_picture();
-//        new AsyncTaskLoadImage(holder.room_iv).execute(url);
+        new AsyncTaskLoadImage(holder.room_iv).execute(url);
 
     }
 

@@ -1,18 +1,13 @@
 package com.example.hotelin_android.modul.booking;
 
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragmentHolderActivity;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.TokenSharedUtil;
 import com.example.hotelin_android.util.UtilProvider;
 
 public class BookingActivity extends BaseFragmentHolderActivity {
     BookingFragment bookingFragment;
     private final int UPDATE_REQUEST = 2019;
-    SharedPreferencesUtil sharedPreferencesUtil;
+    TokenSharedUtil tokenSharedUtil;
 
     @Override
     protected void initializeFragment() {
@@ -22,8 +17,8 @@ public class BookingActivity extends BaseFragmentHolderActivity {
         String room_type = getIntent().getStringExtra("room_type");
         String room_price = getIntent().getStringExtra("room_price");
         String check_in = getIntent().getStringExtra("check_in");
-        sharedPreferencesUtil = UtilProvider.getSharedPreferencesUtil();
-        bookingFragment = new BookingFragment(sharedPreferencesUtil, hotel_name, room_id, room_type, room_price, check_in);
+        tokenSharedUtil = UtilProvider.getTokenSharedUtil();
+        bookingFragment = new BookingFragment(tokenSharedUtil, hotel_name, room_id, room_type, room_price, check_in);
         setCurrentFragment(bookingFragment, false);
 
     }

@@ -1,9 +1,7 @@
 package com.example.hotelin_android.modul.profile;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +15,6 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.GlideBuilder;
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.module.AppGlideModule;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
@@ -31,12 +25,12 @@ import com.example.hotelin_android.modul.login.LoginActivity;
 import com.example.hotelin_android.modul.profile_edit.ProfileEditActivity;
 import com.example.hotelin_android.modul.test.TestResponse;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContract.ProfilePresenter> implements ProfileContract.ProfileView, View.OnClickListener {
-    SharedPreferencesUtil sharedPreferencesUtil;
+    TokenSharedUtil tokenSharedUtil;
 
     TextView tvName;
     TextView tvEmail;
@@ -48,15 +42,15 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
 
     ProfilePresenter profilePresenter;
 
-    public ProfileFragment(SharedPreferencesUtil sharedPreferencesUtil) {
-        this.sharedPreferencesUtil = sharedPreferencesUtil;
+    public ProfileFragment(TokenSharedUtil tokenSharedUtil) {
+        this.tokenSharedUtil = tokenSharedUtil;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentView = inflater.inflate(R.layout.profile_activity, container, false);
-        mPresenter = new ProfilePresenter(this, sharedPreferencesUtil);
+        mPresenter = new ProfilePresenter(this, tokenSharedUtil);
         mPresenter.start();
 
         tvName = fragmentView.findViewById(R.id.name_tv);
@@ -127,7 +121,7 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
     @Override
     public void requestProfile(final RequestCallback<User> requestCallback) {
         AndroidNetworking.get(myURL.PROFILE_URL)
-                .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
+                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .build()
                 .getAsObject(TestResponse.class, new ParsedRequestListener<TestResponse>() {
                     @Override

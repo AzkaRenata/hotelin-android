@@ -2,13 +2,13 @@ package com.example.hotelin_android.modul.previewBooking;
 
 import com.example.hotelin_android.base.BaseFragmentHolderActivity;
 import com.example.hotelin_android.model.Booking;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.TokenSharedUtil;
 import com.example.hotelin_android.util.UtilProvider;
 
 public class PreviewBookingActivity extends BaseFragmentHolderActivity {
     PreviewBookingFragment previewBookingFragment;
     private final int UPDATE_REQUEST = 2019;
-    SharedPreferencesUtil sharedPreferencesUtil;
+    TokenSharedUtil tokenSharedUtil;
 
     @Override
     protected void initializeFragment() {
@@ -30,8 +30,8 @@ public class PreviewBookingActivity extends BaseFragmentHolderActivity {
         booking.setsCheck_in(getIntent().getStringExtra("sCheckin"));
         booking.setsCheck_out(getIntent().getStringExtra("sCheckout"));
 
-        sharedPreferencesUtil = UtilProvider.getSharedPreferencesUtil();
-        previewBookingFragment = new PreviewBookingFragment(sharedPreferencesUtil, booking);
+        tokenSharedUtil = UtilProvider.getTokenSharedUtil();
+        previewBookingFragment = new PreviewBookingFragment(tokenSharedUtil, booking);
         setCurrentFragment(previewBookingFragment, false);
 
     }

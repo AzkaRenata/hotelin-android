@@ -21,16 +21,16 @@ import com.example.hotelin_android.model.User;
 import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.modul.register.RegisterActivity;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
 
 public class TestFragment extends BaseFragment<TestActivity, TestContract.Presenter> implements TestContract.View {
     TextView id,userName,userEmail,gender;
     Button btnLogout;
-    SharedPreferencesUtil sharedPreferencesUtil;
+    TokenSharedUtil tokenSharedUtil;
 
-    public TestFragment(SharedPreferencesUtil sharedPreferencesUtil) {
-        this.sharedPreferencesUtil = sharedPreferencesUtil;
+    public TestFragment(TokenSharedUtil tokenSharedUtil) {
+        this.tokenSharedUtil = tokenSharedUtil;
     }
 
     @Nullable
@@ -76,13 +76,13 @@ public class TestFragment extends BaseFragment<TestActivity, TestContract.Presen
     }
 
     public void saveToken(String token){
-        sharedPreferencesUtil.setToken(token);
+        tokenSharedUtil.setToken(token);
     }
 
     @Override
     public void requestProfile(final RequestCallback<User> requestCallback) {
         AndroidNetworking.get(myURL.PROFILE_URL)
-                .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
+                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .build()
                 .getAsObject(TestResponse.class, new ParsedRequestListener<TestResponse>() {
                     @Override

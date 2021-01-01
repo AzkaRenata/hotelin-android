@@ -21,8 +21,6 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.androidnetworking.interfaces.UploadProgressListener;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.MemoryCategory;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
@@ -30,7 +28,7 @@ import com.example.hotelin_android.model.User;
 import com.example.hotelin_android.modul.profile.ProfileActivity;
 import com.example.hotelin_android.modul.test.TestResponse;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 
@@ -42,7 +40,7 @@ import static com.example.hotelin_android.R.id.female_edit_rb;
 import static com.example.hotelin_android.R.id.male_edit_rb;
 
 public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, ProfileEditContract.Presenter> implements ProfileEditContract.View, View.OnClickListener {
-    SharedPreferencesUtil sharedPreferencesUtil;
+    TokenSharedUtil tokenSharedUtil;
 
     TextView usernameET;
     TextView nameET;
@@ -60,8 +58,8 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
     CircleImageView civPhoto;
     User user;
 
-    public ProfileEditFragment(SharedPreferencesUtil sharedPreferencesUtil) {
-        this.sharedPreferencesUtil = sharedPreferencesUtil;
+    public ProfileEditFragment(TokenSharedUtil tokenSharedUtil) {
+        this.tokenSharedUtil = tokenSharedUtil;
     }
 
     @Nullable
@@ -175,7 +173,7 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
     @Override
     public void editUser(final User newUser, final RequestCallback<User> requestCallback) {
         AndroidNetworking.post(myURL.UPDATE_USER_URL)
-                .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
+                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .addBodyParameter("username", newUser.getUsername())
                 .addBodyParameter("name", newUser.getName())
                 .addBodyParameter("email", newUser.getEmail())
@@ -212,7 +210,7 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
     @Override
     public void updatePicture(final RequestCallback<User> requestCallback) {
         AndroidNetworking.upload(myURL.UPDATE_USER_PICTURE_URL)
-                .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
+                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .addMultipartFile("user_picture", imageUpload)
                 .setTag("uploadTest")
                 .setPriority(Priority.HIGH)
@@ -246,7 +244,7 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
     @Override
     public void requestProfile(final RequestCallback<User> requestCallback) {
         AndroidNetworking.get(myURL.PROFILE_URL)
-                .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
+                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .build()
                 .getAsObject(TestResponse.class, new ParsedRequestListener<TestResponse>() {
                     @Override

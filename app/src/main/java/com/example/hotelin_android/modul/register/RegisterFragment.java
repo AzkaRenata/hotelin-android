@@ -24,10 +24,9 @@ import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.model.User;
-import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.modul.login.LoginActivity;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
 
 import static com.example.hotelin_android.R.id.*;
@@ -46,10 +45,10 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
     RadioButton rbGenderFemale;
     Button btnRegister;
     TextView tvLogin;
-    SharedPreferencesUtil sharedPreferencesUtil;
+    TokenSharedUtil tokenSharedUtil;
 
-    public RegisterFragment(SharedPreferencesUtil sharedPreferencesUtil) {
-        this.sharedPreferencesUtil = sharedPreferencesUtil;
+    public RegisterFragment(TokenSharedUtil tokenSharedUtil) {
+        this.tokenSharedUtil = tokenSharedUtil;
     }
 
     @Nullable

@@ -5,6 +5,7 @@
     <attr name="tabBackgroundColor" format="color" />
     <attr name="toolbarBackgroundColor" format="color" />
     <attr name="textDarkColor" format="color" />
+    <attr name="textSecondaryColor" format="color" />
     <attr name="buttonDefault" format="color" />
     <attr name="buttonDanger" format="color" />
     <attr name="textTabColor" format="color" />

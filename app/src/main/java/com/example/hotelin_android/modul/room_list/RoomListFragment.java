@@ -3,7 +3,6 @@ package com.example.hotelin_android.modul.room_list;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,17 +26,16 @@ import com.example.hotelin_android.model.Room;
 import com.example.hotelin_android.model.RoomGroup;
 import com.example.hotelin_android.modul.booking.BookingActivity;
 import com.example.hotelin_android.modul.home.HomeActivity;
-import com.example.hotelin_android.modul.register.RegisterActivity;
 import com.example.hotelin_android.util.RecyclerViewAdapterRoomList;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
 
 import java.util.Calendar;
 import java.util.List;
 
 public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListContract.Presenter> implements RoomListContract.View {
-    SharedPreferencesUtil sharedPreferencesUtil;
+    TokenSharedUtil tokenSharedUtil;
     int hotel_id;
     String hotel_name;
     TextView tvCheckIn;
@@ -50,10 +48,10 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    public RoomListFragment(int hotel_id, String hotel_name, SharedPreferencesUtil sharedPreferencesUtil) {
+    public RoomListFragment(int hotel_id, String hotel_name, TokenSharedUtil tokenSharedUtil) {
         this.hotel_id = hotel_id;
         this.hotel_name = hotel_name;
-        this.sharedPreferencesUtil = sharedPreferencesUtil;
+        this.tokenSharedUtil = tokenSharedUtil;
     }
 
     @Nullable
@@ -191,13 +189,13 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
     }
 
     public void saveToken(String token) {
-        sharedPreferencesUtil.setToken(token);
+        tokenSharedUtil.setToken(token);
     }
 
     @Override
     public void validateRoom(int hotel_id, final RequestCallback<List<Room>> requestCallback) {
         AndroidNetworking.post(myURL.VALIDATE_TIME + hotel_id)
-                .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
+                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .addBodyParameter("check_in", sCheckIn)
                 .addBodyParameter("check_out", sCheckOut)
                 .setTag(this)
@@ -225,7 +223,7 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
     //    @Override
     public void searchRoom(final int hotel_id, final RequestCallback<List<Room>> requestCallback) {
         AndroidNetworking.get(myURL.SEARCH_ROOM_URL + hotel_id)
-                .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
+                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .setTag(this)
                 .setPriority(Priority.LOW)
                 .build()

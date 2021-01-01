@@ -1,6 +1,5 @@
 package com.example.hotelin_android.modul.booking;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +18,7 @@ import androidx.annotation.Nullable;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.modul.previewBooking.PreviewBookingActivity;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.TokenSharedUtil;
 
 import java.util.Calendar;
 
@@ -36,10 +35,10 @@ public class BookingFragment extends BaseFragment<BookingActivity, BookingContra
     String room_type;
     String room_price;
     String hotel_name;
-    SharedPreferencesUtil sharedPreferencesUtil;
+    TokenSharedUtil tokenSharedUtil;
 
-    public BookingFragment(SharedPreferencesUtil sharedPreferencesUtil, String hotel_name, int room_id, String room_type, String room_price, String check_in) {
-        this.sharedPreferencesUtil = sharedPreferencesUtil;
+    public BookingFragment(TokenSharedUtil tokenSharedUtil, String hotel_name, int room_id, String room_type, String room_price, String check_in) {
+        this.tokenSharedUtil = tokenSharedUtil;
         this.room_id = room_id;
         this.room_price = room_price;
         this.room_type = room_type;

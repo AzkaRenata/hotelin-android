@@ -24,11 +24,11 @@ import com.example.hotelin_android.model.Bookinghistory;
 import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.util.AsyncTaskLoadImage;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
 
 public class CancelDetailFragment extends BaseFragment<CancelDetailActivity, CancelDetailContract.Presenter> implements CancelDetailContract.View {
-    SharedPreferencesUtil sharedPreferencesUtil;
+    TokenSharedUtil tokenSharedUtil;
     int booking_id;
     int booking_status;
     ImageView hotel_iv;
@@ -42,10 +42,10 @@ public class CancelDetailFragment extends BaseFragment<CancelDetailActivity, Can
     TextView booking_price;
     TextView cancel_tv;
 
-    public CancelDetailFragment(SharedPreferencesUtil sharedPreferencesUtil, int booking_id, int booking_status) {
+    public CancelDetailFragment(TokenSharedUtil tokenSharedUtil, int booking_id, int booking_status) {
         this.booking_id = booking_id;
         this.booking_status = booking_status;
-        this.sharedPreferencesUtil = sharedPreferencesUtil;
+        this.tokenSharedUtil = tokenSharedUtil;
     }
 
     @Nullable
@@ -111,7 +111,7 @@ Log.d("LIAT BOOKING ID : ", String.valueOf(booking_id));
     public void searchBooking(final int booking_id, final RequestCallback<Bookinghistory> requestCallback) {
         Log.d("test lagi : ",myURL.MY_BOOKING_URL+booking_id);
         AndroidNetworking.get(myURL.MY_BOOKING_URL+String.valueOf(booking_id))
-                .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
+                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .build()
                 .getAsObject(CancelDetailResponse.class, new ParsedRequestListener<CancelDetailResponse>() {
                     @Override
@@ -133,7 +133,7 @@ Log.d("LIAT BOOKING ID : ", String.valueOf(booking_id));
     }
 
     public void setResult(final Bookinghistory booking){
-        String url = myURL.getImageUrl()+booking.getHotel_picture();
+        String url = myURL.getImageUrl() + booking.getHotel_picture();
         new AsyncTaskLoadImage(hotel_iv).execute(url);
 
         hotel_name.setText(booking.getHotel_name());
