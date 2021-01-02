@@ -1,7 +1,7 @@
 package com.example.hotelin_android.modul.cancel_detail;
 
 import com.example.hotelin_android.base.BaseFragmentHolderActivity;
-import com.example.hotelin_android.util.TokenSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 import com.example.hotelin_android.util.UtilProvider;
 
 public class CancelDetailActivity extends BaseFragmentHolderActivity {

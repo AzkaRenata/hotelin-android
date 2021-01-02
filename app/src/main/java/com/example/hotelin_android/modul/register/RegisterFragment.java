@@ -7,10 +7,11 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,21 +35,16 @@ import com.google.android.material.textfield.TextInputLayout;
 import static com.example.hotelin_android.R.id.*;
 
 public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterContract.Presenter> implements RegisterContract.View {
-    EditText etUsername;
-    EditText etEmail;
-    EditText etPassword;
-    EditText etConfirmPassword;
-    EditText etFullname;
-    EditText etTelp;
-    EditText etAddress;
+    private EditText etUsername;
+    private EditText etEmail;
+    private EditText etPassword;
+    private EditText etConfirmPassword;
+    private EditText etFullname;
+    private EditText etTelp;
+    private EditText etAddress;
+    private RelativeLayout loading;
 
-    RadioGroup rgGender;
-    RadioButton rbGenderMale;
-    RadioButton rbGenderFemale;
-    Button btnRegister;
-    TextView tvLogin;
-
-    String gender = "male";
+    private String gender = "male";
 
     public RegisterFragment() {}
 
@@ -68,6 +64,10 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
         TextInputLayout tilPassword;
         TextInputLayout tilConfirmPassword;
 
+        RadioGroup rgGender;
+        Button btnRegister;
+        TextView tvLogin;
+
         etUsername = fragmentView.findViewById(usernameR);
         etEmail = fragmentView.findViewById(emailR);
         etPassword = fragmentView.findViewById(passwordR);
@@ -75,9 +75,9 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
         etFullname = fragmentView.findViewById(fullnameR);
         etTelp = fragmentView.findViewById(telpR);
         etAddress = fragmentView.findViewById(addressR);
+        loading = fragmentView.findViewById(register_loading);
+
         rgGender = fragmentView.findViewById(genderR);
-        rbGenderMale = fragmentView.findViewById(radio_maleR);
-        rbGenderFemale = fragmentView.findViewById(radio_femaleR);
         btnRegister = fragmentView.findViewById(register_btnR);
         tvLogin = fragmentView.findViewById(login);
         tilPassword = fragmentView.findViewById(register_password_til);
@@ -135,6 +135,7 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
     }
 
     public void setBtRegisterClick(){
+        startLoading();
         if(validateForm()){
             String name = etFullname.getText().toString();
             String username = etUsername.getText().toString();
@@ -145,11 +146,14 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
 
             mPresenter.performRegister(user);
         }
+        stopLoading();
     }
 
     public void setTvLoginClick(){
+        startLoading();
         Intent intent = new Intent(activity, LoginActivity.class);
         startActivity(intent);
+        stopLoading();
     }
 
     @Override
@@ -204,6 +208,17 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
     @Override
     public void showErrorMessage(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    public void startLoading(){
+        loading.setVisibility(View.VISIBLE);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
+
+    public void stopLoading(){
+        loading.setVisibility(View.GONE);
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
     @Override

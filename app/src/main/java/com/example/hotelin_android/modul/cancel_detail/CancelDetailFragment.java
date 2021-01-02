@@ -24,7 +24,7 @@ import com.example.hotelin_android.model.Bookinghistory;
 import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.util.AsyncTaskLoadImage;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.TokenSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
 
 public class CancelDetailFragment extends BaseFragment<CancelDetailActivity, CancelDetailContract.Presenter> implements CancelDetailContract.View {

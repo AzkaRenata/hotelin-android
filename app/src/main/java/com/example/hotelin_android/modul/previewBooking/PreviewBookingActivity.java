@@ -2,7 +2,7 @@ package com.example.hotelin_android.modul.previewBooking;
 
 import com.example.hotelin_android.base.BaseFragmentHolderActivity;
 import com.example.hotelin_android.model.Booking;
-import com.example.hotelin_android.util.TokenSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 import com.example.hotelin_android.util.UtilProvider;
 
 public class PreviewBookingActivity extends BaseFragmentHolderActivity {

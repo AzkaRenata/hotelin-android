@@ -24,9 +24,9 @@ import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.model.Bookinghistory;
 import com.example.hotelin_android.modul.cancel_detail.CancelDetailActivity;
 import com.example.hotelin_android.modul.home.HomeActivity;
-import com.example.hotelin_android.util.RecyclerViewAdapterBookingList;
+import com.example.hotelin_android.util.RecyclerViewAdapter.RecyclerViewAdapterBookingList;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.TokenSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
 
 import java.util.List;

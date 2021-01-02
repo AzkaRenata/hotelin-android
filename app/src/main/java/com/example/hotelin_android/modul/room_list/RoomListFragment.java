@@ -26,9 +26,9 @@ import com.example.hotelin_android.model.Room;
 import com.example.hotelin_android.model.RoomGroup;
 import com.example.hotelin_android.modul.booking.BookingActivity;
 import com.example.hotelin_android.modul.home.HomeActivity;
-import com.example.hotelin_android.util.RecyclerViewAdapterRoomList;
+import com.example.hotelin_android.util.RecyclerViewAdapter.RecyclerViewAdapterRoomList;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.TokenSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
 
 import java.util.Calendar;
@@ -40,7 +40,6 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
     String hotel_name;
     TextView tvCheckIn;
     TextView tvCheckOut;
-    TextView tvHotelName;
     String sCheckOut;
     String sCheckIn;
     RecyclerView mRecyclerView;
@@ -58,7 +57,7 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        fragmentView = inflater.inflate(R.layout.room_list, container, false);
+        fragmentView = inflater.inflate(R.layout.fragment_room_list, container, false);
         mPresenter = new RoomListPresenter(this);
         mPresenter.start();
 
@@ -69,8 +68,7 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
 //        mPresenter.getData(hotel_id);
         setTitle("Room List");
 
-        tvHotelName = fragmentView.findViewById(R.id.room_list_hotel_name_tv);
-        tvHotelName.setText(hotel_name);
+
         tvCheckIn = fragmentView.findViewById(R.id.room_list_check_in_tv);
         tvCheckOut = fragmentView.findViewById(R.id.room_list_check_out_tv);
         btnSearch = fragmentView.findViewById(R.id.room_list_search_btn);
@@ -247,8 +245,8 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
     }
 
     public void setResult(final List<RoomGroup> rooms) {
-        TextView hotel_name = (TextView) fragmentView.findViewById(R.id.room_list_hotel_name_tv);
-        hotel_name.setText(rooms.get(0).getRooms().get(0).getHotel_name());
+        //TextView hotel_name = (TextView) fragmentView.findViewById(R.id.room_list_hotel_name_tv);
+        //hotel_name.setText(rooms.get(0).getRooms().get(0).getHotel_name());
         mAdapter = new RecyclerViewAdapterRoomList(rooms, sCheckIn);
         mRecyclerView.setAdapter(mAdapter);
         ((RecyclerViewAdapterRoomList) mAdapter).setOnItemClickListener(new RecyclerViewAdapterRoomList.MyClickListener() {

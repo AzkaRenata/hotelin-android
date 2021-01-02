@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,8 +29,8 @@ import com.example.hotelin_android.model.User;
 import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.modul.register.RegisterActivity;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.TokenSharedUtil;
-import com.example.hotelin_android.util.UserSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.UserSharedUtil;
 import com.example.hotelin_android.util.UtilProvider;
 import com.example.hotelin_android.util.myURL;
 import com.google.android.material.textfield.TextInputLayout;
@@ -36,6 +38,7 @@ import com.google.android.material.textfield.TextInputLayout;
 public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Presenter> implements LoginContract.View {
     private EditText etEmail;
     private EditText etPassword;
+    private RelativeLayout loading;
     private final TokenSharedUtil tokenSharedUtil;
     private final UserSharedUtil userSharedUtil;
 
@@ -64,6 +67,7 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
 
         etEmail = fragmentView.findViewById(R.id.login_email_et);
         etPassword = fragmentView.findViewById(R.id.login_password_et);
+        loading = fragmentView.findViewById(R.id.login_loading);
         btnLogin = fragmentView.findViewById(R.id.login_btn);
         tvRegister = fragmentView.findViewById(R.id.register);
         tilEmail = fragmentView.findViewById(R.id.login_email_til);
@@ -105,16 +109,20 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
     }
 
     public void setBtLoginClick() {
+        startLoading();
         if (validateLogin()) {
             String email = etEmail.getText().toString();
             String password = etPassword.getText().toString();
             mPresenter.performLogin(email, password);
         }
+        stopLoading();
     }
 
     public void setTvRegisterClick() {
+        startLoading();
         Intent intent = new Intent(activity, RegisterActivity.class);
         startActivity(intent);
+        stopLoading();
     }
 
     @Override
@@ -160,14 +168,24 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
         userSharedUtil.setUser(user);
     }
 
-    @SuppressLint("ShowToast")
     public void showFailedMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT);
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
     @Override
     public void showSuccessMessage() {
         String name = userSharedUtil.getUser().getName();
         Toast.makeText(getContext(), "Selamat Datang, " + name, Toast.LENGTH_SHORT).show();
+    }
+
+    public void startLoading(){
+        loading.setVisibility(View.VISIBLE);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
+
+    public void stopLoading(){
+        loading.setVisibility(View.GONE);
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
     @Override

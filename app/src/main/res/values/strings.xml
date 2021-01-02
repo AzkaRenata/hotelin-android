@@ -30,4 +30,9 @@
     <string name="telp_text">Nomor Telepon</string>
     <string name="address_text">Alamat</string>
     <string name="confirm_password_text">Konfirmasi Password</string>
+
+    <string name="search_text">Cari</string>
+    <string name="hotel_name_text">Nama Hotel</string>
+    <string name="hotel_location_text">Lokasi Hotel</string>
+    <string name="price_text">Harga</string>
 </resources>

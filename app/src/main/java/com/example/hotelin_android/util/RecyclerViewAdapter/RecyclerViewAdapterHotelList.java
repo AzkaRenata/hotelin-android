@@ -1,4 +1,4 @@
-package com.example.hotelin_android.util;
+package com.example.hotelin_android.util.RecyclerViewAdapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,11 +6,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.model.Hotel;
+import com.example.hotelin_android.util.AsyncTaskLoadImage;
+import com.example.hotelin_android.util.myURL;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
 
 public class RecyclerViewAdapterHotelList extends RecyclerView.Adapter<RecyclerViewAdapterHotelList.MyViewHolder> {
@@ -22,15 +27,13 @@ public class RecyclerViewAdapterHotelList extends RecyclerView.Adapter<RecyclerV
         TextView hotel_name_tv;
         TextView hotel_location_tv;
         TextView hotel_price_tv;
-        //CheckBox checkBox;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            hotel_iv = (ImageView) itemView.findViewById(R.id.hotel_list_item_hotel_iv);
-            hotel_name_tv = (TextView) itemView.findViewById(R.id.hotel_list_item_name_tv);
-            hotel_location_tv = (TextView) itemView.findViewById(R.id.hotel_list_item_location_tv);
-            hotel_price_tv = (TextView) itemView.findViewById(R.id.hotel_list_item_price_tv);
-            //checkBox = (CheckBox) itemView.findViewById(R.id.checkBoxItem);
+            hotel_iv = itemView.findViewById(R.id.hotel_list_item_hotel_iv);
+            hotel_name_tv = itemView.findViewById(R.id.hotel_list_item_name_tv);
+            hotel_location_tv = itemView.findViewById(R.id.hotel_list_item_location_tv);
+            hotel_price_tv = itemView.findViewById(R.id.hotel_list_item_price_tv);
             itemView.setOnClickListener(this);
         }
 
@@ -41,42 +44,36 @@ public class RecyclerViewAdapterHotelList extends RecyclerView.Adapter<RecyclerV
         }
     }
 
-    public RecyclerViewAdapterHotelList(List<Hotel> myDataset) {
-        mDataset = myDataset;
+    public RecyclerViewAdapterHotelList(List<Hotel> hotels) {
+        mDataset = hotels;
     }
 
+    @NonNull
     @Override
     public RecyclerViewAdapterHotelList.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.hotel_list_item, parent, false);
-        MyViewHolder myViewHolder = new MyViewHolder(view);
-        return myViewHolder;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_search_result, parent, false);
+        return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.hotel_name_tv.setText(mDataset.get(position).getHotel_name());
         holder.hotel_location_tv.setText(mDataset.get(position).getHotel_location());
-        holder.hotel_price_tv.setText("Rp. "+mDataset.get(position).getHotel_price());
+
+        Double price = Double.parseDouble(mDataset.get(position).getHotel_price());
+
+        DecimalFormat kurs = (DecimalFormat) DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+        formatRp.setCurrencySymbol("Rp. ");
+
+        kurs.setDecimalFormatSymbols(formatRp);
+        holder.hotel_price_tv.setText(kurs.format(price));
 
         String url = myURL.getImageUrl()+mDataset.get(position).getHotel_picture();
         new AsyncTaskLoadImage(holder.hotel_iv).execute(url);
 
         final Hotel hotel = mDataset.get(position);
-
-//        holder.checkBox.setOnCheckedChangeListener(null);
-        //holder.checkBox.setSelected(hotel.isSelected());
-//        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if(isChecked){
-//                    Log.d("gg", "ff");
-//                    hotel.setSelected(true);
-//                }else {
-//                    hotel.setSelected(false);
-//                }
-//            }
-//        });
-//        holder.checkBox.setChecked(hotel.isSelected());
     }
 
     @Override
@@ -88,6 +85,6 @@ public class RecyclerViewAdapterHotelList extends RecyclerView.Adapter<RecyclerV
         this.myClickListener = myClickListener;
     }
     public interface MyClickListener {
-        public void onItemClick(int position, View v);
+        void onItemClick(int position, View v);
     }
 }

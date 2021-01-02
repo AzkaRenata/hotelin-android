@@ -2,7 +2,7 @@ package com.example.hotelin_android.modul.hotel_detail;
 
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragmentHolderActivity;
-import com.example.hotelin_android.util.TokenSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 import com.example.hotelin_android.util.UtilProvider;
 
 public class HotelDetailActivity extends BaseFragmentHolderActivity {

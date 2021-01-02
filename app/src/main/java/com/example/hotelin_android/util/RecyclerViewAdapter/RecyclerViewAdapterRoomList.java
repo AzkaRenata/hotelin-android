@@ -1,6 +1,5 @@
-package com.example.hotelin_android.util;
+package com.example.hotelin_android.util.RecyclerViewAdapter;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,17 +7,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.model.Room;
 import com.example.hotelin_android.model.RoomGroup;
+import com.example.hotelin_android.util.AsyncTaskLoadImage;
+import com.example.hotelin_android.util.myURL;
 
 import java.util.List;
-
-import static com.example.hotelin_android.R.color.customPrimary;
-import static com.example.hotelin_android.R.color.customTextLight;
 
 public class RecyclerViewAdapterRoomList extends RecyclerView.Adapter<RecyclerViewAdapterRoomList.MyViewHolder> {
     private static List<RoomGroup> mDataset;

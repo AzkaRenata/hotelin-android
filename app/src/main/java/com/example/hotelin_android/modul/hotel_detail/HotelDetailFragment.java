@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
-import com.example.hotelin_android.util.TokenSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 
 public class HotelDetailFragment extends BaseFragment<HotelDetailActivity, HotelDetailContract.HotelDetailPresenter> implements HotelDetailContract.HotelDetailView {
     TokenSharedUtil tokenSharedUtil;

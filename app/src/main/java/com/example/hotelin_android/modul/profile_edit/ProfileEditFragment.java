@@ -28,7 +28,7 @@ import com.example.hotelin_android.model.UserTemp;
 import com.example.hotelin_android.modul.profile.ProfileActivity;
 import com.example.hotelin_android.modul.test.TestResponse;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.TokenSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 
