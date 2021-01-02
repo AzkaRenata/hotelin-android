@@ -2,7 +2,7 @@ package com.example.hotelin_android.modul.profile;
 
 import com.example.hotelin_android.model.UserTemp;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.TokenSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 
 public class ProfilePresenter implements ProfileContract.ProfilePresenter {
     ProfileContract.ProfileView view;

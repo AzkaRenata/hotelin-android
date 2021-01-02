@@ -22,7 +22,7 @@ import com.example.hotelin_android.modul.booking_history.BookingHistoryActivity;
 import com.example.hotelin_android.modul.cancel_detail.CancelDetailActivity;
 import com.example.hotelin_android.modul.register.RegisterActivity;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.TokenSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
 
 public class CancelBookingFragment extends BaseFragment<CancelBookingActivity, CancelBookingContract.Presenter> implements CancelBookingContract.View{

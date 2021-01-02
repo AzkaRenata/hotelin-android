@@ -1,7 +1,7 @@
 package com.example.hotelin_android.modul.change_password;
 
 import com.example.hotelin_android.base.BaseFragmentHolderActivity;
-import com.example.hotelin_android.util.TokenSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 import com.example.hotelin_android.util.UtilProvider;
 
 public class ChangePasswordActivity extends BaseFragmentHolderActivity {

@@ -7,6 +7,7 @@ public class myURL {
     public final static String LOGIN_URL = BASE_URL + "user/login/customer";
     public final static String REGISTER_URL = BASE_URL + "user/register/customer";
     public final static String SEARCH_HOTEL_URL = BASE_URL + "hotel/search/location";
+    public final static String GET_HOTEL_DETAIL_URL = BASE_URL + "hotel/detail-by-id/";
 
     public final static String PROFILE_URL = BASE_URL + "user";
     public final static String HOTEL_URL = BASE_URL + "hotel/detail/";

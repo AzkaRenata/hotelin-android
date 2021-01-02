@@ -18,7 +18,7 @@ import androidx.annotation.Nullable;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.modul.previewBooking.PreviewBookingActivity;
-import com.example.hotelin_android.util.TokenSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 
 import java.util.Calendar;
 

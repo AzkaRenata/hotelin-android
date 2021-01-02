@@ -22,7 +22,7 @@ import com.example.hotelin_android.model.Booking;
 import com.example.hotelin_android.model.SuccessMessage;
 import com.example.hotelin_android.modul.booking_history.BookingHistoryActivity;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.TokenSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
 
 public class PreviewBookingFragment extends BaseFragment<PreviewBookingActivity, PreviewBookingContract.Presenter> implements PreviewBookingContract.View {

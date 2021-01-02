@@ -1,7 +1,7 @@
 package com.example.hotelin_android.modul.search_result;
 
 import com.example.hotelin_android.base.BaseFragmentHolderActivity;
-import com.example.hotelin_android.util.TokenSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 import com.example.hotelin_android.util.UtilProvider;
 
 public class SearchResultActivity extends BaseFragmentHolderActivity {

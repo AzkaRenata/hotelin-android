@@ -21,7 +21,7 @@ import com.example.hotelin_android.model.UserTemp;
 import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.modul.register.RegisterActivity;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.TokenSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
 
 public class TestFragment extends BaseFragment<TestActivity, TestContract.Presenter> implements TestContract.View {

@@ -1,4 +1,4 @@
-package com.example.hotelin_android.util;
+package com.example.hotelin_android.util.SharedPreferences;
 
 import android.content.SharedPreferences;
 import android.util.Log;

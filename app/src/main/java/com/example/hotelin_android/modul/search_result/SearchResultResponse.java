@@ -6,4 +6,5 @@ import java.util.List;
 
 public class SearchResultResponse {
     public List<Hotel> hotelList;
+    public Hotel hotel;
 }

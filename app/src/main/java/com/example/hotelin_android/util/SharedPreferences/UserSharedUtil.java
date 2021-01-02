@@ -1,4 +1,4 @@
-package com.example.hotelin_android.util;
+package com.example.hotelin_android.util.SharedPreferences;
 
 import android.content.SharedPreferences;
 
@@ -28,8 +28,7 @@ public class UserSharedUtil {
     public User getUser(){
         Gson gson = new Gson();
         String json = sharedPreferences.getString("User", "");
-        Type type = new TypeToken<User>(){}.getType();
-        User user = gson.fromJson(json, type);
+        User user = gson.fromJson(json, User.class);
 
         return user;
     }

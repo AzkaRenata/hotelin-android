@@ -25,7 +25,7 @@ import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.model.SuccessMessage;
 import com.example.hotelin_android.modul.profile.ProfileActivity;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.TokenSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
 
 public class ChangePasswordFragment extends BaseFragment<ChangePasswordActivity, ChangePasswordContract.Presenter> implements ChangePasswordContract.View, View.OnClickListener {

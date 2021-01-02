@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -25,9 +26,11 @@ import com.example.hotelin_android.model.Hotel;
 import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.modul.room_list.RoomListActivity;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.TokenSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.HotelSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
+import com.example.hotelin_android.util.UtilProvider;
 import com.example.hotelin_android.util.myURL;
-import com.example.hotelin_android.util.RecyclerViewAdapterHotelList;
+import com.example.hotelin_android.util.RecyclerViewAdapter.RecyclerViewAdapterHotelList;
 
 import java.util.List;
 
@@ -37,11 +40,13 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
     private RecyclerView mRecyclerView;
     private RelativeLayout rlNoResult;
     private RecyclerView.Adapter mAdapter;
-    private ProgressBar loading;
+    private RelativeLayout loading;
+    private final HotelSharedUtil hotelSharedUtil;
 
     public SearchResultFragment(String hotel_location, TokenSharedUtil tokenSharedUtil) {
         this.hotel_location = hotel_location;
         this.tokenSharedUtil = tokenSharedUtil;
+        hotelSharedUtil = UtilProvider.getHotelSharedUtil();
     }
 
     @Nullable
@@ -67,7 +72,7 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(activity);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mPresenter.getData(hotel_location);
+        mPresenter.getHotelList(hotel_location);
 
         tvTitle.setText("Hotel di " + hotel_location);
 
@@ -77,12 +82,6 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
     @Override
     public void setPresenter(SearchResultContract.Presenter presenter) {
         mPresenter = presenter;
-    }
-
-    @Override
-    public void redirectToHome() {
-        Intent intent = new Intent(activity, HomeActivity.class);
-        startActivity(intent);
     }
 
     public void redirectToRoomList(int id, String hotel_name){
@@ -125,6 +124,7 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
             public void onItemClick(int position, View v) {
                 int id = hotels.get(position).getId();
                 String hotel_name = hotels.get(position).getHotel_name();
+                mPresenter.getHotelDetail(id);
                 redirectToRoomList(id, hotel_name);
             }
         });
@@ -136,15 +136,45 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
         }
     }
 
+    public void requestHotelDetail(final int id, final RequestCallback<SearchResultResponse> requestCallback) {
+        AndroidNetworking.get(myURL.GET_HOTEL_DETAIL_URL + id)
+                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
+                .setTag(this)
+                .setPriority(Priority.LOW)
+                .build()
+                .getAsObject(SearchResultResponse.class, new ParsedRequestListener<SearchResultResponse>() {
+                    @Override
+                    public void onResponse(SearchResultResponse response) {
+                        if(response == null){
+                            requestCallback.requestFailed("Null Response");
+                        }else{
+                            requestCallback.requestSuccess(response);
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        requestCallback.requestFailed(anError.getMessage());
+                    }
+                });
+    }
+
+    public void saveHotel(Hotel hotel){
+        hotelSharedUtil.setHotel(hotel);
+    }
+
     public void showFailedMessage(String message){
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT);
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     public void startLoading(){
         loading.setVisibility(View.VISIBLE);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
     public void stopLoading(){
         loading.setVisibility(View.GONE);
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 }
