@@ -3,6 +3,7 @@ package com.example.hotelin_android.modul.login;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -160,9 +161,8 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
         userSharedUtil.setUser(user);
     }
 
-    @SuppressLint("ShowToast")
     public void showFailedMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT);
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
     @Override
     public void showSuccessMessage() {

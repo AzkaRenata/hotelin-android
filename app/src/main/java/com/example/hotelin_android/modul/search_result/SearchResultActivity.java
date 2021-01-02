@@ -6,7 +6,6 @@ import com.example.hotelin_android.util.UtilProvider;
 
 public class SearchResultActivity extends BaseFragmentHolderActivity {
     SearchResultFragment testFragment;
-    private final int UPDATE_REQUEST = 2019;
     TokenSharedUtil tokenSharedUtil;
 
     @Override

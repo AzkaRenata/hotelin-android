@@ -5,5 +5,5 @@ import com.example.hotelin_android.model.Hotel;
 import java.util.List;
 
 public class SearchResultResponse {
-    public List<Hotel> hotels;
+    public List<Hotel> hotelList;
 }

@@ -10,8 +10,8 @@
 
     <ScrollView
         android:id="@+id/scroll1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="391dp"
+        android:layout_height="395dp"
         android:layout_below="@+id/top_layout"
         android:layout_marginHorizontal="20dp">
 
@@ -53,7 +53,7 @@
                 android:ems="10"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:hint="Search Location"
+                android:hint="Lokasi"
                 android:inputType="text"
                 android:padding="10dp"
                 android:textSize="16sp" />
@@ -70,16 +70,16 @@
                     android:layout_width="170dp"
                     android:layout_height="35dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginEnd="5dp"
                     android:background="@drawable/rounded_border2"
                     android:drawableStart="@drawable/ic_in"
                     android:drawablePadding="5dp"
-                    android:layout_marginEnd="5dp"
                     android:ems="10"
-                    android:visibility="gone"
                     android:hint="Check In"
                     android:inputType="date"
                     android:paddingTop="7dp"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/room_list_check_out_tv"
@@ -91,12 +91,11 @@
                     android:drawableStart="@drawable/ic_out"
                     android:drawablePadding="5dp"
                     android:ems="10"
-                    android:visibility="gone"
                     android:hint="Check Out"
                     android:inputType="date"
                     android:paddingTop="7dp"
-                    android:textSize="16sp" />
-
+                    android:textSize="16sp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <Button
@@ -104,9 +103,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/date_ll"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/button_color"
-                android:text="Search"
+                android:text="Cari"
                 android:textColor="#ffffff"
                 android:textSize="22sp" />
         </RelativeLayout>

@@ -9,9 +9,13 @@ import java.util.List;
 
 public interface SearchResultContract {
     interface View extends BaseView<Presenter> {
+        void setItems();
+        void startLoading();
+        void stopLoading();
         void redirectToHome();
         void setResult(List<Hotel> data);
-        void searchHotel(String location, final RequestCallback<List<Hotel>> requestCallback);
+        void checkResult();
+        void searchHotel(String location, final RequestCallback<SearchResultResponse> requestCallback);
         void showFailedMessage(String message);
     }
 

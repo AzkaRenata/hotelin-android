@@ -15,11 +15,10 @@ public class LoginPresenter implements LoginContract.Presenter{
     @Override
     public void start() {
         view.setItems();
-        /*
+
         if(sessionRepository.getToken() != null){
             view.redirectToHome();
         }
-         */
     }
 
     @Override

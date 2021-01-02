@@ -8,7 +8,9 @@ public class HomePresenter implements HomeContract.Presenter{
     }
 
     @Override
-    public void start() {}
+    public void start() {
+        view.setItems();
+    }
 
     public void search(String location){
         view.redirectToSearchResult(location);

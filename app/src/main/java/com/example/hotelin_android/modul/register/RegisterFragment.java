@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,21 +33,15 @@ import com.google.android.material.textfield.TextInputLayout;
 import static com.example.hotelin_android.R.id.*;
 
 public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterContract.Presenter> implements RegisterContract.View {
-    EditText etUsername;
-    EditText etEmail;
-    EditText etPassword;
-    EditText etConfirmPassword;
-    EditText etFullname;
-    EditText etTelp;
-    EditText etAddress;
+    private EditText etUsername;
+    private EditText etEmail;
+    private EditText etPassword;
+    private EditText etConfirmPassword;
+    private EditText etFullname;
+    private EditText etTelp;
+    private EditText etAddress;
 
-    RadioGroup rgGender;
-    RadioButton rbGenderMale;
-    RadioButton rbGenderFemale;
-    Button btnRegister;
-    TextView tvLogin;
-
-    String gender = "male";
+    private String gender = "male";
 
     public RegisterFragment() {}
 
@@ -68,6 +61,10 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
         TextInputLayout tilPassword;
         TextInputLayout tilConfirmPassword;
 
+        RadioGroup rgGender;
+        Button btnRegister;
+        TextView tvLogin;
+
         etUsername = fragmentView.findViewById(usernameR);
         etEmail = fragmentView.findViewById(emailR);
         etPassword = fragmentView.findViewById(passwordR);
@@ -75,9 +72,8 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
         etFullname = fragmentView.findViewById(fullnameR);
         etTelp = fragmentView.findViewById(telpR);
         etAddress = fragmentView.findViewById(addressR);
+
         rgGender = fragmentView.findViewById(genderR);
-        rbGenderMale = fragmentView.findViewById(radio_maleR);
-        rbGenderFemale = fragmentView.findViewById(radio_femaleR);
         btnRegister = fragmentView.findViewById(register_btnR);
         tvLogin = fragmentView.findViewById(login);
         tilPassword = fragmentView.findViewById(register_password_til);

@@ -6,6 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -29,11 +32,12 @@ import com.example.hotelin_android.util.RecyclerViewAdapterHotelList;
 import java.util.List;
 
 public class SearchResultFragment extends BaseFragment<SearchResultActivity, SearchResultContract.Presenter> implements SearchResultContract.View {
-    TokenSharedUtil tokenSharedUtil;
-    String hotel_location;
-    RecyclerView mRecyclerView;
+    private final TokenSharedUtil tokenSharedUtil;
+    private final String hotel_location;
+    private RecyclerView mRecyclerView;
+    private RelativeLayout rlNoResult;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private ProgressBar loading;
 
     public SearchResultFragment(String hotel_location, TokenSharedUtil tokenSharedUtil) {
         this.hotel_location = hotel_location;
@@ -44,9 +48,20 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        fragmentView = inflater.inflate(R.layout.hotel_list, container, false);
+        fragmentView = inflater.inflate(R.layout.fragment_search_result, container, false);
         mPresenter = new SearchResultPresenter(this);
         mPresenter.start();
+
+        return fragmentView;
+    }
+
+    public void setItems(){
+        TextView tvTitle;
+        RecyclerView.LayoutManager mLayoutManager;
+
+        tvTitle = fragmentView.findViewById(R.id.search_result_title);
+        rlNoResult = fragmentView.findViewById(R.id.no_result_layout);
+        loading = fragmentView.findViewById(R.id.search_result_loading);
 
         mRecyclerView = fragmentView.findViewById(R.id.recyclerViewHotelList);
         mRecyclerView.setHasFixedSize(true);
@@ -54,10 +69,10 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
         mRecyclerView.setLayoutManager(mLayoutManager);
         mPresenter.getData(hotel_location);
 
-        setTitle("Hotel List");
-        return fragmentView;
-    }
+        tvTitle.setText("Hotel di " + hotel_location);
 
+        setTitle("Hasil Pencarian");
+    }
 
     @Override
     public void setPresenter(SearchResultContract.Presenter presenter) {
@@ -77,24 +92,19 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
         startActivity(intent);
     }
 
-    public void saveToken(String token){
-        tokenSharedUtil.setToken(token);
-    }
-
     @Override
-    public void searchHotel(final String hotel_location, final RequestCallback<List<Hotel>> requestCallback) {
+    public void searchHotel(final String hotel_location, final RequestCallback<SearchResultResponse> requestCallback) {
         AndroidNetworking.get(myURL.SEARCH_HOTEL_URL)
                 .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .addQueryParameter("hotel_location", hotel_location)
                 .setTag(this)
                 .setPriority(Priority.LOW)
                 .build()
-                .getAsObjectList(Hotel.class, new ParsedRequestListener<List<Hotel>>() {
+                .getAsObject(SearchResultResponse.class, new ParsedRequestListener<SearchResultResponse>() {
                     @Override
-                    public void onResponse(List<Hotel> response) {
+                    public void onResponse(SearchResultResponse response) {
                         if(response == null){
                             requestCallback.requestFailed("Null Response");
-                            Log.d("tag", "response null");
                         }else{
                             requestCallback.requestSuccess(response);
                         }
@@ -103,7 +113,6 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
                     @Override
                     public void onError(ANError anError) {
                         requestCallback.requestFailed(anError.getMessage());
-                        Log.d("tag", "error gan" + anError.getMessage() + anError.getErrorCode());
                     }
                 });
     }
@@ -119,10 +128,23 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
                 redirectToRoomList(id, hotel_name);
             }
         });
+    }
 
+    public void checkResult(){
+        if(mAdapter.getItemCount() == 0){
+            rlNoResult.setVisibility(View.VISIBLE);
+        }
     }
 
     public void showFailedMessage(String message){
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT);
+    }
+
+    public void startLoading(){
+        loading.setVisibility(View.VISIBLE);
+    }
+
+    public void stopLoading(){
+        loading.setVisibility(View.GONE);
     }
 }
