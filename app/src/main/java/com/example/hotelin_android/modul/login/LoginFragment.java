@@ -89,12 +89,19 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
         });
     }
 
-    private boolean validateLogin() {
-        AwesomeValidation mAwesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
-        mAwesomeValidation.addValidation(activity, R.id.login_email_et, Patterns.EMAIL_ADDRESS, R.string.error_email_valid);
-        mAwesomeValidation.addValidation(activity, R.id.login_email_et, Patterns.EMAIL_ADDRESS, R.string.error_email_empty);
-        mAwesomeValidation.addValidation(activity, R.id.login_password_et, RegexTemplate.NOT_EMPTY, R.string.error_password_empty);
-        return mAwesomeValidation.validate();
+    public boolean validateLogin() {
+        AwesomeValidation emptyValidation = new AwesomeValidation(ValidationStyle.BASIC);
+        emptyValidation.addValidation(activity, R.id.login_email_et, RegexTemplate.NOT_EMPTY, R.string.error_email_empty);
+        emptyValidation.addValidation(activity, R.id.login_password_et, RegexTemplate.NOT_EMPTY, R.string.error_password_empty);
+
+        if(emptyValidation.validate()){
+            AwesomeValidation extraValidation = new AwesomeValidation(ValidationStyle.BASIC);
+            extraValidation.addValidation(activity, R.id.login_email_et, Patterns.EMAIL_ADDRESS, R.string.error_email_valid);
+
+            return extraValidation.validate();
+        }else{
+            return emptyValidation.validate();
+        }
     }
 
     public void setBtLoginClick() {
@@ -108,11 +115,6 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
     public void setTvRegisterClick() {
         Intent intent = new Intent(activity, RegisterActivity.class);
         startActivity(intent);
-    }
-
-    @Override
-    public void setPresenter(LoginContract.Presenter presenter) {
-        mPresenter = presenter;
     }
 
     @Override
@@ -166,5 +168,10 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
     public void showSuccessMessage() {
         String name = userSharedUtil.getUser().getName();
         Toast.makeText(getContext(), "Selamat Datang, " + name, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setPresenter(LoginContract.Presenter presenter) {
+        mPresenter = presenter;
     }
 }

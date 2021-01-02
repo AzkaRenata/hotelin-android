@@ -1,7 +1,6 @@
 package com.example.hotelin_android.modul.home;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,7 +29,7 @@ public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presen
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        fragmentView = inflater.inflate(R.layout.home_activity, container, false);
+        fragmentView = inflater.inflate(R.layout.fragment_home, container, false);
         mPresenter = new HomePresenter(this);
         mPresenter.start();
 
