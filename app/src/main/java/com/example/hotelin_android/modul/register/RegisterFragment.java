@@ -3,7 +3,6 @@ package com.example.hotelin_android.modul.register;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,14 +20,16 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
-import com.example.hotelin_android.model.UserTemp;
+import com.example.hotelin_android.model.User;
 import com.example.hotelin_android.modul.login.LoginActivity;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.TokenSharedUtil;
-import com.example.hotelin_android.util.UserSharedUtil;
 import com.example.hotelin_android.util.myURL;
+import com.google.android.material.textfield.TextInputLayout;
 
 import static com.example.hotelin_android.R.id.*;
 
@@ -40,17 +41,16 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
     EditText etFullname;
     EditText etTelp;
     EditText etAddress;
-    String gender;
+
     RadioGroup rgGender;
     RadioButton rbGenderMale;
     RadioButton rbGenderFemale;
     Button btnRegister;
     TextView tvLogin;
-    TokenSharedUtil tokenSharedUtil;
-    UserSharedUtil userSharedUtil;
 
-    public RegisterFragment() {
-    }
+    String gender = "male";
+
+    public RegisterFragment() {}
 
     @Nullable
     @Override
@@ -60,12 +60,14 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
         mPresenter = new RegisterPresenter(this);
         mPresenter.start();
 
-
-
         return fragmentView;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     public void setItems(){
+        TextInputLayout tilPassword;
+        TextInputLayout tilConfirmPassword;
+
         etUsername = fragmentView.findViewById(usernameR);
         etEmail = fragmentView.findViewById(emailR);
         etPassword = fragmentView.findViewById(passwordR);
@@ -78,11 +80,15 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
         rbGenderFemale = fragmentView.findViewById(radio_femaleR);
         btnRegister = fragmentView.findViewById(register_btnR);
         tvLogin = fragmentView.findViewById(login);
+        tilPassword = fragmentView.findViewById(register_password_til);
+        tilConfirmPassword = fragmentView.findViewById(register_confirm_password_til);
+
+        tilPassword.setHintEnabled(false);
+        tilConfirmPassword.setHintEnabled(false);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("tes", "tes1");
                 setBtRegisterClick();
             }
         });
@@ -99,47 +105,51 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
         rgGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                checkGender(group, checkedId);
+                checkGender(checkedId);
             }
         });
     }
 
-    public void checkGender(RadioGroup group, int checkedId){
+    @SuppressLint("NonConstantResourceId")
+    public void checkGender(int checkedId){
         switch (checkedId){
             case radio_maleR:
                 gender = "male";
-                Log.e("tes", gender);
                 break;
             case radio_femaleR:
                 gender = "female";
-                Log.e("tes", gender);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + checkedId);
         }
     }
 
+    public boolean validateForm() {
+        AwesomeValidation emptyValidation = new AwesomeValidation(ValidationStyle.BASIC);
+        emptyValidation.addValidation(activity, usernameR, RegexTemplate.NOT_EMPTY, R.string.error_username_empty);
+        emptyValidation.addValidation(activity, fullnameR, RegexTemplate.NOT_EMPTY, R.string.error_name_empty);
+        emptyValidation.addValidation(activity, emailR, RegexTemplate.NOT_EMPTY, R.string.error_email_empty);
+        emptyValidation.addValidation(activity, passwordR, RegexTemplate.NOT_EMPTY, R.string.error_password_empty);
+
+        return emptyValidation.validate();
+    }
+
     public void setBtRegisterClick(){
-        String fullname = etFullname.getText().toString();
-        String username = etUsername.getText().toString();
-        String password = etPassword.getText().toString();
-        String email = etEmail.getText().toString();
-        String telp = etTelp.getText().toString();
-        String address = etAddress.getText().toString();
+        if(validateForm()){
+            String name = etFullname.getText().toString();
+            String username = etUsername.getText().toString();
+            String email = etEmail.getText().toString();
+            String telp = etTelp.getText().toString();
+            String address = etAddress.getText().toString();
+            User user = new User(0, username, name, email, gender, telp, address, null);
 
-        UserTemp newUserTemp = new UserTemp(username, fullname, email, password, 2, gender, telp,address, null);
-
-        mPresenter.performRegister(newUserTemp);
+            mPresenter.performRegister(user);
+        }
     }
 
     public void setTvLoginClick(){
         Intent intent = new Intent(activity, LoginActivity.class);
         startActivity(intent);
-    }
-
-    @Override
-    public void setPresenter(RegisterContract.Presenter presenter) {
-        mPresenter = presenter;
     }
 
     @Override
@@ -149,20 +159,21 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
     }
 
     @Override
-    public void requestRegister(final UserTemp newUserTemp, final RequestCallback<RegisterResponse> requestCallback) {
-        AndroidNetworking.post(myURL.CUSTOMER_REGISTER_URL)
-                .addBodyParameter("username", newUserTemp.getUsername())
-                .addBodyParameter("name", newUserTemp.getName())
-                .addBodyParameter("email", newUserTemp.getEmail())
-                .addBodyParameter("password", newUserTemp.getPassword())
-                .addBodyParameter("password_confirmation", etConfirmPassword.getText().toString())
-                .addBodyParameter("gender", newUserTemp.getGender())
-                .addBodyParameter("telp", newUserTemp.getTelp())
-                .addBodyParameter("address", newUserTemp.getAddress())
+    public void requestRegister(final User user, final RequestCallback<RegisterResponse> requestCallback) {
+        String password = etPassword.getText().toString();
+        String confirm_password = etConfirmPassword.getText().toString();
+        AndroidNetworking.post(myURL.REGISTER_URL)
+                .addBodyParameter("username", user.getUsername())
+                .addBodyParameter("name", user.getName())
+                .addBodyParameter("email", user.getEmail())
+                .addBodyParameter("password", password)
+                .addBodyParameter("password_confirmation", confirm_password)
+                .addBodyParameter("gender", user.getGender())
+                .addBodyParameter("telp", user.getTelp())
+                .addBodyParameter("address", user.getAddress())
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsObject(RegisterResponse.class, new ParsedRequestListener<RegisterResponse>() {
-
                     @Override
                     public void onResponse(RegisterResponse response) {
                         if(response == null){
@@ -174,14 +185,11 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
 
                     @Override
                     public void onError(ANError anError) {
-                        if(anError.getErrorCode() == 401) {
-                            Log.e("tesqqq", "ERROR", anError);
-                            requestCallback.requestFailed("Please input a valid e-mail");
-                        }else {
-                            Log.e("tesww", String.valueOf(anError.getErrorCode()));
-                            Log.e("teswwwww", "fdfd" + anError.getErrorBody());
-                            Log.e("teswwww", "fdfdsasa" + anError.getErrorDetail());
-                            requestCallback.requestFailed("Server Error !");
+                        if(anError.getErrorCode() == 400) {
+                            String error = anError.getResponse().header("error");
+                            requestCallback.requestFailed(error);
+                        }else{
+                            requestCallback.requestFailed("Ada yang Salah");
                         }
                     }
                 });
@@ -189,14 +197,17 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
 
     @Override
     public void showSuccessMessage() {
-        Toast.makeText(getContext(), "Register Success", Toast.LENGTH_SHORT).show();
-        Log.e("tes", "success");
+        Toast.makeText(getContext(), "User Berhasil Didaftarkan", Toast.LENGTH_SHORT).show();
         redirectToLogin();
     }
 
     @Override
     public void showErrorMessage(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-        Log.e("tes", "failed");
+    }
+
+    @Override
+    public void setPresenter(RegisterContract.Presenter presenter) {
+        mPresenter = presenter;
     }
 }

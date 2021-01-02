@@ -3,8 +3,9 @@ package com.example.hotelin_android.util;
 public class myURL {
     private final static String BASE_URL = "http://192.168.1.5:8000/api/";
     private final static String IMAGE_URL = "http://192.168.1.5:8000/storage/";
+
     public final static String LOGIN_URL = BASE_URL + "user/login/customer";
-    public final static String CUSTOMER_REGISTER_URL = BASE_URL + "user/registerCustomer";
+    public final static String REGISTER_URL = BASE_URL + "user/register/customer";
     public final static String PROFILE_URL = BASE_URL + "user";
     public final static String HOTEL_URL = BASE_URL + "hotel/detail/";
     public final static String BOOKING_URL = BASE_URL + "booking/create";

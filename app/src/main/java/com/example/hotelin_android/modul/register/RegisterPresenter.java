@@ -1,8 +1,6 @@
 package com.example.hotelin_android.modul.register;
 
-import android.util.Log;
-
-import com.example.hotelin_android.model.UserTemp;
+import com.example.hotelin_android.model.User;
 import com.example.hotelin_android.util.RequestCallback;
 
 public class RegisterPresenter implements RegisterContract.Presenter{
@@ -18,12 +16,12 @@ public class RegisterPresenter implements RegisterContract.Presenter{
     }
 
     @Override
-    public void performRegister(UserTemp newUserTemp){
-        Log.e("tes", "tes4");
-        view.requestRegister(newUserTemp, new RequestCallback<RegisterResponse>() {
+    public void performRegister(User user){
+        view.requestRegister(user, new RequestCallback<RegisterResponse>() {
             @Override
             public void requestSuccess(RegisterResponse data) {
                 view.showSuccessMessage();
+                view.redirectToLogin();
             }
 
             @Override

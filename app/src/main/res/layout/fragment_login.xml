@@ -64,7 +64,7 @@
                     android:fontFamily="@font/semibold"
                     android:inputType="textPassword"
                     android:textColor="#707070"
-                    android:paddingLeft="16dp"/>
+                    android:paddingLeft="16dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
