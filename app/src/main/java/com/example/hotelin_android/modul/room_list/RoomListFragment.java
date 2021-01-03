@@ -79,7 +79,7 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
     public void setItems(){
         mRecyclerView = fragmentView.findViewById(R.id.recyclerViewRoomList);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false);
+        mLayoutManager = new LinearLayoutManager(activity);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         tvCheckIn = fragmentView.findViewById(R.id.room_list_check_in_tv);

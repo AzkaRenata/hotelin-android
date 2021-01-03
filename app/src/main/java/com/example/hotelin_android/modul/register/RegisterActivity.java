@@ -17,7 +17,7 @@ public class RegisterActivity extends BaseFragmentHolderActivity {
 
     @Override
     protected void initializeView() {
-        setContentView(R.layout.base_loginregister_layout);
+        setContentView(R.layout.base_loginregister_activity);
         flFragmentContainer = findViewById(R.id.flFragmentContainer);
         rlActivityFragmentHolder = findViewById(R.id.rlActivityFragmentHolder);
         loading = (RelativeLayout) findViewById(R.id.loading_screen);
