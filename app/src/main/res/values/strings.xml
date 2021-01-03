@@ -35,4 +35,18 @@
     <string name="hotel_name_text">Nama Hotel</string>
     <string name="hotel_location_text">Lokasi Hotel</string>
     <string name="price_text">Harga</string>
+
+    <string name="check_in_text">Check In</string>
+    <string name="check_out_text">Check Out</string>
+    <string name="find_room_text">Tampilkan Kamar</string>
+
+    <string name="room_title_text">Kode Kamar - Tipe Kamar</string>
+    <string name="room_code_text">Kode Kamar</string>
+    <string name="room_type_text">Tipe Kamar</string>
+    <string name="bed_type_text">Tipe Kasur</string>
+    <string name="bed_count_text">Jumlah Kasur</string>
+    <string name="bed_text">Tipe Kasur (Jumlah Kasur)</string>
+    <string name="guest_capacity_text">Kapasitas</string>
+    <string name="select_room_text">Pilih Kamar</string>
+    <string name="not_available_text">Tidak Tersedia</string>
 </resources>

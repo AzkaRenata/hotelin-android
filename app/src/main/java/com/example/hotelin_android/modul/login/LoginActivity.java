@@ -4,12 +4,11 @@ import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragmentHolderActivity;
 
 public class LoginActivity extends BaseFragmentHolderActivity {
-    LoginFragment loginFragment;
 
     @Override
     protected void initializeFragment() {
         initializeView();
-        loginFragment = new LoginFragment();
+        LoginFragment loginFragment = new LoginFragment();
         setCurrentFragment(loginFragment, false);
     }
 
@@ -18,5 +17,6 @@ public class LoginActivity extends BaseFragmentHolderActivity {
         setContentView(R.layout.base_loginregister_layout);
         flFragmentContainer = findViewById(R.id.flFragmentContainer);
         rlActivityFragmentHolder = findViewById(R.id.rlActivityFragmentHolder);
+        loading = findViewById(R.id.loading_screen);
     }
 }

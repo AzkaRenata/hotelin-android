@@ -60,20 +60,17 @@ public class RecyclerViewAdapterHotelList extends RecyclerView.Adapter<RecyclerV
         holder.hotel_name_tv.setText(mDataset.get(position).getHotel_name());
         holder.hotel_location_tv.setText(mDataset.get(position).getHotel_location());
 
-        Double price = Double.parseDouble(mDataset.get(position).getHotel_price());
-
         DecimalFormat kurs = (DecimalFormat) DecimalFormat.getCurrencyInstance();
         DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
-
         formatRp.setCurrencySymbol("Rp. ");
-
         kurs.setDecimalFormatSymbols(formatRp);
-        holder.hotel_price_tv.setText(kurs.format(price));
 
-        String url = myURL.getImageUrl()+mDataset.get(position).getHotel_picture();
-        new AsyncTaskLoadImage(holder.hotel_iv).execute(url);
+        holder.hotel_price_tv.setText(kurs.format(mDataset.get(position).getHotel_price()));
 
-        final Hotel hotel = mDataset.get(position);
+        if(mDataset.get(position).getHotel_picture() != null){
+            String url = myURL.getImageUrl() + mDataset.get(position).getHotel_picture();
+            new AsyncTaskLoadImage(holder.hotel_iv).execute(url);
+        }
     }
 
     @Override
@@ -82,7 +79,7 @@ public class RecyclerViewAdapterHotelList extends RecyclerView.Adapter<RecyclerV
     }
 
     public void setOnItemClickListener(MyClickListener myClickListener) {
-        this.myClickListener = myClickListener;
+        RecyclerViewAdapterHotelList.myClickListener = myClickListener;
     }
     public interface MyClickListener {
         void onItemClick(int position, View v);

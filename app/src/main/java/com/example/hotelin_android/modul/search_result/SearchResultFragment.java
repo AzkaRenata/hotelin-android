@@ -1,13 +1,11 @@
 package com.example.hotelin_android.modul.search_result;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.Adapter;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -23,7 +22,6 @@ import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.model.Hotel;
-import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.modul.room_list.RoomListActivity;
 import com.example.hotelin_android.util.RequestCallback;
 import com.example.hotelin_android.util.SharedPreferences.HotelSharedUtil;
@@ -39,13 +37,12 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
     private final String hotel_location;
     private RecyclerView mRecyclerView;
     private RelativeLayout rlNoResult;
-    private RecyclerView.Adapter mAdapter;
-    private RelativeLayout loading;
+    private Adapter mAdapter;
     private final HotelSharedUtil hotelSharedUtil;
 
-    public SearchResultFragment(String hotel_location, TokenSharedUtil tokenSharedUtil) {
+    public SearchResultFragment(String hotel_location) {
         this.hotel_location = hotel_location;
-        this.tokenSharedUtil = tokenSharedUtil;
+        tokenSharedUtil = UtilProvider.getTokenSharedUtil();
         hotelSharedUtil = UtilProvider.getHotelSharedUtil();
     }
 
@@ -54,19 +51,19 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         fragmentView = inflater.inflate(R.layout.fragment_search_result, container, false);
-        mPresenter = new SearchResultPresenter(this);
+        mPresenter = new SearchResultPresenter(this, activity);
         mPresenter.start();
 
         return fragmentView;
     }
 
+    @SuppressLint("SetTextI18n")
     public void setItems(){
         TextView tvTitle;
         RecyclerView.LayoutManager mLayoutManager;
 
         tvTitle = fragmentView.findViewById(R.id.search_result_title);
         rlNoResult = fragmentView.findViewById(R.id.no_result_layout);
-        loading = fragmentView.findViewById(R.id.search_result_loading);
 
         mRecyclerView = fragmentView.findViewById(R.id.recyclerViewHotelList);
         mRecyclerView.setHasFixedSize(true);
@@ -79,15 +76,8 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
         setTitle("Hasil Pencarian");
     }
 
-    @Override
-    public void setPresenter(SearchResultContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
-    public void redirectToRoomList(int id, String hotel_name){
+    public void redirectToRoomList(){
         Intent intent = new Intent(activity, RoomListActivity.class);
-        intent.putExtra("hotel_id", id);
-        intent.putExtra("hotel_name", hotel_name);
         startActivity(intent);
     }
 
@@ -123,9 +113,7 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
             @Override
             public void onItemClick(int position, View v) {
                 int id = hotels.get(position).getId();
-                String hotel_name = hotels.get(position).getHotel_name();
                 mPresenter.getHotelDetail(id);
-                redirectToRoomList(id, hotel_name);
             }
         });
     }
@@ -167,14 +155,8 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    public void startLoading(){
-        loading.setVisibility(View.VISIBLE);
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-    }
-
-    public void stopLoading(){
-        loading.setVisibility(View.GONE);
-        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    @Override
+    public void setPresenter(SearchResultContract.Presenter presenter) {
+        mPresenter = presenter;
     }
 }
