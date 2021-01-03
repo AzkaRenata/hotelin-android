@@ -4,21 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoomGroup {
-    private List<Room> rooms;
+    private List<RoomTemp> roomTemps;
 
     public RoomGroup() {
-        rooms = new ArrayList<>();
+        roomTemps = new ArrayList<>();
     }
 
-    public void setRooms(List<Room> rooms) {
-        this.rooms = rooms;
+    public void setRoomTemps(List<RoomTemp> roomTemps) {
+        this.roomTemps = roomTemps;
     }
 
-    public void setRoom(Room room) {
-        this.rooms.add(room);
+    public void setRoom(RoomTemp roomTemp) {
+        this.roomTemps.add(roomTemp);
     }
 
-    public List<Room> getRooms() {
-        return rooms;
+    public List<RoomTemp> getRoomTemps() {
+        return roomTemps;
     }
 }

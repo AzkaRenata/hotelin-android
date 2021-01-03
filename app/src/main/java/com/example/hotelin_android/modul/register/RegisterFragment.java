@@ -42,8 +42,6 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
     private EditText etFullname;
     private EditText etTelp;
     private EditText etAddress;
-    private RelativeLayout loading;
-
     private String gender = "male";
 
     public RegisterFragment() {}
@@ -53,7 +51,7 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         fragmentView = inflater.inflate(R.layout.fragment_register, container, false);
-        mPresenter = new RegisterPresenter(this);
+        mPresenter = new RegisterPresenter(this, activity);
         mPresenter.start();
 
         return fragmentView;
@@ -75,7 +73,6 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
         etFullname = fragmentView.findViewById(fullnameR);
         etTelp = fragmentView.findViewById(telpR);
         etAddress = fragmentView.findViewById(addressR);
-        loading = fragmentView.findViewById(register_loading);
 
         rgGender = fragmentView.findViewById(genderR);
         btnRegister = fragmentView.findViewById(register_btnR);
@@ -135,7 +132,6 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
     }
 
     public void setBtRegisterClick(){
-        startLoading();
         if(validateForm()){
             String name = etFullname.getText().toString();
             String username = etUsername.getText().toString();
@@ -146,14 +142,11 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
 
             mPresenter.performRegister(user);
         }
-        stopLoading();
     }
 
     public void setTvLoginClick(){
-        startLoading();
         Intent intent = new Intent(activity, LoginActivity.class);
         startActivity(intent);
-        stopLoading();
     }
 
     @Override
@@ -202,25 +195,12 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
     @Override
     public void showSuccessMessage() {
         Toast.makeText(getContext(), "User Berhasil Didaftarkan", Toast.LENGTH_SHORT).show();
-        redirectToLogin();
     }
 
     @Override
     public void showErrorMessage(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
-
-    public void startLoading(){
-        loading.setVisibility(View.VISIBLE);
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-    }
-
-    public void stopLoading(){
-        loading.setVisibility(View.GONE);
-        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-    }
-
     @Override
     public void setPresenter(RegisterContract.Presenter presenter) {
         mPresenter = presenter;

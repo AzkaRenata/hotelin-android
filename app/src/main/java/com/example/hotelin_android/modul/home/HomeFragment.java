@@ -24,7 +24,7 @@ public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presen
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         fragmentView = inflater.inflate(R.layout.fragment_home, container, false);
-        mPresenter = new HomePresenter(this);
+        mPresenter = new HomePresenter(this, activity);
         mPresenter.start();
 
         return fragmentView;

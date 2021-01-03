@@ -1,83 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="15dp" >
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/search_result_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="15dp">
-
-        <TextView
-            android:id="@+id/search_result_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/bold"
-            android:padding="2dp"
-            android:text="Hotel di Lokasi"
-            android:textColor="#707070"
-            android:textSize="20dp" />
-
-        <RelativeLayout
-            android:id="@+id/no_result_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/no_result_icon"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/ic_search">
-
-            </ImageView>
-            <TextView
-                android:layout_below="@+id/no_result_icon"
-                android:id="@+id/search_result_empty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Tidak Ditemukan Hotel"
-                android:textStyle="bold"
-                android:textSize="24sp">
-
-            </TextView>
-        </RelativeLayout>
-
-        <ScrollView
-            android:id="@+id/search_result_sv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/search_result_title">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginTop="10dp"
-                android:paddingBottom="30dp"
-                android:id="@+id/recyclerViewHotelList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </ScrollView>
-    </RelativeLayout>
+        android:fontFamily="@font/bold"
+        android:layout_marginTop="10dp"
+        android:padding="2dp"
+        android:text="Hotel di Lokasi"
+        android:textColor="#707070"
+        android:textSize="20dp" />
 
     <RelativeLayout
-        android:id="@+id/search_result_loading"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#50707070"
-        android:visibility="gone"
-        >
-        <ProgressBar
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_centerInParent="true"
-            android:indeterminateTint="@color/hotelinPrimary"
-            />
+        android:id="@+id/no_result_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/no_result_icon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_search">
+
+        </ImageView>
+        <TextView
+            android:layout_below="@+id/no_result_icon"
+            android:id="@+id/search_result_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Tidak Ditemukan Hotel"
+            android:textStyle="bold"
+            android:textSize="24sp">
+
+        </TextView>
     </RelativeLayout>
 
+    <ScrollView
+        android:id="@+id/search_result_sv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_result_title">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="10dp"
+            android:paddingBottom="30dp"
+            android:id="@+id/recyclerViewHotelList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
 </RelativeLayout>

@@ -4,38 +4,35 @@ import com.example.hotelin_android.util.RequestCallback;
 import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 
 public class LoginPresenter implements LoginContract.Presenter{
+    private final LoginActivity activity;
     private final LoginContract.View view;
-    private final TokenSharedUtil sessionRepository;
 
-    public LoginPresenter(LoginContract.View view, TokenSharedUtil sessionRepository) {
+    public LoginPresenter(LoginContract.View view, LoginActivity activity) {
         this.view = view;
-        this.sessionRepository = sessionRepository;
+        this.activity = activity;
     }
 
     @Override
     public void start() {
         view.setItems();
-        /*
-        if(sessionRepository.getToken() != null){
-            view.redirectToHome();
-        }
-
-         */
     }
 
     @Override
     public void performLogin(String email, String password){
+        activity.startLoading();
         view.requestLogin(email, password, new RequestCallback<LoginResponse>() {
             @Override
             public void requestSuccess(LoginResponse data) {
                 view.saveToken(data.token);
                 view.saveUser(data.user);
+                activity.stopLoading();
                 view.redirectToHome();
                 view.showSuccessMessage();
             }
 
             @Override
             public void requestFailed(String errorMessage) {
+                activity.stopLoading();
                 view.showFailedMessage(errorMessage);
             }
         });
