@@ -1,6 +1,6 @@
 package com.example.hotelin_android.model;
 
-public class Bookinghistory {
+public class BookinghHstorytemp {
     private int id;
     private int booking_status;
     private String booking_time;
@@ -16,10 +16,10 @@ public class Bookinghistory {
     private String check_in;
     private String check_out;
 
-    public Bookinghistory(int id, String hotel_name, String hotel_picture,
-                          String hotel_location, String booking_time,
-                          String room_type, String room_price, String name,
-                          String email, String telp, String check_in, String check_out) {
+    public BookinghHstorytemp(int id, String hotel_name, String hotel_picture,
+                              String hotel_location, String booking_time,
+                              String room_type, String room_price, String name,
+                              String email, String telp, String check_in, String check_out) {
         this.id = id;
         this.hotel_name = hotel_name;
         this.hotel_picture = hotel_picture;
@@ -34,9 +34,9 @@ public class Bookinghistory {
         this.check_out = check_out;
     }
 
-    public Bookinghistory(int id, String hotel_name, String hotel_picture,
-                          String hotel_location, String booking_time,
-                          String room_type, String room_price) {
+    public BookinghHstorytemp(int id, String hotel_name, String hotel_picture,
+                              String hotel_location, String booking_time,
+                              String room_type, String room_price) {
         this.id = id;
         this.hotel_name = hotel_name;
         this.hotel_picture = hotel_picture;

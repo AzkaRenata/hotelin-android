@@ -6,14 +6,11 @@ import com.example.hotelin_android.util.UtilProvider;
 
 public class BookingHistoryActivity extends BaseFragmentHolderActivity {
     BookingHistoryFragment bookingHistoryFragment;
-    private final int UPDATE_REQUEST = 2019;
-    TokenSharedUtil tokenSharedUtil;
 
     @Override
     protected void initializeFragment() {
         initializeView();
-        tokenSharedUtil = UtilProvider.getTokenSharedUtil();
-        bookingHistoryFragment = new BookingHistoryFragment(tokenSharedUtil);
+        bookingHistoryFragment = new BookingHistoryFragment();
         setCurrentFragment(bookingHistoryFragment, false);
 
     }

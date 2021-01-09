@@ -74,7 +74,7 @@ public class BookingFragment extends BaseFragment<BookingActivity, BookingContra
         tvCheckIn = fragmentView.findViewById(R.id.booking_check_in_tv);
         tvCheckOut = fragmentView.findViewById(R.id.booking_check_out_tv);
         etTelp = fragmentView.findViewById(R.id.booking_telp_et);
-        btnNext = fragmentView.findViewById(R.id.next_btn);
+        btnNext = fragmentView.findViewById(R.id.booking_next_btn);
 
         hotelName = hotelSharedUtil.getHotel().getHotel_name();
         roomType = roomSharedUtil.getRoom().getRoom_code() + " - " + roomSharedUtil.getRoom().getRoom_type();

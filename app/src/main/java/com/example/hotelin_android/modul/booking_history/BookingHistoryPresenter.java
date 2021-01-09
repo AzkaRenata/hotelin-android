@@ -1,31 +1,41 @@
 package com.example.hotelin_android.modul.booking_history;
 
-import com.example.hotelin_android.model.Bookinghistory;
+import android.util.Log;
+
+import com.example.hotelin_android.model.BookinghHstorytemp;
 import com.example.hotelin_android.util.RequestCallback;
 
 import java.util.List;
 
 public class BookingHistoryPresenter implements BookingHistoryContract.Presenter{
+    private final BookingHistoryActivity activity;
     private final BookingHistoryContract.View view;
 
-    public BookingHistoryPresenter(BookingHistoryContract.View view) {
+    public BookingHistoryPresenter(BookingHistoryContract.View view, BookingHistoryActivity activity) {
         this.view = view;
+        this.activity = activity;
     }
 
     @Override
-    public void start() {}
+    public void start() {
+        view.setItems();
+        getData("1");
+    }
 
     @Override
     public void getData(String status_id){
-        view.searchBooking(status_id, new RequestCallback<List<Bookinghistory>>() {
+        activity.startLoading();
+        view.searchBooking(status_id, new RequestCallback<BookingHistoryResponse>() {
             @Override
-            public void requestSuccess(List<Bookinghistory> data, String message) {
-                view.setResult(data);
+            public void requestSuccess(BookingHistoryResponse data, String message) {
+                view.setResult(data.booking);
+                activity.stopLoading();
             }
 
             @Override
             public void requestFailed(String message) {
-                view.showFailedMessage(message);
+                activity.stopLoading();
+                activity.showMessage(message);
             }
         });
     }

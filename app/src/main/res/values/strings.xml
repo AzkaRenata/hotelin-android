@@ -21,6 +21,7 @@
     <string name="search_result_toolbar_title">Hasil Pencarian</string>
     <string name="booking_title">Data Pemesanan</string>
     <string name="preview_booking_title">Detail Pemesanan</string>
+    <string name="booking_history_title">Riwayat Pemesanan</string>
 
     <string name="success_message">Success</string>
     <string name="login_success_message">Selamat Datang,</string>
@@ -71,4 +72,7 @@
     <string name="total_price_text">Total Harga</string>
     <string name="book_room_text">Pesan Kamar</string>
     <string name="booking_time">12:00:00</string>
+    <string name="ongoing_text">On Going</string>
+    <string name="done_text">Done</string>
+    <string name="canceled_text">Canceled</string>
 </resources>
