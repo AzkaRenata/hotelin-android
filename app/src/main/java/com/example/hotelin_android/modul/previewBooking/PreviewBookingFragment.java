@@ -129,7 +129,7 @@ public class PreviewBookingFragment extends BaseFragment<PreviewBookingActivity,
                         } else if (response.isSuccess() == false) {
                             requestCallback.requestFailed("Cancel Failed");
                         } else {
-                            requestCallback.requestSuccess(response);
+                            requestCallback.requestSuccess(response,"tes" );
                         }
                     }
 

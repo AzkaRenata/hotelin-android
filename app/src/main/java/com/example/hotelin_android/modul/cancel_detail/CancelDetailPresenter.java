@@ -17,13 +17,13 @@ public class CancelDetailPresenter implements CancelDetailContract.Presenter {
     public void getData(int booking_id){
         view.searchBooking(booking_id, new RequestCallback<Bookinghistory>() {
             @Override
-            public void requestSuccess(Bookinghistory data) {
+            public void requestSuccess(Bookinghistory data, String message) {
                 view.setResult(data);
             }
 
             @Override
-            public void requestFailed(String errorMessage) {
-                view.showFailedMessage(errorMessage);
+            public void requestFailed(String message) {
+                view.showFailedMessage(message);
             }
         });
     }

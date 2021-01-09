@@ -4,16 +4,12 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -42,9 +38,11 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
     private EditText etFullname;
     private EditText etTelp;
     private EditText etAddress;
-    private String gender = "male";
+    private String gender;
 
-    public RegisterFragment() {}
+    public RegisterFragment() {
+        gender = "male";
+    }
 
     @Nullable
     @Override
@@ -57,7 +55,6 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
         return fragmentView;
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     public void setItems(){
         TextInputLayout tilPassword;
         TextInputLayout tilConfirmPassword;
@@ -90,12 +87,10 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
             }
         });
 
-        tvLogin.setOnTouchListener(new View.OnTouchListener() {
-            @SuppressLint("ClickableViewAccessibility")
+        tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public void onClick(View view) {
                 setTvLoginClick();
-                return true;
             }
         });
 
@@ -105,6 +100,24 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
                 checkGender(checkedId);
             }
         });
+    }
+
+    public void setBtRegisterClick(){
+        if(validateForm()){
+            String name = etFullname.getText().toString();
+            String username = etUsername.getText().toString();
+            String email = etEmail.getText().toString();
+            String telp = etTelp.getText().toString();
+            String address = etAddress.getText().toString();
+            User user = new User(username, name, email, gender, telp, address);
+
+            mPresenter.performRegister(user);
+        }
+    }
+
+    public void setTvLoginClick(){
+        Intent intent = new Intent(activity, LoginActivity.class);
+        startActivity(intent);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -129,24 +142,6 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
         emptyValidation.addValidation(activity, passwordR, RegexTemplate.NOT_EMPTY, R.string.error_password_empty);
 
         return emptyValidation.validate();
-    }
-
-    public void setBtRegisterClick(){
-        if(validateForm()){
-            String name = etFullname.getText().toString();
-            String username = etUsername.getText().toString();
-            String email = etEmail.getText().toString();
-            String telp = etTelp.getText().toString();
-            String address = etAddress.getText().toString();
-            User user = new User(0, username, name, email, gender, telp, address, null);
-
-            mPresenter.performRegister(user);
-        }
-    }
-
-    public void setTvLoginClick(){
-        Intent intent = new Intent(activity, LoginActivity.class);
-        startActivity(intent);
     }
 
     @Override
@@ -174,9 +169,9 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
                     @Override
                     public void onResponse(RegisterResponse response) {
                         if(response == null){
-                            requestCallback.requestFailed("Null Response");
+                            requestCallback.requestFailed(getString(R.string.error_null_response));
                         }else {
-                            requestCallback.requestSuccess(response);
+                            requestCallback.requestSuccess(response, getString(R.string.register_success_message));
                         }
                     }
 
@@ -186,21 +181,12 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
                             String error = anError.getResponse().header("error");
                             requestCallback.requestFailed(error);
                         }else{
-                            requestCallback.requestFailed("Ada yang Salah");
+                            requestCallback.requestFailed(getString(R.string.error_database));
                         }
                     }
                 });
     }
 
-    @Override
-    public void showSuccessMessage() {
-        Toast.makeText(getContext(), "User Berhasil Didaftarkan", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void showErrorMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-    }
     @Override
     public void setPresenter(RegisterContract.Presenter presenter) {
         mPresenter = presenter;

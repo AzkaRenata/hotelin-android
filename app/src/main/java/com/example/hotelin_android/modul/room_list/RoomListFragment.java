@@ -24,7 +24,6 @@ import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.model.Room;
 import com.example.hotelin_android.model.RoomTemp;
-import com.example.hotelin_android.model.RoomGroup;
 import com.example.hotelin_android.modul.booking.BookingActivity;
 import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.util.RecyclerViewAdapter.RecyclerViewAdapterRoomList;
@@ -134,7 +133,7 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
                         if (response == null) {
                             requestCallback.requestFailed("Null Response");
                         } else {
-                            requestCallback.requestSuccess(response);
+                            requestCallback.requestSuccess(response, "tes");
                         }
                     }
 
@@ -270,7 +269,7 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
                             requestCallback.requestFailed("Null Response");
                             Log.d("tag", "response null");
                         } else {
-                            requestCallback.requestSuccess(response);
+                            requestCallback.requestSuccess(response, "tes");
                         }
                     }
 
@@ -296,7 +295,7 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
                             requestCallback.requestFailed("Null Response");
                             Log.d("tag", "response null");
                         } else {
-                            requestCallback.requestSuccess(response);
+                            requestCallback.requestSuccess(response, "tes");
                         }
                     }
 

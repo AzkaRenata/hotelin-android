@@ -23,13 +23,13 @@ public class ProfileEditPresenter implements ProfileEditContract.Presenter {
     public void showData(){
         view.requestProfile(new RequestCallback<UserTemp>() {
             @Override
-            public void requestSuccess(UserTemp data) {
+            public void requestSuccess(UserTemp data, String message) {
                 view.setProfile(data);
             }
 
             @Override
-            public void requestFailed(String errorMessage) {
-                view.showErrorMessage(errorMessage);
+            public void requestFailed(String message) {
+                view.showErrorMessage(message);
             }
         });
     }
@@ -39,13 +39,13 @@ public class ProfileEditPresenter implements ProfileEditContract.Presenter {
         Log.e("tes", "tes4");
         view.editUser(newUserTemp, new RequestCallback<UserTemp>() {
             @Override
-            public void requestSuccess(UserTemp userTemp) {
+            public void requestSuccess(UserTemp userTemp, String message) {
                 view.showSuccessMessage();
             }
 
             @Override
-            public void requestFailed(String errorMessage) {
-                view.showErrorMessage(errorMessage);
+            public void requestFailed(String message) {
+                view.showErrorMessage(message);
             }
         });
     }
@@ -55,13 +55,13 @@ public class ProfileEditPresenter implements ProfileEditContract.Presenter {
         view.updatePicture(new RequestCallback<UserTemp>() {
 
             @Override
-            public void requestSuccess(UserTemp data) {
+            public void requestSuccess(UserTemp data, String message) {
                 Log.e("reqSuccess", data.getUser_picture());
                 view.setPicture(data);
             }
 
             @Override
-            public void requestFailed(String errorMessage) {
+            public void requestFailed(String message) {
 
             }
         });

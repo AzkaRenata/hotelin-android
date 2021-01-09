@@ -91,7 +91,7 @@ public class TestFragment extends BaseFragment<TestActivity, TestContract.Presen
                             requestCallback.requestFailed("Null Response");
                             Log.d("tag", "response null");
                         }else{
-                            requestCallback.requestSuccess(response.userTemp);
+                            requestCallback.requestSuccess(response.userTemp,"tes" );
                         }
                     }
 

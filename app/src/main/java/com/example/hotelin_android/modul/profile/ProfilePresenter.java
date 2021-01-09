@@ -31,13 +31,13 @@ public class ProfilePresenter implements ProfileContract.ProfilePresenter {
     public void showData() {
         view.requestProfile(new RequestCallback<UserTemp>() {
             @Override
-            public void requestSuccess(UserTemp data) {
+            public void requestSuccess(UserTemp data, String message) {
                 view.setProfile(data);
             }
 
             @Override
-            public void requestFailed(String errorMessage) {
-                view.showFailedMessage(errorMessage);
+            public void requestFailed(String message) {
+                view.showFailedMessage(message);
             }
         });
     }

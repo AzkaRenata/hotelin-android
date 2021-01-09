@@ -130,7 +130,7 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
                             requestCallback.requestFailed("Null Response");
                             Log.d("tag", "response null");
                         }else{
-                            requestCallback.requestSuccess(response.userTemp);
+                            requestCallback.requestSuccess(response.userTemp, "tes");
                         }
                     }
 

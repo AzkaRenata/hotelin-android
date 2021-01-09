@@ -13,6 +13,14 @@
     <string name="confirmation_password_not_match">Kolom Password dan Konfirmasi Password Harus Sama!</string>
     <string name="error_database">Ada yang Salah</string>
     <string name="error_emailOrPassword">Email atau Password Salah!</string>
+    <string name="error_null_response">Null Response</string>
+
+    <string name="home_toolbar_title">Hotelin</string>
+    <string name="search_result_toolbar_title">Hasil Pencarian</string>
+
+    <string name="success_message">Success</string>
+    <string name="login_success_message">Selamat Datang,</string>
+    <string name="register_success_message">User Berhasil Didaftarkan</string>
 
     <string name="login_title">Selamat Datang,</string>
     <string name="register_title">Informasi Akun</string>

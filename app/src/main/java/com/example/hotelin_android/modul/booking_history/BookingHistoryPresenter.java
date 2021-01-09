@@ -19,13 +19,13 @@ public class BookingHistoryPresenter implements BookingHistoryContract.Presenter
     public void getData(String status_id){
         view.searchBooking(status_id, new RequestCallback<List<Bookinghistory>>() {
             @Override
-            public void requestSuccess(List<Bookinghistory> data) {
+            public void requestSuccess(List<Bookinghistory> data, String message) {
                 view.setResult(data);
             }
 
             @Override
-            public void requestFailed(String errorMessage) {
-                view.showFailedMessage(errorMessage);
+            public void requestFailed(String message) {
+                view.showFailedMessage(message);
             }
         });
     }

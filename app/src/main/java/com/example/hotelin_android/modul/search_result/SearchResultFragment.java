@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -69,43 +68,20 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(activity);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mPresenter.getHotelList(hotel_location);
+        mPresenter.performHotelSearch(hotel_location);
 
         tvTitle.setText("Hotel di " + hotel_location);
 
-        setTitle("Hasil Pencarian");
+        setTitle(getString(R.string.search_result_toolbar_title));
     }
 
+    @Override
     public void redirectToRoomList(){
         Intent intent = new Intent(activity, RoomListActivity.class);
         startActivity(intent);
     }
 
     @Override
-    public void searchHotel(final String hotel_location, final RequestCallback<SearchResultResponse> requestCallback) {
-        AndroidNetworking.get(myURL.SEARCH_HOTEL_URL)
-                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
-                .addQueryParameter("hotel_location", hotel_location)
-                .setTag(this)
-                .setPriority(Priority.LOW)
-                .build()
-                .getAsObject(SearchResultResponse.class, new ParsedRequestListener<SearchResultResponse>() {
-                    @Override
-                    public void onResponse(SearchResultResponse response) {
-                        if(response == null){
-                            requestCallback.requestFailed("Null Response");
-                        }else{
-                            requestCallback.requestSuccess(response);
-                        }
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        requestCallback.requestFailed(anError.getMessage());
-                    }
-                });
-    }
-
     public void setResult(final List<Hotel> hotels){
         mAdapter = new RecyclerViewAdapterHotelList(hotels);
         mRecyclerView.setAdapter(mAdapter);
@@ -118,15 +94,18 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
         });
     }
 
+    @Override
     public void checkResult(){
         if(mAdapter.getItemCount() == 0){
             rlNoResult.setVisibility(View.VISIBLE);
         }
     }
 
-    public void requestHotelDetail(final int id, final RequestCallback<SearchResultResponse> requestCallback) {
-        AndroidNetworking.get(myURL.GET_HOTEL_DETAIL_URL + id)
+    @Override
+    public void requestHotelSearch(final String hotel_location, final RequestCallback<SearchResultResponse> requestCallback) {
+        AndroidNetworking.get(myURL.SEARCH_HOTEL_URL)
                 .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
+                .addQueryParameter("hotel_location", hotel_location)
                 .setTag(this)
                 .setPriority(Priority.LOW)
                 .build()
@@ -134,9 +113,9 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
                     @Override
                     public void onResponse(SearchResultResponse response) {
                         if(response == null){
-                            requestCallback.requestFailed("Null Response");
+                            requestCallback.requestFailed(getString(R.string.error_null_response));
                         }else{
-                            requestCallback.requestSuccess(response);
+                            requestCallback.requestSuccess(response,getString(R.string.success_message));
                         }
                     }
 
@@ -147,12 +126,33 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
                 });
     }
 
-    public void saveHotel(Hotel hotel){
-        hotelSharedUtil.setHotel(hotel);
+    @Override
+    public void requestHotelDetail(final int id, final RequestCallback<SearchResultResponse> requestCallback) {
+        AndroidNetworking.get(myURL.GET_HOTEL_DETAIL_URL + id)
+                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
+                .setTag(this)
+                .setPriority(Priority.LOW)
+                .build()
+                .getAsObject(SearchResultResponse.class, new ParsedRequestListener<SearchResultResponse>() {
+                    @Override
+                    public void onResponse(SearchResultResponse response) {
+                        if(response == null){
+                            requestCallback.requestFailed(getString(R.string.error_null_response));
+                        }else{
+                            requestCallback.requestSuccess(response,getString(R.string.success_message));
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        requestCallback.requestFailed(anError.getMessage());
+                    }
+                });
     }
 
-    public void showFailedMessage(String message){
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    @Override
+    public void saveHotel(Hotel hotel){
+        hotelSharedUtil.setHotel(hotel);
     }
 
     @Override

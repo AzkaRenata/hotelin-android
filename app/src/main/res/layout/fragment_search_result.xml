@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/bold"
-        android:layout_marginTop="10dp"
+        android:layout_marginVertical="10dp"
         android:padding="2dp"
         android:text="Hotel di Lokasi"
         android:textColor="#707070"

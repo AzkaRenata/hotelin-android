@@ -188,7 +188,7 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
                         if (response == null) {
                             requestCallback.requestFailed("Null Response");
                         } else {
-                            requestCallback.requestSuccess(response.userTemp);
+                            requestCallback.requestSuccess(response.userTemp, "tes");
                         }
                     }
 
@@ -228,7 +228,7 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
                             requestCallback.requestFailed("Null Response");
                             Log.d("tag", "response null");
                         } else {
-                            requestCallback.requestSuccess(response.userTemp);
+                            requestCallback.requestSuccess(response.userTemp,"tes" );
                         }
                     }
 
@@ -253,7 +253,7 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
                             requestCallback.requestFailed("Null Response");
                             Log.d("tag", "response null");
                         } else {
-                            requestCallback.requestSuccess(response.userTemp);
+                            requestCallback.requestSuccess(response.userTemp, "tes");
                         }
                     }
 

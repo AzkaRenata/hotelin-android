@@ -10,6 +10,6 @@ public interface HomeContract {
     }
 
     interface Presenter extends BasePresenter {
-        void search(String location);
+        void performSearch(String location);
     }
 }

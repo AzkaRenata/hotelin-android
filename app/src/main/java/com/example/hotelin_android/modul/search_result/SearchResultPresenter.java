@@ -17,21 +17,22 @@ public class SearchResultPresenter implements SearchResultContract.Presenter{
     }
 
     @Override
-    public void getHotelList(String location){
+    public void performHotelSearch(String location){
         activity.startLoading();
-        view.searchHotel(location, new RequestCallback<SearchResultResponse>() {
+        view.requestHotelSearch(location, new RequestCallback<SearchResultResponse>() {
             @Override
-            public void requestSuccess(SearchResultResponse data) {
+            public void requestSuccess(SearchResultResponse data, String message) {
                 view.setResult(data.hotelList);
                 view.checkResult();
+                activity.stopLoading();
             }
 
             @Override
-            public void requestFailed(String errorMessage) {
-                view.showFailedMessage(errorMessage);
+            public void requestFailed(String message) {
+                activity.stopLoading();
+                activity.showMessage(message);
             }
         });
-        activity.stopLoading();
     }
 
     @Override
@@ -39,16 +40,16 @@ public class SearchResultPresenter implements SearchResultContract.Presenter{
         activity.startLoading();
         view.requestHotelDetail(id, new RequestCallback<SearchResultResponse>() {
             @Override
-            public void requestSuccess(SearchResultResponse data) {
+            public void requestSuccess(SearchResultResponse data, String message) {
                 view.saveHotel(data.hotel);
                 activity.stopLoading();
                 view.redirectToRoomList();
             }
 
             @Override
-            public void requestFailed(String errorMessage) {
+            public void requestFailed(String message) {
                 activity.stopLoading();
-                view.showFailedMessage(errorMessage);
+                activity.showMessage(message);
             }
         });
     }

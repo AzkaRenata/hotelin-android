@@ -10,17 +10,16 @@ import java.util.List;
 public interface SearchResultContract {
     interface View extends BaseView<Presenter> {
         void setItems();
+        void redirectToRoomList();
         void setResult(List<Hotel> data);
         void checkResult();
         void saveHotel(Hotel hotel);
-        void redirectToRoomList();
-        void searchHotel(String location, final RequestCallback<SearchResultResponse> requestCallback);
+        void requestHotelSearch(String location, final RequestCallback<SearchResultResponse> requestCallback);
         void requestHotelDetail(final int id, final RequestCallback<SearchResultResponse> requestCallback);
-        void showFailedMessage(String message);
     }
 
     interface Presenter extends BasePresenter {
-        void getHotelList(String location);
+        void performHotelSearch(String location);
         void getHotelDetail(int id);
     }
 }
