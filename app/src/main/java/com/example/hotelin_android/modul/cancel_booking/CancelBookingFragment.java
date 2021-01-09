@@ -19,7 +19,7 @@ import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.model.SuccessMessage;
 import com.example.hotelin_android.modul.booking_history.BookingHistoryActivity;
-import com.example.hotelin_android.modul.cancel_detail.CancelDetailActivity;
+import com.example.hotelin_android.modul.booking_detail.BookingDetailActivity;
 import com.example.hotelin_android.modul.register.RegisterActivity;
 import com.example.hotelin_android.util.RequestCallback;
 import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
@@ -81,7 +81,7 @@ public class CancelBookingFragment extends BaseFragment<CancelBookingActivity, C
             startActivity(intent);
 
         } else {
-            Intent intent = new Intent(activity, CancelDetailActivity.class);
+            Intent intent = new Intent(activity, BookingDetailActivity.class);
             intent.putExtra("booking_id", booking_id);
             intent.putExtra("booking_status", 1);
             startActivity(intent);

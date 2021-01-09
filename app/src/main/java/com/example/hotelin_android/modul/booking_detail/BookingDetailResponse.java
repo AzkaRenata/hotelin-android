@@ -1,10 +1,10 @@
-package com.example.hotelin_android.modul.cancel_detail;
+package com.example.hotelin_android.modul.booking_detail;
 
-import com.example.hotelin_android.model.Bookinghistory;
+import com.example.hotelin_android.model.BookinghHstorytemp;
 
-public class CancelDetailResponse {
+public class BookingDetailResponse {
     //perahtikan return dari api
     //pastikan return api berupa objek ditandai dengan method compact()
     //nama attribute di class response ini harus sama dengan nama objek yang direturn oleh api
-    public Bookinghistory bookinghistory;
+    public BookinghHstorytemp bookinghistory;
 }

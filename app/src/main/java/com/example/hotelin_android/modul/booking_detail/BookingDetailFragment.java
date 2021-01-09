@@ -1,4 +1,4 @@
-package com.example.hotelin_android.modul.cancel_detail;
+package com.example.hotelin_android.modul.booking_detail;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -20,14 +20,14 @@ import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.modul.cancel_booking.CancelBookingActivity;
-import com.example.hotelin_android.model.Bookinghistory;
+import com.example.hotelin_android.model.BookinghHstorytemp;
 import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.util.AsyncTaskLoadImage;
 import com.example.hotelin_android.util.RequestCallback;
 import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
 
-public class CancelDetailFragment extends BaseFragment<CancelDetailActivity, CancelDetailContract.Presenter> implements CancelDetailContract.View {
+public class BookingDetailFragment extends BaseFragment<BookingDetailActivity, BookingDetailContract.Presenter> implements BookingDetailContract.View {
     TokenSharedUtil tokenSharedUtil;
     int booking_id;
     int booking_status;
@@ -42,9 +42,8 @@ public class CancelDetailFragment extends BaseFragment<CancelDetailActivity, Can
     TextView booking_price;
     TextView cancel_tv;
 
-    public CancelDetailFragment(TokenSharedUtil tokenSharedUtil, int booking_id, int booking_status) {
+    public BookingDetailFragment(TokenSharedUtil tokenSharedUtil, int booking_id) {
         this.booking_id = booking_id;
-        this.booking_status = booking_status;
         this.tokenSharedUtil = tokenSharedUtil;
     }
 
@@ -53,7 +52,7 @@ public class CancelDetailFragment extends BaseFragment<CancelDetailActivity, Can
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         fragmentView = inflater.inflate(R.layout.detail_cancel_booking_t, container, false);
-        mPresenter = new CancelDetailPresenter(this);
+        mPresenter = new BookingDetailPresenter(this);
         mPresenter.start();
         mPresenter.getData(booking_id);
 
@@ -97,7 +96,7 @@ Log.d("LIAT BOOKING ID : ", String.valueOf(booking_id));
     }
 
     @Override
-    public void setPresenter(CancelDetailContract.Presenter presenter) {
+    public void setPresenter(BookingDetailContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
@@ -108,14 +107,14 @@ Log.d("LIAT BOOKING ID : ", String.valueOf(booking_id));
     }
 
     @Override
-    public void searchBooking(final int booking_id, final RequestCallback<Bookinghistory> requestCallback) {
+    public void searchBooking(final int booking_id, final RequestCallback<BookinghHstorytemp> requestCallback) {
         Log.d("test lagi : ",myURL.MY_BOOKING_URL+booking_id);
         AndroidNetworking.get(myURL.MY_BOOKING_URL+String.valueOf(booking_id))
                 .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .build()
-                .getAsObject(CancelDetailResponse.class, new ParsedRequestListener<CancelDetailResponse>() {
+                .getAsObject(BookingDetailResponse.class, new ParsedRequestListener<BookingDetailResponse>() {
                     @Override
-                    public void onResponse(CancelDetailResponse response) {
+                    public void onResponse(BookingDetailResponse response) {
                         if(response == null){
                             requestCallback.requestFailed("Null Response");
                             Log.d("tag", "response null");
@@ -132,7 +131,7 @@ Log.d("LIAT BOOKING ID : ", String.valueOf(booking_id));
                 });
     }
 
-    public void setResult(final Bookinghistory booking){
+    public void setResult(final BookinghHstorytemp booking){
         String url = myURL.getImageUrl() + booking.getHotel_picture();
         new AsyncTaskLoadImage(hotel_iv).execute(url);
 
