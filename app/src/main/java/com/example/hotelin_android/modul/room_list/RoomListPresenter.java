@@ -44,7 +44,7 @@ public class RoomListPresenter implements RoomListContract.Presenter {
             public void requestSuccess(RoomListResponse data, String message) {
                 view.saveRoom(data.room);
                 activity.stopLoading();
-                view.redirectToBooking();
+                view.redirectToPreviewBooking();
             }
 
             @Override

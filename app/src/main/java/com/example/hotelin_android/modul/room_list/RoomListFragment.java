@@ -23,7 +23,7 @@ import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.model.Room;
-import com.example.hotelin_android.modul.booking.BookingActivity;
+import com.example.hotelin_android.modul.preview_booking.PreviewBookingActivity;
 import com.example.hotelin_android.util.RecyclerViewAdapter.RecyclerViewAdapterRoomList;
 import com.example.hotelin_android.util.RequestCallback;
 import com.example.hotelin_android.util.SharedPreferences.HotelSharedUtil;
@@ -184,10 +184,10 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
     }
 
     @Override
-    public void redirectToBooking() {
-        Intent intent = new Intent(activity, BookingActivity.class);
+    public void redirectToPreviewBooking() {
+        Intent intent = new Intent(activity, PreviewBookingActivity.class);
         intent.putExtra("check_in", strCheckIn);
-        intent.putExtra("check_out", strCheckIn);
+        intent.putExtra("check_out", strCheckOut);
         startActivity(intent);
     }
 
@@ -250,7 +250,7 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
 
     @Override
     public void requestRoomDetail(final int id, final RequestCallback<RoomListResponse> requestCallback) {
-        AndroidNetworking.get(myURL.GET_HOTEL_DETAIL_URL + id)
+        AndroidNetworking.get(myURL.GET_ROOM_DETAIL_URL + id)
                 .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .setTag(this)
                 .setPriority(Priority.LOW)
