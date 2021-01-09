@@ -45,7 +45,7 @@
                     android:layout_marginLeft="7dp"
                     android:drawableStart="@drawable/ic_circle"
                     android:drawablePadding="10dp"
-                    android:text="Refund sesuai dengan kesepakatan ketika booking"
+                    android:text="Refund sesuai dengan kesepakatan ketika bookingTemp"
                     android:drawableLeft="@drawable/ic_circle" />
 
                 <TextView

@@ -11,7 +11,7 @@ public interface RoomListContract {
     interface View extends BaseView<Presenter> {
         void setItems();
         void initCalendar();
-        void redirectToBooking();
+        void redirectToPreviewBooking();
         void checkResult();
         void setResult(List<Room> data);
         void saveRoom(Room room);

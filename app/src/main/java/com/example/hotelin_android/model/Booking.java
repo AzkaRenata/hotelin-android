@@ -1,93 +1,93 @@
 package com.example.hotelin_android.model;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-
 public class Booking {
-    private String hotel_name;
-    private String namaPemesan;
-    private String email;
-    private String telp;
     private int id;
-    private int user_id;
     private int room_id;
-    private int jumlahMalam;
-    private String room_type;
-    private String room_price;
+    private int booking_status;
     private String check_in;
     private String check_out;
-    private String sCheck_in;
-    private String sCheck_out;
+    private String booking_time;
+    private int days_count;
+    private double total_price;
 
-    public Booking(String hotel_name, String room_type, String room_price, String namaPemesan, String email, String telp, int room_id, String check_in, String check_out) {
-        this.hotel_name = hotel_name;
-        this.namaPemesan = namaPemesan;
-        this.email = email;
-        this.telp = telp;
+    public Booking(int id, int room_id, int booking_status, String check_in, String check_out, String booking_time, int days_count, double total_price) {
+        this.id = id;
+        this.room_id = room_id;
+        this.booking_status = booking_status;
+        this.check_in = check_in;
+        this.check_out = check_out;
+        this.booking_time = booking_time;
+        this.days_count = days_count;
+        this.total_price = total_price;
+    }
+
+    public Booking(int room_id, String check_in, String check_out) {
         this.room_id = room_id;
         this.check_in = check_in;
         this.check_out = check_out;
-        this.room_type = room_type;
-        this.room_price = room_price;
-    }
-
-    public String getsCheck_in() {
-        return sCheck_in;
-    }
-
-    public void setsCheck_in(String sCheck_in) {
-        this.sCheck_in = sCheck_in;
-    }
-
-    public String getsCheck_out() {
-        return sCheck_out;
-    }
-
-    public void setsCheck_out(String sCheck_out) {
-        this.sCheck_out = sCheck_out;
-    }
-
-    public String getRoom_type() {
-        return room_type;
-    }
-
-    public String getRoom_price() {
-        return room_price;
-    }
-
-    public String getHotel_name() {
-        return hotel_name;
-    }
-
-    public String getNamaPemesan() {
-        return namaPemesan;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getTelp() {
-        return telp;
     }
 
     public int getId() {
         return id;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getRoom_id() {
         return room_id;
     }
 
+    public void setRoom_id(int room_id) {
+        this.room_id = room_id;
+    }
+
+    public int getBooking_status() {
+        return booking_status;
+    }
+
+    public void setBooking_status(int booking_status) {
+        this.booking_status = booking_status;
+    }
+
     public String getCheck_in() {
         return check_in;
     }
 
+    public void setCheck_in(String check_in) {
+        this.check_in = check_in;
+    }
+
     public String getCheck_out() {
         return check_out;
+    }
+
+    public void setCheck_out(String check_out) {
+        this.check_out = check_out;
+    }
+
+    public String getBooking_time() {
+        return booking_time;
+    }
+
+    public void setBooking_time(String booking_time) {
+        this.booking_time = booking_time;
+    }
+
+    public int getDays_count() {
+        return days_count;
+    }
+
+    public void setDays_count(int days_count) {
+        this.days_count = days_count;
+    }
+
+    public double getTotal_price() {
+        return total_price;
+    }
+
+    public void setTotal_price(double total_price) {
+        this.total_price = total_price;
     }
 }

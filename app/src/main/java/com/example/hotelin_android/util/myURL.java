@@ -10,10 +10,11 @@ public class myURL {
     public final static String GET_HOTEL_DETAIL_URL = BASE_URL + "hotel/detail-by-id/";
     public final static String SEARCH_AVAILABLE_ROOM_URL = BASE_URL + "room/show-available/";
     public final static String GET_ROOM_DETAIL_URL = BASE_URL + "room/detail/";
+    public final static String BOOKING_URL = BASE_URL + "booking/create";
+
 
     public final static String PROFILE_URL = BASE_URL + "user";
     public final static String HOTEL_URL = BASE_URL + "hotel/detail/";
-    public final static String BOOKING_URL = BASE_URL + "booking/create";
     public final static String SEARCH_ROOM_URL = BASE_URL + "room/hotel/";
     public final static String VALIDATE_TIME = BASE_URL + "room/validate-time/";
     public final static String BOOKING_HISTORY_URL = BASE_URL + "booking/list/";
