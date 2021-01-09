@@ -26,6 +26,7 @@
 
                 <ImageView
                     android:id="@+id/hotel_list_item_hotel_iv"
+                    android:src="@drawable/no_pic"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:scaleType="centerCrop" />
@@ -44,15 +45,18 @@
 
                 <TextView
                     android:id="@+id/hotel_list_item_location_tv"
+                    android:drawableLeft="@drawable/icon_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/hotel_list_item_name_tv"
+                    android:gravity="center_vertical"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginVertical="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
                     android:fontFamily="@font/regular"
                     android:text="@string/hotel_location_text"
                     android:textColor="#707070"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/hotel_list_item_price_tv"

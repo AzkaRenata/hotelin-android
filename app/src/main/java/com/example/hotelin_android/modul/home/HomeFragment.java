@@ -44,21 +44,23 @@ public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presen
             }
         });
 
-        setTitle("Hotelin");
+        setTitle(getString(R.string.home_toolbar_title));
+    }
+
+    public void setBtSearchClick(){
+        String location = etSearchBar.getText().toString();
+        mPresenter.performSearch(location);
+    }
+
+    @Override
+    public void redirectToSearchResult(String location){
+        Intent intent = new Intent(activity, SearchResultActivity.class);
+        intent.putExtra("hotel_location", location);
+        startActivity(intent);
     }
 
     @Override
     public void setPresenter(HomeContract.Presenter presenter) {
         mPresenter = presenter;
-    }
-
-    public void setBtSearchClick(){
-        String location = etSearchBar.getText().toString();
-        mPresenter.search(location);
-    }
-    public void redirectToSearchResult(String location){
-        Intent intent = new Intent(activity, SearchResultActivity.class);
-        intent.putExtra("hotel_location", location);
-        startActivity(intent);
     }
 }

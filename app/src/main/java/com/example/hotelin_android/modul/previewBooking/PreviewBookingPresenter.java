@@ -20,13 +20,13 @@ public class PreviewBookingPresenter implements PreviewBookingContract.Presenter
         Log.e("tes", "tes4");
         view.requestBooking(room_id, checkin, checkout, new RequestCallback<SuccessMessage>() {
             @Override
-            public void requestSuccess(SuccessMessage data) {
+            public void requestSuccess(SuccessMessage data, String message) {
                 view.setResult(data);
             }
 
             @Override
-            public void requestFailed(String errorMessage) {
-                view.showFailedMessage(errorMessage);
+            public void requestFailed(String message) {
+                view.showFailedMessage(message);
             }
         });
     }

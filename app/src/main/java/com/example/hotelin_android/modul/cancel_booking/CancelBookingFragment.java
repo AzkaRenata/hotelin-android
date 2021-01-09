@@ -106,7 +106,7 @@ public class CancelBookingFragment extends BaseFragment<CancelBookingActivity, C
                         }else if(response.isSuccess() == false){
                             requestCallback.requestFailed("Cancel Failed");
                         } else {
-                            requestCallback.requestSuccess(response);
+                            requestCallback.requestSuccess(response,"tes" );
                         }
                     }
 

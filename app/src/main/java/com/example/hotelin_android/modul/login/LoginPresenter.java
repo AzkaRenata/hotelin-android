@@ -1,7 +1,6 @@
 package com.example.hotelin_android.modul.login;
 
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 
 public class LoginPresenter implements LoginContract.Presenter{
     private final LoginActivity activity;
@@ -22,18 +21,18 @@ public class LoginPresenter implements LoginContract.Presenter{
         activity.startLoading();
         view.requestLogin(email, password, new RequestCallback<LoginResponse>() {
             @Override
-            public void requestSuccess(LoginResponse data) {
+            public void requestSuccess(LoginResponse data, String message) {
                 view.saveToken(data.token);
                 view.saveUser(data.user);
                 activity.stopLoading();
+                activity.showMessage(message);
                 view.redirectToHome();
-                view.showSuccessMessage();
             }
 
             @Override
-            public void requestFailed(String errorMessage) {
+            public void requestFailed(String message) {
                 activity.stopLoading();
-                view.showFailedMessage(errorMessage);
+                activity.showMessage(message);
             }
         });
     }

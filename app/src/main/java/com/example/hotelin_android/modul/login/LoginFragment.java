@@ -1,17 +1,14 @@
 package com.example.hotelin_android.modul.login;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -55,7 +52,6 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
         return fragmentView;
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     public void setItems(){
         TextInputLayout tilEmail;
         TextInputLayout tilPassword;
@@ -79,14 +75,25 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
             }
         });
 
-        tvRegister.setOnTouchListener(new View.OnTouchListener() {
-            @SuppressLint("ClickableViewAccessibility")
+        tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public void onClick(View view) {
                 setTvRegisterClick();
-                return true;
             }
         });
+    }
+
+    public void setBtLoginClick() {
+        if (validateLogin()) {
+            String email = etEmail.getText().toString();
+            String password = etPassword.getText().toString();
+            mPresenter.performLogin(email, password);
+        }
+    }
+
+    public void setTvRegisterClick() {
+        Intent intent = new Intent(activity, RegisterActivity.class);
+        startActivity(intent);
     }
 
     public boolean validateLogin() {
@@ -104,26 +111,14 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
         }
     }
 
-    public void setBtLoginClick() {
-        if (validateLogin()) {
-            String email = etEmail.getText().toString();
-            String password = etPassword.getText().toString();
-            mPresenter.performLogin(email, password);
-        }
-    }
-
-    public void setTvRegisterClick() {
-        Intent intent = new Intent(activity, RegisterActivity.class);
-        startActivity(intent);
-    }
-
     @Override
     public void redirectToHome() {
         Intent intent = new Intent(activity, HomeActivity.class);
         startActivity(intent);
     }
 
-    public void requestLogin(final String email, String password, final RequestCallback<LoginResponse> requestCallback) {
+    @Override
+    public void requestLogin(final String email, final String password, final RequestCallback<LoginResponse> requestCallback) {
         AndroidNetworking.post(myURL.LOGIN_URL)
                 .addBodyParameter("email", email)
                 .addBodyParameter("password", password)
@@ -132,41 +127,34 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
                     @Override
                     public void onResponse(LoginResponse response) {
                         if (response == null) {
-                            requestCallback.requestFailed("Null Response");
+                            requestCallback.requestFailed(getString(R.string.error_null_response));
                         } else if (response.token == null) {
-                            requestCallback.requestFailed("Email atau Password Salah");
+                            requestCallback.requestFailed(getString(R.string.error_emailOrPassword));
                         } else {
-                            requestCallback.requestSuccess(response);
+                            requestCallback.requestSuccess(response,getString(R.string.login_success_message) + " " + response.user.getUsername() );
                         }
                     }
 
                     @Override
                     public void onError(ANError anError) {
                         if (anError.getErrorCode() == 400) {
-                            requestCallback.requestFailed("Email atau Password Salah");
+                            requestCallback.requestFailed(getString(R.string.error_emailOrPassword));
                         }
                         else if (anError.getErrorCode() == 500){
-                            requestCallback.requestFailed("Ada yang Salah");
+                            requestCallback.requestFailed(getString(R.string.error_database));
                         }
                     }
                 });
     }
 
+    @Override
     public void saveToken(String token) {
         tokenSharedUtil.setToken(token);
     }
 
+    @Override
     public void saveUser(User user){
         userSharedUtil.setUser(user);
-    }
-
-    public void showFailedMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-    }
-    @Override
-    public void showSuccessMessage() {
-        String name = userSharedUtil.getUser().getName();
-        Toast.makeText(getContext(), "Selamat Datang, " + name, Toast.LENGTH_SHORT).show();
     }
 
     @Override

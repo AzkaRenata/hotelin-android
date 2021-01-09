@@ -22,16 +22,16 @@ public class RegisterPresenter implements RegisterContract.Presenter{
         activity.startLoading();
         view.requestRegister(user, new RequestCallback<RegisterResponse>() {
             @Override
-            public void requestSuccess(RegisterResponse data) {
+            public void requestSuccess(RegisterResponse data, String message) {
                 activity.stopLoading();
-                view.showSuccessMessage();
+                activity.showMessage(message);
                 view.redirectToLogin();
             }
 
             @Override
-            public void requestFailed(String errorMessage) {
+            public void requestFailed(String message) {
                 activity.stopLoading();
-                view.showErrorMessage(errorMessage);
+                activity.showMessage(message);
             }
         });
     }

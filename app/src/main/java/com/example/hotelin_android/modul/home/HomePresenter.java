@@ -14,7 +14,8 @@ public class HomePresenter implements HomeContract.Presenter{
         view.setItems();
     }
 
-    public void search(String location){
+    @Override
+    public void performSearch(String location){
         activity.startLoading();
         view.redirectToSearchResult(location);
         activity.stopLoading();

@@ -21,6 +21,15 @@ public class User {
         this.user_picture = user_picture;
     }
 
+    public User(String username, String name, String email, String gender, String telp, String address) {
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.gender = gender;
+        this.telp = telp;
+        this.address = address;
+    }
+
     public int getId() {
         return id;
     }

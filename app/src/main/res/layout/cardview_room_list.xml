@@ -21,7 +21,7 @@
 
             <ImageView
                 android:id="@+id/room_list_item_room_iv"
-                android:src="@drawable/room"
+                android:src="@drawable/no_pic"
                 android:scaleType="centerCrop"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"/>
@@ -42,110 +42,64 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
-                <LinearLayout
-                    android:id="@+id/room_list_bed_layout"
+                <TextView
+                    android:id="@+id/room_list_bed_tv"
                     android:layout_below="@id/room_list_item_room_type_tv"
+                    android:fontFamily="@font/regular"
+                    android:layout_marginBottom="5dp"
+                    android:drawableLeft="@drawable/icon_bed"
+                    android:drawablePadding="10dp"
+                    android:text="@string/bed_text"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="#707070"
+                    android:textSize="14sp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"/>
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/bed"
-                        android:layout_marginRight="10dp" />
-
-                    <TextView
-                        android:id="@+id/room_list_bed_tv"
-                        android:fontFamily="@font/regular"
-                        android:text="@string/bed_text"
-                        android:layout_gravity="center_vertical"
-                        android:textColor="#707070"
-                        android:textSize="14sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/room_list_capacity_layout"
-                    android:layout_below="@id/room_list_bed_layout"
+                <TextView
+                    android:id="@+id/room_list_capacity_tv"
+                    android:layout_below="@id/room_list_bed_tv"
+                    android:drawableLeft="@drawable/icon_people"
+                    android:layout_marginBottom="5dp"
+                    android:drawablePadding="10dp"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/guest_capacity_text"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="#707070"
+                    android:textSize="14sp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"/>
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_user"
-                        android:layout_marginRight="10dp" />
-
-                    <TextView
-                        android:id="@+id/room_list_capacity_tv"
-                        android:fontFamily="@font/regular"
-                        android:text="@string/guest_capacity_text"
-                        android:layout_gravity="center_vertical"
-                        android:textColor="#707070"
-                        android:textSize="14sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/room_list_fac1_layout"
-                    android:layout_below="@id/room_list_capacity_layout"
+                <TextView
+                    android:id="@+id/room_list_fac1_tv"
+                    android:layout_below="@id/room_list_capacity_tv"
+                    android:fontFamily="@font/regular"
+                    android:layout_marginBottom="5dp"
+                    android:drawableLeft="@drawable/icon_breakfast"
+                    android:drawablePadding="10dp"
+                    android:text="@string/not_available_text"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="#707070"
+                    android:textSize="14sp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"/>
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/lunch"
-                        android:layout_marginRight="10dp" />
-
-                    <TextView
-                        android:id="@+id/room_list_fac1_tv"
-                        android:fontFamily="@font/regular"
-                        android:text="@string/not_available_text"
-                        android:layout_gravity="center_vertical"
-                        android:textColor="#707070"
-                        android:textSize="14sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/room_list_fac2_layout"
-                    android:layout_below="@id/room_list_fac1_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <TextView
+                    android:id="@+id/room_list_fac2_tv"
+                    android:layout_below="@+id/room_list_fac1_tv"
+                    android:fontFamily="@font/regular"
+                    android:drawableLeft="@drawable/icon_wifi"
+                    android:drawablePadding="10dp"
                     android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/wifi"
-                        android:layout_marginRight="10dp" />
-
-                    <TextView
-                        android:id="@+id/room_list_fac2_tv"
-                        android:fontFamily="@font/regular"
-                        android:text="@string/not_available_text"
-                        android:layout_gravity="center_vertical"
-                        android:textColor="#707070"
-                        android:textSize="14sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-
+                    android:text="@string/not_available_text"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="#707070"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
                 <RelativeLayout
-                    android:layout_below="@id/room_list_fac2_layout"
+                    android:layout_below="@id/room_list_fac2_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp">
@@ -176,11 +130,7 @@
                         android:layout_marginTop="12dp"
                         android:textColor="#ffff" />
                 </RelativeLayout>
-
             </RelativeLayout>
-
-
-
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

@@ -91,7 +91,7 @@ public class ChangePasswordFragment extends BaseFragment<ChangePasswordActivity,
     @Override
     public void updatePassword(String newPassword, String oldPassword, final RequestCallback<SuccessMessage> requestCallback) {
         AndroidNetworking.post(myURL.UPDATE_PASSWORD_URL)
-                .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
+                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .addBodyParameter("old_password", oldPassword)
                 .addBodyParameter("password", newPassword)
                 .addBodyParameter("password_confirmation", newPassword)

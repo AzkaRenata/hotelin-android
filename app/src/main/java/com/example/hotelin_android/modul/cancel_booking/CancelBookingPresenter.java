@@ -1,7 +1,6 @@
 package com.example.hotelin_android.modul.cancel_booking;
 
 import com.example.hotelin_android.model.SuccessMessage;
-import com.example.hotelin_android.modul.booking_history.BookingHistoryContract;
 import com.example.hotelin_android.util.RequestCallback;
 
 public class CancelBookingPresenter implements CancelBookingContract.Presenter {
@@ -18,13 +17,13 @@ public class CancelBookingPresenter implements CancelBookingContract.Presenter {
     public void performCancelBooking(int booking_id){
         view.cancelBooking(booking_id, new RequestCallback<SuccessMessage>() {
             @Override
-            public void requestSuccess(SuccessMessage data) {
+            public void requestSuccess(SuccessMessage data, String message) {
                 view.setResult(data);
             }
 
             @Override
-            public void requestFailed(String errorMessage) {
-                view.showFailedMessage(errorMessage);
+            public void requestFailed(String message) {
+                view.showFailedMessage(message);
             }
         });
     }

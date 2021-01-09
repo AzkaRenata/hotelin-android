@@ -8,6 +8,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.modul.booking_history.BookingHistoryActivity;
@@ -81,6 +82,10 @@ public abstract class BaseFragmentHolderActivity extends BaseActivity {
     public void stopLoading(){
         loading.setVisibility(View.GONE);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
+
+    public void showMessage(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 }
 
