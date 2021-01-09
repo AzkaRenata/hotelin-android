@@ -24,15 +24,15 @@ import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.model.Bookinghistory;
 import com.example.hotelin_android.modul.cancel_detail.CancelDetailActivity;
 import com.example.hotelin_android.modul.home.HomeActivity;
-import com.example.hotelin_android.util.RecyclerViewAdapterBookingList;
+import com.example.hotelin_android.util.RecyclerViewAdapter.RecyclerViewAdapterBookingList;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
 
 import java.util.List;
 
 public class BookingHistoryFragment extends BaseFragment<BookingHistoryActivity, BookingHistoryContract.Presenter> implements BookingHistoryContract.View {
-    SharedPreferencesUtil sharedPreferencesUtil;
+    TokenSharedUtil tokenSharedUtil;
     RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -40,8 +40,8 @@ public class BookingHistoryFragment extends BaseFragment<BookingHistoryActivity,
     private  TextView done_tv;
     private  TextView cancel_tv;
 
-    public BookingHistoryFragment(SharedPreferencesUtil sharedPreferencesUtil) {
-        this.sharedPreferencesUtil = sharedPreferencesUtil;
+    public BookingHistoryFragment(TokenSharedUtil tokenSharedUtil) {
+        this.tokenSharedUtil = tokenSharedUtil;
     }
 
     @Nullable
@@ -139,13 +139,13 @@ public class BookingHistoryFragment extends BaseFragment<BookingHistoryActivity,
     }
 
     public void saveToken(String token){
-        sharedPreferencesUtil.setToken(token);
+        tokenSharedUtil.setToken(token);
     }
 
     @Override
     public void searchBooking(String status_id, final RequestCallback<List<Bookinghistory>> requestCallback) {
         AndroidNetworking.get(myURL.BOOKING_HISTORY_URL+status_id)
-                .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
+                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .setTag(this)
                 .setPriority(Priority.LOW)
                 .build()

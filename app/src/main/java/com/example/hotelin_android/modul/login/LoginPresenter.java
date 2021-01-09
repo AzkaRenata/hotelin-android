@@ -1,39 +1,38 @@
 package com.example.hotelin_android.modul.login;
 
-import android.util.Log;
-
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 
 public class LoginPresenter implements LoginContract.Presenter{
+    private final LoginActivity activity;
     private final LoginContract.View view;
-    private final SharedPreferencesUtil sessionRepository;                                              //new
 
-    public LoginPresenter(LoginContract.View view, SharedPreferencesUtil sessionRepository) {
+    public LoginPresenter(LoginContract.View view, LoginActivity activity) {
         this.view = view;
-        this.sessionRepository = sessionRepository;                                                 //new
+        this.activity = activity;
     }
 
     @Override
     public void start() {
-        if(sessionRepository.getToken() != null){                                             //new
-            view.redirectToHome();                                                               //jika sudah login langsung masuk profile
-        }
+        view.setItems();
     }
 
     @Override
     public void performLogin(String email, String password){
+        activity.startLoading();
         view.requestLogin(email, password, new RequestCallback<LoginResponse>() {
             @Override
             public void requestSuccess(LoginResponse data) {
-                view.redirectToHome();
-                Log.e("tes", data.token);
                 view.saveToken(data.token);
-                view.showSuccesMessage();
+                view.saveUser(data.user);
+                activity.stopLoading();
+                view.redirectToHome();
+                view.showSuccessMessage();
             }
 
             @Override
             public void requestFailed(String errorMessage) {
+                activity.stopLoading();
                 view.showFailedMessage(errorMessage);
             }
         });

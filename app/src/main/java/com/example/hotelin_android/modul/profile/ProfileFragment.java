@@ -1,9 +1,7 @@
 package com.example.hotelin_android.modul.profile;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,26 +15,22 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.GlideBuilder;
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.module.AppGlideModule;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
-import com.example.hotelin_android.model.User;
+import com.example.hotelin_android.model.UserTemp;
 import com.example.hotelin_android.modul.booking_history.BookingHistoryActivity;
 import com.example.hotelin_android.modul.change_password.ChangePasswordActivity;
 import com.example.hotelin_android.modul.login.LoginActivity;
 import com.example.hotelin_android.modul.profile_edit.ProfileEditActivity;
 import com.example.hotelin_android.modul.test.TestResponse;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContract.ProfilePresenter> implements ProfileContract.ProfileView, View.OnClickListener {
-    SharedPreferencesUtil sharedPreferencesUtil;
+    TokenSharedUtil tokenSharedUtil;
 
     TextView tvName;
     TextView tvEmail;
@@ -48,15 +42,15 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
 
     ProfilePresenter profilePresenter;
 
-    public ProfileFragment(SharedPreferencesUtil sharedPreferencesUtil) {
-        this.sharedPreferencesUtil = sharedPreferencesUtil;
+    public ProfileFragment(TokenSharedUtil tokenSharedUtil) {
+        this.tokenSharedUtil = tokenSharedUtil;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentView = inflater.inflate(R.layout.profile_activity, container, false);
-        mPresenter = new ProfilePresenter(this, sharedPreferencesUtil);
+        mPresenter = new ProfilePresenter(this, tokenSharedUtil);
         mPresenter.start();
 
         tvName = fragmentView.findViewById(R.id.name_tv);
@@ -125,9 +119,9 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
     }
 
     @Override
-    public void requestProfile(final RequestCallback<User> requestCallback) {
+    public void requestProfile(final RequestCallback<UserTemp> requestCallback) {
         AndroidNetworking.get(myURL.PROFILE_URL)
-                .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
+                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .build()
                 .getAsObject(TestResponse.class, new ParsedRequestListener<TestResponse>() {
                     @Override
@@ -136,7 +130,7 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
                             requestCallback.requestFailed("Null Response");
                             Log.d("tag", "response null");
                         }else{
-                            requestCallback.requestSuccess(response.user);
+                            requestCallback.requestSuccess(response.userTemp);
                         }
                     }
 
@@ -148,11 +142,11 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
                 });
     }
 
-    public void setProfile(User user){
-        tvName.setText(user.getName());
-        tvEmail.setText(user.getEmail());
+    public void setProfile(UserTemp userTemp){
+        tvName.setText(userTemp.getName());
+        tvEmail.setText(userTemp.getEmail());
         Glide.with(fragmentView)
-                .load(myURL.getImageUrl()+user.getUser_picture())
+                .load(myURL.getImageUrl()+ userTemp.getUser_picture())
                 .error(R.drawable.ic_profile_picture)
                 .signature(new ObjectKey(System.currentTimeMillis()))
                 .into(civPhoto);

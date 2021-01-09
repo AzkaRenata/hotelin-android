@@ -6,9 +6,9 @@ public class Hotel {
     private String hotel_location;
     private String hotel_desc;
     private String hotel_picture;
-    private String hotel_price;
+    private double hotel_price;
 
-    public Hotel(int id, String hotel_name, String hotel_location, String hotel_desc, String hotel_picture, String hotel_price) {
+    public Hotel(int id, String hotel_name, String hotel_location, String hotel_desc, String  hotel_picture, double hotel_price) {
         this.id = id;
         this.hotel_name = hotel_name;
         this.hotel_location = hotel_location;
@@ -37,7 +37,7 @@ public class Hotel {
         this.hotel_picture = hotel_picture;
     }
 
-    public void setHotel_price(String hotel_price) {
+    public void setHotel_price(double hotel_price) {
         this.hotel_price = hotel_price;
     }
 
@@ -61,7 +61,7 @@ public class Hotel {
         return hotel_picture;
     }
 
-    public String getHotel_price() {
+    public double getHotel_price() {
         return hotel_price;
     }
 }

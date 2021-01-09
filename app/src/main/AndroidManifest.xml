@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_hotelin_round"
         android:supportsRtl="true"
-        android:theme="@style/Custom"
+        android:theme="@style/Hotelin"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustResize">
         <activity android:name=".modul.booking.BookingActivity" />

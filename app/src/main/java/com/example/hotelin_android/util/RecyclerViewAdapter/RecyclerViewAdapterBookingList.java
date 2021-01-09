@@ -1,4 +1,4 @@
-package com.example.hotelin_android.util;
+package com.example.hotelin_android.util.RecyclerViewAdapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.model.Bookinghistory;
+import com.example.hotelin_android.util.AsyncTaskLoadImage;
+import com.example.hotelin_android.util.myURL;
 
 import java.util.List;
 

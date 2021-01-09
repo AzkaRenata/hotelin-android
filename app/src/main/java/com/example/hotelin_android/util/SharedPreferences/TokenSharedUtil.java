@@ -1,19 +1,18 @@
-package com.example.hotelin_android.util;
+package com.example.hotelin_android.util.SharedPreferences;
 
 import android.content.SharedPreferences;
 import android.util.Log;
 
-public class SharedPreferencesUtil {
+public class TokenSharedUtil {
     private final SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
-    public SharedPreferencesUtil(SharedPreferences sharedPreferences) {
+    public TokenSharedUtil(SharedPreferences sharedPreferences) {
         this.sharedPreferences = sharedPreferences;
         this.editor = sharedPreferences.edit();
     }
 
     public void setToken(String token){
-        Log.e("testing", token);
         sharedPreferences.edit().putString("token", token).apply();
     }
 

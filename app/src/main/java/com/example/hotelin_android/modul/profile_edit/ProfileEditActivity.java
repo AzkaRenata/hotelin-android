@@ -1,18 +1,18 @@
 package com.example.hotelin_android.modul.profile_edit;
 
 import com.example.hotelin_android.base.BaseFragmentHolderActivity;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 import com.example.hotelin_android.util.UtilProvider;
 
 public class ProfileEditActivity extends BaseFragmentHolderActivity {
-    SharedPreferencesUtil sharedPreferencesUtil;
+    TokenSharedUtil tokenSharedUtil;
     ProfileEditFragment ProfileEditFragment;
 
     @Override
     protected void initializeFragment() {
         initializeView();
-        sharedPreferencesUtil = UtilProvider.getSharedPreferencesUtil();
-        ProfileEditFragment = new ProfileEditFragment(sharedPreferencesUtil);
+        tokenSharedUtil = UtilProvider.getTokenSharedUtil();
+        ProfileEditFragment = new ProfileEditFragment(tokenSharedUtil);
         setCurrentFragment(ProfileEditFragment, false);
 
     }

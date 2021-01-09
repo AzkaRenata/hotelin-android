@@ -2,8 +2,7 @@ package com.example.hotelin_android.modul.profile;
 
 import com.example.hotelin_android.base.BasePresenter;
 import com.example.hotelin_android.base.BaseView;
-import com.example.hotelin_android.model.User;
-import com.example.hotelin_android.modul.hotel_detail.HotelDetail;
+import com.example.hotelin_android.model.UserTemp;
 import com.example.hotelin_android.util.RequestCallback;
 
 public interface ProfileContract {
@@ -12,8 +11,8 @@ public interface ProfileContract {
         void redirectToLogin();
         void redirectToBookingHistory();
         void redirectToEditProfile();
-        void requestProfile(RequestCallback<User> requestCallback);
-        void setProfile(User user);
+        void requestProfile(RequestCallback<UserTemp> requestCallback);
+        void setProfile(UserTemp userTemp);
         void showFailedMessage(String message);
     }
 

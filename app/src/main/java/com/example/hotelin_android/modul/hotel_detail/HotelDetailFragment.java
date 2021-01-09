@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,11 +11,10 @@ import androidx.annotation.Nullable;
 
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
-import com.example.hotelin_android.util.myURL;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 
 public class HotelDetailFragment extends BaseFragment<HotelDetailActivity, HotelDetailContract.HotelDetailPresenter> implements HotelDetailContract.HotelDetailView {
-    SharedPreferencesUtil sharedPreferencesUtil;
+    TokenSharedUtil tokenSharedUtil;
 
     TextView hotelNameTV;
     TextView hotelLocationTV;
@@ -26,8 +24,8 @@ public class HotelDetailFragment extends BaseFragment<HotelDetailActivity, Hotel
     HotelDetailPresenter hotelDetailPresenter;
     int HOTEL_ID =  4;
 
-    public HotelDetailFragment(SharedPreferencesUtil sharedPreferencesUtil) {
-        this.sharedPreferencesUtil = sharedPreferencesUtil;
+    public HotelDetailFragment(TokenSharedUtil tokenSharedUtil) {
+        this.tokenSharedUtil = tokenSharedUtil;
     }
 
     @Nullable

@@ -1,25 +1,19 @@
 package com.example.hotelin_android.modul.hotel_detail;
 
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
 import com.example.hotelin_android.R;
-import com.example.hotelin_android.base.BaseActivity;
 import com.example.hotelin_android.base.BaseFragmentHolderActivity;
-import com.example.hotelin_android.modul.login.LoginFragment;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 import com.example.hotelin_android.util.UtilProvider;
 
 public class HotelDetailActivity extends BaseFragmentHolderActivity {
-    SharedPreferencesUtil sharedPreferencesUtil;
+    TokenSharedUtil tokenSharedUtil;
     HotelDetailFragment hotelDetailFragment;
 
     @Override
     protected void initializeFragment() {
         initializeView();
-        sharedPreferencesUtil = UtilProvider.getSharedPreferencesUtil();
-        hotelDetailFragment = new HotelDetailFragment(sharedPreferencesUtil);
+        tokenSharedUtil = UtilProvider.getTokenSharedUtil();
+        hotelDetailFragment = new HotelDetailFragment(tokenSharedUtil);
         setCurrentFragment(hotelDetailFragment, false);
 
     }

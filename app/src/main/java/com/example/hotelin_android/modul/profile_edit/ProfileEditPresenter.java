@@ -1,12 +1,9 @@
 package com.example.hotelin_android.modul.profile_edit;
 
-import android.net.Uri;
 import android.util.Log;
 
-import com.example.hotelin_android.model.User;
+import com.example.hotelin_android.model.UserTemp;
 import com.example.hotelin_android.util.RequestCallback;
-
-import java.io.File;
 
 public class ProfileEditPresenter implements ProfileEditContract.Presenter {
     ProfileEditContract.View view;
@@ -24,9 +21,9 @@ public class ProfileEditPresenter implements ProfileEditContract.Presenter {
 
     @Override
     public void showData(){
-        view.requestProfile(new RequestCallback<User>() {
+        view.requestProfile(new RequestCallback<UserTemp>() {
             @Override
-            public void requestSuccess(User data) {
+            public void requestSuccess(UserTemp data) {
                 view.setProfile(data);
             }
 
@@ -38,11 +35,11 @@ public class ProfileEditPresenter implements ProfileEditContract.Presenter {
     }
 
     @Override
-    public void performRegister(User newUser){
+    public void performRegister(UserTemp newUserTemp){
         Log.e("tes", "tes4");
-        view.editUser(newUser, new RequestCallback<User>() {
+        view.editUser(newUserTemp, new RequestCallback<UserTemp>() {
             @Override
-            public void requestSuccess(User user) {
+            public void requestSuccess(UserTemp userTemp) {
                 view.showSuccessMessage();
             }
 
@@ -55,10 +52,10 @@ public class ProfileEditPresenter implements ProfileEditContract.Presenter {
 
     @Override
     public void performUpdatePicture() {
-        view.updatePicture(new RequestCallback<User>() {
+        view.updatePicture(new RequestCallback<UserTemp>() {
 
             @Override
-            public void requestSuccess(User data) {
+            public void requestSuccess(UserTemp data) {
                 Log.e("reqSuccess", data.getUser_picture());
                 view.setPicture(data);
             }

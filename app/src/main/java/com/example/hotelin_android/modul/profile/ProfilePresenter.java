@@ -1,29 +1,17 @@
 package com.example.hotelin_android.modul.profile;
 
-import android.util.Log;
-
-import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONArrayRequestListener;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.example.hotelin_android.model.User;
-import com.example.hotelin_android.modul.hotel_detail.HotelDetail;
+import com.example.hotelin_android.model.UserTemp;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
-import com.example.hotelin_android.util.myURL;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 
 public class ProfilePresenter implements ProfileContract.ProfilePresenter {
     ProfileContract.ProfileView view;
-    SharedPreferencesUtil sharedPreferencesUtil;
+    TokenSharedUtil tokenSharedUtil;
 
 
-    public ProfilePresenter(ProfileContract.ProfileView view, SharedPreferencesUtil sharedPreferencesUtil) {
+    public ProfilePresenter(ProfileContract.ProfileView view, TokenSharedUtil tokenSharedUtil) {
         this.view = view;
-        this.sharedPreferencesUtil = sharedPreferencesUtil;
+        this.tokenSharedUtil = tokenSharedUtil;
     }
 
     @Override
@@ -33,17 +21,17 @@ public class ProfilePresenter implements ProfileContract.ProfilePresenter {
 
     @Override
     public void performLogOut() {
-        if (sharedPreferencesUtil.getToken() != null) {
-            sharedPreferencesUtil.clear();
+        if (tokenSharedUtil.getToken() != null) {
+            tokenSharedUtil.clear();
             view.redirectToLogin();
         }
     }
 
     @Override
     public void showData() {
-        view.requestProfile(new RequestCallback<User>() {
+        view.requestProfile(new RequestCallback<UserTemp>() {
             @Override
-            public void requestSuccess(User data) {
+            public void requestSuccess(UserTemp data) {
                 view.setProfile(data);
             }
 

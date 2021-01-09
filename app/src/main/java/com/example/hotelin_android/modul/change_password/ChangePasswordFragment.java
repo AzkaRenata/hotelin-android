@@ -26,7 +26,7 @@ import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.model.SuccessMessage;
 import com.example.hotelin_android.modul.profile.ProfileActivity;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
 
 public class ChangePasswordFragment extends BaseFragment<ChangePasswordActivity, ChangePasswordContract.Presenter> implements ChangePasswordContract.View, View.OnClickListener {
@@ -36,10 +36,11 @@ public class ChangePasswordFragment extends BaseFragment<ChangePasswordActivity,
     TextView tvForgotPassword;
     TextView tvWarning;
     Button btnSave;
-    SharedPreferencesUtil sharedPreferencesUtil;
+    String oldPassword;
+    TokenSharedUtil tokenSharedUtil;
 
-    public ChangePasswordFragment(SharedPreferencesUtil sharedPreferencesUtil) {
-        this.sharedPreferencesUtil = sharedPreferencesUtil;
+    public ChangePasswordFragment(TokenSharedUtil tokenSharedUtil) {
+        this.tokenSharedUtil = tokenSharedUtil;
     }
 
     @Nullable

@@ -17,20 +17,20 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
-import com.example.hotelin_android.model.User;
+import com.example.hotelin_android.model.UserTemp;
 import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.modul.register.RegisterActivity;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
 
 public class TestFragment extends BaseFragment<TestActivity, TestContract.Presenter> implements TestContract.View {
     TextView id,userName,userEmail,gender;
     Button btnLogout;
-    SharedPreferencesUtil sharedPreferencesUtil;
+    TokenSharedUtil tokenSharedUtil;
 
-    public TestFragment(SharedPreferencesUtil sharedPreferencesUtil) {
-        this.sharedPreferencesUtil = sharedPreferencesUtil;
+    public TestFragment(TokenSharedUtil tokenSharedUtil) {
+        this.tokenSharedUtil = tokenSharedUtil;
     }
 
     @Nullable
@@ -76,13 +76,13 @@ public class TestFragment extends BaseFragment<TestActivity, TestContract.Presen
     }
 
     public void saveToken(String token){
-        sharedPreferencesUtil.setToken(token);
+        tokenSharedUtil.setToken(token);
     }
 
     @Override
-    public void requestProfile(final RequestCallback<User> requestCallback) {
+    public void requestProfile(final RequestCallback<UserTemp> requestCallback) {
         AndroidNetworking.get(myURL.PROFILE_URL)
-                .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
+                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .build()
                 .getAsObject(TestResponse.class, new ParsedRequestListener<TestResponse>() {
                     @Override
@@ -91,7 +91,7 @@ public class TestFragment extends BaseFragment<TestActivity, TestContract.Presen
                             requestCallback.requestFailed("Null Response");
                             Log.d("tag", "response null");
                         }else{
-                            requestCallback.requestSuccess(response.user);
+                            requestCallback.requestSuccess(response.userTemp);
                         }
                     }
 
@@ -103,11 +103,11 @@ public class TestFragment extends BaseFragment<TestActivity, TestContract.Presen
                 });
     }
 
-    public void setProfile(User user){
-        id.setText(String.valueOf(user.getId()));
-        userEmail.setText(user.getEmail());
-        gender.setText(user.getGender());
-        userName.setText(user.getUsername());
+    public void setProfile(UserTemp userTemp){
+        id.setText(String.valueOf(userTemp.getId()));
+        userEmail.setText(userTemp.getEmail());
+        gender.setText(userTemp.getGender());
+        userName.setText(userTemp.getUsername());
     }
 
     public void showFailedMessage(String message){

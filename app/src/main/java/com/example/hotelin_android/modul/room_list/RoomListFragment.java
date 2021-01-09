@@ -3,7 +3,6 @@ package com.example.hotelin_android.modul.room_list;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,25 +23,31 @@ import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.model.Room;
+import com.example.hotelin_android.model.RoomTemp;
 import com.example.hotelin_android.model.RoomGroup;
 import com.example.hotelin_android.modul.booking.BookingActivity;
 import com.example.hotelin_android.modul.home.HomeActivity;
-import com.example.hotelin_android.modul.register.RegisterActivity;
-import com.example.hotelin_android.util.RecyclerViewAdapterRoomList;
+import com.example.hotelin_android.util.RecyclerViewAdapter.RecyclerViewAdapterRoomList;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.SharedPreferences.HotelSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
+import com.example.hotelin_android.util.UtilProvider;
 import com.example.hotelin_android.util.myURL;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListContract.Presenter> implements RoomListContract.View {
-    SharedPreferencesUtil sharedPreferencesUtil;
+    TokenSharedUtil tokenSharedUtil;
+    HotelSharedUtil hotelSharedUtil;
     int hotel_id;
     String hotel_name;
     TextView tvCheckIn;
     TextView tvCheckOut;
-    TextView tvHotelName;
     String sCheckOut;
     String sCheckIn;
     RecyclerView mRecyclerView;
@@ -50,29 +55,33 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    public RoomListFragment(int hotel_id, String hotel_name, SharedPreferencesUtil sharedPreferencesUtil) {
-        this.hotel_id = hotel_id;
-        this.hotel_name = hotel_name;
-        this.sharedPreferencesUtil = sharedPreferencesUtil;
+    public RoomListFragment() {
+        this.tokenSharedUtil = UtilProvider.getTokenSharedUtil();
+        this.hotelSharedUtil = UtilProvider.getHotelSharedUtil();
+        hotel_id = hotelSharedUtil.getHotel().getId();
+        hotel_name = hotelSharedUtil.getHotel().getHotel_name();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        fragmentView = inflater.inflate(R.layout.room_list, container, false);
-        mPresenter = new RoomListPresenter(this);
+        fragmentView = inflater.inflate(R.layout.fragment_room_list, container, false);
+        mPresenter = new RoomListPresenter(this, activity);
         mPresenter.start();
 
+        initCalendar();
+
+
+        return fragmentView;
+    }
+
+    public void setItems(){
         mRecyclerView = fragmentView.findViewById(R.id.recyclerViewRoomList);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(activity);
         mRecyclerView.setLayoutManager(mLayoutManager);
-//        mPresenter.getData(hotel_id);
-        setTitle("Room List");
 
-        tvHotelName = fragmentView.findViewById(R.id.room_list_hotel_name_tv);
-        tvHotelName.setText(hotel_name);
         tvCheckIn = fragmentView.findViewById(R.id.room_list_check_in_tv);
         tvCheckOut = fragmentView.findViewById(R.id.room_list_check_out_tv);
         btnSearch = fragmentView.findViewById(R.id.room_list_search_btn);
@@ -80,15 +89,66 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sCheckIn = tvCheckIn.getText().toString();
+                sCheckOut = tvCheckOut.getText().toString();
+
+                checkDate();
                 validateTime();
             }
         });
 
-        initCalendar();
-
-
-        return fragmentView;
+        setTitle(hotel_name);
     }
+
+    public void checkDate(){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-m-d");
+
+        try {
+            Date checkInDate = format.parse(sCheckIn);
+            Date checkOutDate = format.parse(sCheckOut);
+            Log.e("tesIn", checkInDate.toString());
+            Log.e("tesOut", checkOutDate.toString());
+
+            if(checkInDate.after(checkOutDate) || checkInDate.equals(checkOutDate)){
+                showFailedMessage("Tanggal Input Salah");
+            }else{
+                mPresenter.getAvailableRoom();
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            showFailedMessage("Masukkan Tanggal Check In dan Check Out");
+        }
+    }
+
+    public void requestAvailableRoom(final RequestCallback<RoomListResponse> requestCallback) {
+        AndroidNetworking.post(myURL.SEARCH_AVAILABLE_ROOM_URL + hotel_id)
+                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
+                .addBodyParameter("check_in", sCheckIn)
+                .addBodyParameter("check_out", sCheckOut)
+                .setTag(this)
+                .setPriority(Priority.LOW)
+                .build()
+                .getAsObject(RoomListResponse.class, new ParsedRequestListener<RoomListResponse>() {
+                    @Override
+                    public void onResponse(RoomListResponse response) {
+                        if (response == null) {
+                            requestCallback.requestFailed("Null Response");
+                        } else {
+                            requestCallback.requestSuccess(response);
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.e("cek", String.valueOf(anError.getErrorCode()));
+                        Log.e("cek", "t " + anError.getErrorBody());
+                        Log.e("cek", "t " + anError.getErrorDetail());
+                        requestCallback.requestFailed(anError.getMessage());
+                    }
+                });
+    }
+
+
 
     private void validateTime() {
         mPresenter.getData(hotel_id);
@@ -191,21 +251,21 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
     }
 
     public void saveToken(String token) {
-        sharedPreferencesUtil.setToken(token);
+        tokenSharedUtil.setToken(token);
     }
 
     @Override
-    public void validateRoom(int hotel_id, final RequestCallback<List<Room>> requestCallback) {
+    public void validateRoom(int hotel_id, final RequestCallback<List<RoomTemp>> requestCallback) {
         AndroidNetworking.post(myURL.VALIDATE_TIME + hotel_id)
-                .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
+                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .addBodyParameter("check_in", sCheckIn)
                 .addBodyParameter("check_out", sCheckOut)
                 .setTag(this)
                 .setPriority(Priority.LOW)
                 .build()
-                .getAsObjectList(Room.class, new ParsedRequestListener<List<Room>>() {
+                .getAsObjectList(RoomTemp.class, new ParsedRequestListener<List<RoomTemp>>() {
                     @Override
-                    public void onResponse(List<Room> response) {
+                    public void onResponse(List<RoomTemp> response) {
                         if (response == null) {
                             requestCallback.requestFailed("Null Response");
                             Log.d("tag", "response null");
@@ -223,15 +283,15 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
     }
 
     //    @Override
-    public void searchRoom(final int hotel_id, final RequestCallback<List<Room>> requestCallback) {
+    public void searchRoom(final int hotel_id, final RequestCallback<List<RoomTemp>> requestCallback) {
         AndroidNetworking.get(myURL.SEARCH_ROOM_URL + hotel_id)
-                .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
+                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .setTag(this)
                 .setPriority(Priority.LOW)
                 .build()
-                .getAsObjectList(Room.class, new ParsedRequestListener<List<Room>>() {
+                .getAsObjectList(RoomTemp.class, new ParsedRequestListener<List<RoomTemp>>() {
                     @Override
-                    public void onResponse(List<Room> response) {
+                    public void onResponse(List<RoomTemp> response) {
                         if (response == null) {
                             requestCallback.requestFailed("Null Response");
                             Log.d("tag", "response null");
@@ -248,17 +308,21 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
                 });
     }
 
-    public void setResult(final List<RoomGroup> rooms) {
-        TextView hotel_name = (TextView) fragmentView.findViewById(R.id.room_list_hotel_name_tv);
-        hotel_name.setText(rooms.get(0).getRooms().get(0).getHotel_name());
-        mAdapter = new RecyclerViewAdapterRoomList(rooms, sCheckIn);
+    public void setResult(final List<Room> rooms) {
+        List<Room> roomList = new ArrayList<>();
+        for(int i = 0; i < rooms.size(); i++){
+            if(!rooms.get(i).isIs_booked()){
+                roomList.add(rooms.get(i));
+            }
+        }
+        mAdapter = new RecyclerViewAdapterRoomList(roomList);
         mRecyclerView.setAdapter(mAdapter);
         ((RecyclerViewAdapterRoomList) mAdapter).setOnItemClickListener(new RecyclerViewAdapterRoomList.MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                int id = rooms.get(position).getRooms().get(0).getId();
-                String price = rooms.get(position).getRooms().get(0).getRoom_price();
-                String type = rooms.get(position).getRooms().get(0).getRoom_type();
+                int id = rooms.get(position).getId();
+                String price = rooms.get(position).getRoom_price().toString();
+                String type = rooms.get(position).getRoom_type();
                 redirectToBooking(id, type, price);
             }
         });
@@ -266,6 +330,6 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
     }
 
     public void showFailedMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT);
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

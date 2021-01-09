@@ -3,6 +3,7 @@ package com.example.hotelin_android.base;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -26,26 +27,19 @@ public abstract class BaseFragmentHolderActivity extends BaseActivity {
     protected ImageButton btProfile;
     protected View vMenuBarShadow;
     protected RelativeLayout rlActivityFragmentHolder;
+    protected RelativeLayout loading;
 
     @Override
     protected void initializeView() {
         setContentView(R.layout.base_activity);
         tvToolbarTitle = (TextView) findViewById(R.id.tvToolbarTitle);
         flFragmentContainer = (FrameLayout) findViewById(R.id.flFragmentContainer);
-        btOptionMenu = (ImageButton) findViewById(R.id.btOptionMenu);
-        btBack = (ImageButton) findViewById(R.id.btBack);
         btSearch = (ImageButton) findViewById(R.id.btSearch);
         btBooking = (ImageButton) findViewById(R.id.btBooking);
         btProfile = (ImageButton) findViewById(R.id.btProfile);
         vMenuBarShadow = findViewById(R.id.vMenuBarShadow);
         rlActivityFragmentHolder = (RelativeLayout) findViewById(R.id.rlActivityFragmentHolder);
-
-        btBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        loading = (RelativeLayout) findViewById(R.id.loading_screen);
 
         btSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +70,17 @@ public abstract class BaseFragmentHolderActivity extends BaseActivity {
         this.tvToolbarTitle.setText(title);
     }
 
+    public void setItems(){}
 
+    public void startLoading(){
+        loading.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
+
+    public void stopLoading(){
+        loading.setVisibility(View.GONE);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
 }
 

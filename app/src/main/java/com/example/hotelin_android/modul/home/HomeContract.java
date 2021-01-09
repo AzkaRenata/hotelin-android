@@ -5,6 +5,7 @@ import com.example.hotelin_android.base.BaseView;
 
 public interface HomeContract {
     interface View extends BaseView<Presenter> {
+        void setItems();
         void redirectToSearchResult(String location);
     }
 

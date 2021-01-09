@@ -22,18 +22,18 @@ import com.example.hotelin_android.modul.booking_history.BookingHistoryActivity;
 import com.example.hotelin_android.modul.cancel_detail.CancelDetailActivity;
 import com.example.hotelin_android.modul.register.RegisterActivity;
 import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.SharedPreferencesUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 import com.example.hotelin_android.util.myURL;
 
 public class CancelBookingFragment extends BaseFragment<CancelBookingActivity, CancelBookingContract.Presenter> implements CancelBookingContract.View{
-    SharedPreferencesUtil sharedPreferencesUtil;
+    TokenSharedUtil tokenSharedUtil;
     int booking_id;
     Button back_btn;
     Button cancel_btn;
 
-    public CancelBookingFragment(SharedPreferencesUtil sharedPreferencesUtil, int booking_id) {
+    public CancelBookingFragment(TokenSharedUtil tokenSharedUtil, int booking_id) {
         this.booking_id = booking_id;
-        this.sharedPreferencesUtil = sharedPreferencesUtil;
+        this.tokenSharedUtil = tokenSharedUtil;
     }
 
     @Nullable
@@ -93,7 +93,7 @@ public class CancelBookingFragment extends BaseFragment<CancelBookingActivity, C
     @Override
     public void cancelBooking(final int booking_id, final RequestCallback<SuccessMessage> requestCallback) {
         AndroidNetworking.post(myURL.CANCEL_BOOKING+booking_id+"/3")
-                .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
+                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .setTag(this)
                 .setPriority(Priority.LOW)
                 .build()
