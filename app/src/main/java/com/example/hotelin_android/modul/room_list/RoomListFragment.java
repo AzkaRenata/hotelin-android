@@ -1,16 +1,16 @@
 package com.example.hotelin_android.modul.room_list;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,12 +23,11 @@ import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.model.Room;
-import com.example.hotelin_android.model.RoomTemp;
 import com.example.hotelin_android.modul.booking.BookingActivity;
-import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.util.RecyclerViewAdapter.RecyclerViewAdapterRoomList;
 import com.example.hotelin_android.util.RequestCallback;
 import com.example.hotelin_android.util.SharedPreferences.HotelSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.RoomSharedUtil;
 import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 import com.example.hotelin_android.util.UtilProvider;
 import com.example.hotelin_android.util.myURL;
@@ -41,22 +40,25 @@ import java.util.Date;
 import java.util.List;
 
 public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListContract.Presenter> implements RoomListContract.View {
-    TokenSharedUtil tokenSharedUtil;
-    HotelSharedUtil hotelSharedUtil;
-    int hotel_id;
-    String hotel_name;
-    TextView tvCheckIn;
-    TextView tvCheckOut;
-    String sCheckOut;
-    String sCheckIn;
-    RecyclerView mRecyclerView;
-    Button btnSearch;
+    private TextView tvCheckIn;
+    private TextView tvCheckOut;
+    private RelativeLayout rlNoResult;
+    private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+
+    private final int hotel_id;
+    private final String hotel_name;
+    private String strCheckOut;
+    private String strCheckIn;
+
+    private final TokenSharedUtil tokenSharedUtil;
+    private final RoomSharedUtil roomSharedUtil;
 
     public RoomListFragment() {
-        this.tokenSharedUtil = UtilProvider.getTokenSharedUtil();
-        this.hotelSharedUtil = UtilProvider.getHotelSharedUtil();
+        tokenSharedUtil = UtilProvider.getTokenSharedUtil();
+        HotelSharedUtil hotelSharedUtil = UtilProvider.getHotelSharedUtil();
+        roomSharedUtil = UtilProvider.getRoomSharedUtil();
+
         hotel_id = hotelSharedUtil.getHotel().getId();
         hotel_name = hotelSharedUtil.getHotel().getHotel_name();
     }
@@ -69,61 +71,163 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
         mPresenter = new RoomListPresenter(this, activity);
         mPresenter.start();
 
-        initCalendar();
-
-
         return fragmentView;
     }
 
+    @Override
     public void setItems(){
+        Button btnSearch;
+
         mRecyclerView = fragmentView.findViewById(R.id.recyclerViewRoomList);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(activity);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         tvCheckIn = fragmentView.findViewById(R.id.room_list_check_in_tv);
         tvCheckOut = fragmentView.findViewById(R.id.room_list_check_out_tv);
         btnSearch = fragmentView.findViewById(R.id.room_list_search_btn);
+        rlNoResult = fragmentView.findViewById(R.id.no_result_layout);
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sCheckIn = tvCheckIn.getText().toString();
-                sCheckOut = tvCheckOut.getText().toString();
-
-                checkDate();
-                validateTime();
+                setBtnSearchClick();
             }
         });
 
         setTitle(hotel_name);
     }
 
+    @Override
+    public void initCalendar() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        setTvCheckInCalendar(year, month, day);
+        setTvCheckOutCalendar(year, month, day);
+    }
+
+    public void setTvCheckInCalendar(final int year, final int month, final int day) {
+        tvCheckIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @SuppressLint("DefaultLocale")
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int day) {
+                        month = month + 1;
+
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.YEAR, year - 1);
+                        calendar.set(Calendar.MONTH, month);
+                        calendar.set(Calendar.DAY_OF_MONTH, day);
+
+                        strCheckIn = year + "-" + String.format("%02d", month) + "-" + String.format("%02d", day);
+                        tvCheckIn.setText(strCheckIn);
+
+                    }
+                }, year, month, day);
+                datePickerDialog.show();
+            }
+        });
+    }
+
+    public void setTvCheckOutCalendar(final int year, final int month, final int day) {
+        tvCheckOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @SuppressLint("DefaultLocale")
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int day) {
+                        month = month + 1;
+
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.YEAR, year - 1);
+                        calendar.set(Calendar.MONTH, month);
+                        calendar.set(Calendar.DAY_OF_MONTH, day);
+
+                        strCheckOut = year + "-" + String.format("%02d", month) + "-" + String.format("%02d", day);
+                        tvCheckOut.setText(strCheckOut);
+                    }
+                }, year, month, day);
+                datePickerDialog.show();
+            }
+        });
+    }
+
+    public void setBtnSearchClick(){
+        strCheckIn = tvCheckIn.getText().toString();
+        strCheckOut = tvCheckOut.getText().toString();
+
+        checkDate();
+    }
+
     public void checkDate(){
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-m-d");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         try {
-            Date checkInDate = format.parse(sCheckIn);
-            Date checkOutDate = format.parse(sCheckOut);
-            Log.e("tesIn", checkInDate.toString());
-            Log.e("tesOut", checkOutDate.toString());
+            Date checkInDate = format.parse(strCheckIn);
+            Date checkOutDate = format.parse(strCheckOut);
 
             if(checkInDate.after(checkOutDate) || checkInDate.equals(checkOutDate)){
-                showFailedMessage("Tanggal Input Salah");
+                activity.showMessage(getString(R.string.error_wrong_date_input));
             }else{
-                mPresenter.getAvailableRoom();
+                mPresenter.performRoomSearch();
             }
         } catch (ParseException e) {
             e.printStackTrace();
-            showFailedMessage("Masukkan Tanggal Check In dan Check Out");
+            activity.showMessage(getString(R.string.error_empty_date_input));
         }
     }
 
+    @Override
+    public void redirectToBooking() {
+        Intent intent = new Intent(activity, BookingActivity.class);
+        intent.putExtra("check_in", strCheckIn);
+        intent.putExtra("check_out", strCheckIn);
+        startActivity(intent);
+    }
+
+    @Override
+    public void checkResult(){
+        rlNoResult.setVisibility(View.GONE);
+
+        if(mAdapter.getItemCount() == 0){
+            rlNoResult.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void setResult(final List<Room> rooms) {
+        List<Room> roomList = new ArrayList<>();
+
+        for(int i = 0; i < rooms.size(); i++){
+            if(!rooms.get(i).isIs_booked()){
+                roomList.add(rooms.get(i));
+            }
+        }
+
+        mAdapter = new RecyclerViewAdapterRoomList(roomList);
+        mRecyclerView.setAdapter(mAdapter);
+        ((RecyclerViewAdapterRoomList) mAdapter).setOnItemClickListener(new RecyclerViewAdapterRoomList.MyClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                int id = rooms.get(position).getId();
+                mPresenter.getRoomDetail(id);
+            }
+        });
+
+    }
+
+    @Override
     public void requestAvailableRoom(final RequestCallback<RoomListResponse> requestCallback) {
         AndroidNetworking.post(myURL.SEARCH_AVAILABLE_ROOM_URL + hotel_id)
                 .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
-                .addBodyParameter("check_in", sCheckIn)
-                .addBodyParameter("check_out", sCheckOut)
+                .addBodyParameter("check_in", strCheckIn)
+                .addBodyParameter("check_out", strCheckOut)
                 .setTag(this)
                 .setPriority(Priority.LOW)
                 .build()
@@ -131,204 +235,50 @@ public class RoomListFragment extends BaseFragment<RoomListActivity, RoomListCon
                     @Override
                     public void onResponse(RoomListResponse response) {
                         if (response == null) {
-                            requestCallback.requestFailed("Null Response");
+                            requestCallback.requestFailed(getString(R.string.error_null_response));
                         } else {
-                            requestCallback.requestSuccess(response, "tes");
+                            requestCallback.requestSuccess(response, getString(R.string.success_message));
                         }
                     }
 
                     @Override
                     public void onError(ANError anError) {
-                        Log.e("cek", String.valueOf(anError.getErrorCode()));
-                        Log.e("cek", "t " + anError.getErrorBody());
-                        Log.e("cek", "t " + anError.getErrorDetail());
                         requestCallback.requestFailed(anError.getMessage());
                     }
                 });
     }
 
-
-
-    private void validateTime() {
-        mPresenter.getData(hotel_id);
-    }
-
-    public void initCalendar() {
-        checkInDate();
-        checkOutDate();
-
-
-//        mPresenter.getData(hotel_id);
-    }
-
-
-    public void checkInDate() {
-        final Calendar calendar = Calendar.getInstance();
-        final int year = calendar.get(Calendar.YEAR);
-        final int month = calendar.get(Calendar.MONTH);
-        final int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        tvCheckIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+    @Override
+    public void requestRoomDetail(final int id, final RequestCallback<RoomListResponse> requestCallback) {
+        AndroidNetworking.get(myURL.GET_HOTEL_DETAIL_URL + id)
+                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
+                .setTag(this)
+                .setPriority(Priority.LOW)
+                .build()
+                .getAsObject(RoomListResponse.class, new ParsedRequestListener<RoomListResponse>() {
                     @Override
-                    public void onDateSet(DatePicker view, int year, int month, int day) {
-                        month = month + 1;
-//                        String date = day+"/"+month+"/"+year;
-//                        String dates = date.toString();
-
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.set(Calendar.YEAR, year - 1);
-                        calendar.set(Calendar.MONTH, month);
-                        calendar.set(Calendar.DAY_OF_MONTH, day);
-                        sCheckIn = year + "-" + month + "-" + day;
-//                        CharSequence date = DateFormat.format("EEE, d MMM yyyy", calendar);
-                        tvCheckIn.setText(sCheckIn);
-
+                    public void onResponse(RoomListResponse response) {
+                        if(response == null){
+                            requestCallback.requestFailed(getString(R.string.error_null_response));
+                        }else{
+                            requestCallback.requestSuccess(response, getString(R.string.success_message));
+                        }
                     }
-                }, year, month, day);
-                datePickerDialog.show();
-            }
-        });
-//        mPresenter.getData(hotel_id);
 
-
-    }
-
-    public void checkOutDate() {
-
-        final Calendar calendar = Calendar.getInstance();
-        final int year = calendar.get(Calendar.YEAR);
-        final int month = calendar.get(Calendar.MONTH);
-        final int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        tvCheckOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
-                    public void onDateSet(DatePicker view, int year, int month, int day) {
-                        month = month + 1;
-//                        String date = day+"/"+month+"/"+year;
-
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.set(Calendar.YEAR, year - 1);
-                        calendar.set(Calendar.MONTH, month);
-                        calendar.set(Calendar.DAY_OF_MONTH, day);
-                        sCheckOut = year + "-" + month + "-" + day;
-//                        Log.e("_DATE", sCheckIn);
-//                        CharSequence date = DateFormat.format("EEE, d MMM yyyy", calendar);
-                        tvCheckOut.setText(sCheckOut);
+                    public void onError(ANError anError) {
+                        requestCallback.requestFailed(anError.getMessage());
                     }
-                }, year, month, day);
-                datePickerDialog.show();
-            }
-        });
+                });
     }
 
+    @Override
+    public void saveRoom(Room room){
+        roomSharedUtil.setRoom(room);
+    }
 
     @Override
     public void setPresenter(RoomListContract.Presenter presenter) {
         mPresenter = presenter;
-    }
-
-    @Override
-    public void redirectToHome() {
-        Intent intent = new Intent(activity, HomeActivity.class);
-        startActivity(intent);
-    }
-
-    public void redirectToBooking(int id, String type, String price) {
-        Intent intent = new Intent(activity, BookingActivity.class);
-        intent.putExtra("room_id", id);
-        intent.putExtra("hotel_name", hotel_name);
-        intent.putExtra("room_type", type);
-        intent.putExtra("room_price", price);
-        intent.putExtra("check_in", sCheckIn);
-        startActivity(intent);
-    }
-
-    public void saveToken(String token) {
-        tokenSharedUtil.setToken(token);
-    }
-
-    @Override
-    public void validateRoom(int hotel_id, final RequestCallback<List<RoomTemp>> requestCallback) {
-        AndroidNetworking.post(myURL.VALIDATE_TIME + hotel_id)
-                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
-                .addBodyParameter("check_in", sCheckIn)
-                .addBodyParameter("check_out", sCheckOut)
-                .setTag(this)
-                .setPriority(Priority.LOW)
-                .build()
-                .getAsObjectList(RoomTemp.class, new ParsedRequestListener<List<RoomTemp>>() {
-                    @Override
-                    public void onResponse(List<RoomTemp> response) {
-                        if (response == null) {
-                            requestCallback.requestFailed("Null Response");
-                            Log.d("tag", "response null");
-                        } else {
-                            requestCallback.requestSuccess(response, "tes");
-                        }
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        requestCallback.requestFailed(anError.getMessage());
-                        Log.e("validateRoom", "error gan " + anError.getMessage() + anError.getErrorCode());
-                    }
-                });
-    }
-
-    //    @Override
-    public void searchRoom(final int hotel_id, final RequestCallback<List<RoomTemp>> requestCallback) {
-        AndroidNetworking.get(myURL.SEARCH_ROOM_URL + hotel_id)
-                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
-                .setTag(this)
-                .setPriority(Priority.LOW)
-                .build()
-                .getAsObjectList(RoomTemp.class, new ParsedRequestListener<List<RoomTemp>>() {
-                    @Override
-                    public void onResponse(List<RoomTemp> response) {
-                        if (response == null) {
-                            requestCallback.requestFailed("Null Response");
-                            Log.d("tag", "response null");
-                        } else {
-                            requestCallback.requestSuccess(response, "tes");
-                        }
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        requestCallback.requestFailed(anError.getMessage());
-                        Log.e("tag", "error gan " + anError.getMessage() + anError.getErrorCode());
-                    }
-                });
-    }
-
-    public void setResult(final List<Room> rooms) {
-        List<Room> roomList = new ArrayList<>();
-        for(int i = 0; i < rooms.size(); i++){
-            if(!rooms.get(i).isIs_booked()){
-                roomList.add(rooms.get(i));
-            }
-        }
-        mAdapter = new RecyclerViewAdapterRoomList(roomList);
-        mRecyclerView.setAdapter(mAdapter);
-        ((RecyclerViewAdapterRoomList) mAdapter).setOnItemClickListener(new RecyclerViewAdapterRoomList.MyClickListener() {
-            @Override
-            public void onItemClick(int position, View v) {
-                int id = rooms.get(position).getId();
-                String price = rooms.get(position).getRoom_price().toString();
-                String type = rooms.get(position).getRoom_type();
-                redirectToBooking(id, type, price);
-            }
-        });
-
-    }
-
-    public void showFailedMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

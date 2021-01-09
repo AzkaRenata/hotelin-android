@@ -33,6 +33,7 @@ import com.google.android.material.textfield.TextInputLayout;
 public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Presenter> implements LoginContract.View {
     private EditText etEmail;
     private EditText etPassword;
+
     private final TokenSharedUtil tokenSharedUtil;
     private final UserSharedUtil userSharedUtil;
 

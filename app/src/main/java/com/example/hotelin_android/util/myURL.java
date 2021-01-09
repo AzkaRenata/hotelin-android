@@ -9,6 +9,7 @@ public class myURL {
     public final static String SEARCH_HOTEL_URL = BASE_URL + "hotel/search/location";
     public final static String GET_HOTEL_DETAIL_URL = BASE_URL + "hotel/detail-by-id/";
     public final static String SEARCH_AVAILABLE_ROOM_URL = BASE_URL + "room/show-available/";
+    public final static String GET_ROOM_DETAIL_URL = BASE_URL + "room/detail/";
 
     public final static String PROFILE_URL = BASE_URL + "user";
     public final static String HOTEL_URL = BASE_URL + "hotel/detail/";

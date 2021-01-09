@@ -14,6 +14,8 @@
     <string name="error_database">Ada yang Salah</string>
     <string name="error_emailOrPassword">Email atau Password Salah!</string>
     <string name="error_null_response">Null Response</string>
+    <string name="error_wrong_date_input">Tanggal Input Salah</string>
+    <string name="error_empty_date_input">Masukkan Tanggal Check In dan Check Out</string>
 
     <string name="home_toolbar_title">Hotelin</string>
     <string name="search_result_toolbar_title">Hasil Pencarian</string>
@@ -43,10 +45,12 @@
     <string name="hotel_name_text">Nama Hotel</string>
     <string name="hotel_location_text">Lokasi Hotel</string>
     <string name="price_text">Harga</string>
+    <string name="no_hotel_text">Tidak Ditemukan Hotel</string>
 
     <string name="check_in_text">Check In</string>
     <string name="check_out_text">Check Out</string>
     <string name="find_room_text">Tampilkan Kamar</string>
+    <string name="no_room_text">Kamar Tidak Tersedia</string>
 
     <string name="room_title_text">Kode Kamar - Tipe Kamar</string>
     <string name="room_code_text">Kode Kamar</string>

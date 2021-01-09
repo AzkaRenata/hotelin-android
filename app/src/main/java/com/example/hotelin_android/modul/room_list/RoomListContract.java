@@ -3,8 +3,6 @@ package com.example.hotelin_android.modul.room_list;
 import com.example.hotelin_android.base.BasePresenter;
 import com.example.hotelin_android.base.BaseView;
 import com.example.hotelin_android.model.Room;
-import com.example.hotelin_android.model.RoomTemp;
-import com.example.hotelin_android.model.RoomGroup;
 import com.example.hotelin_android.util.RequestCallback;
 
 import java.util.List;
@@ -12,17 +10,17 @@ import java.util.List;
 public interface RoomListContract {
     interface View extends BaseView<Presenter> {
         void setItems();
-        void redirectToHome();
+        void initCalendar();
+        void redirectToBooking();
+        void checkResult();
         void setResult(List<Room> data);
+        void saveRoom(Room room);
         void requestAvailableRoom(final RequestCallback<RoomListResponse> requestCallback);
-//        void searchRoom(int hotel_id, final RequestCallback<List<Room>> requestCallback);
-        void validateRoom(int hotel_id, final RequestCallback<List<RoomTemp>> requestCallback);
-        void showFailedMessage(String message);
+        void requestRoomDetail(final int id, final RequestCallback<RoomListResponse> requestCallback);
     }
 
     interface Presenter extends BasePresenter {
-        void getData(int hotel_id);
-        void getAvailableRoom();
-//        void validateTime(int hotel_id);
+        void performRoomSearch();
+        void getRoomDetail(int id);
     }
 }
