@@ -1,6 +1,7 @@
 package com.example.hotelin_android.modul.change_password;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,7 +33,8 @@ public class ChangePasswordFragment extends BaseFragment<ChangePasswordActivity,
     EditText etPassword;
     EditText etPasswordOld;
     EditText etPasswordConfirmation;
-    TextView forgotPassword;
+    TextView tvForgotPassword;
+    TextView tvWarning;
     Button btnSave;
     String oldPassword;
     TokenSharedUtil tokenSharedUtil;
@@ -51,13 +53,14 @@ public class ChangePasswordFragment extends BaseFragment<ChangePasswordActivity,
         setTitle("Change Password");
 
         etPasswordOld = fragmentView.findViewById(R.id.change_password_old_pass_et);
-        forgotPassword = fragmentView.findViewById(R.id.change_password_forgot_password);
+        tvForgotPassword = fragmentView.findViewById(R.id.change_password_forgot_password);
+        tvWarning = fragmentView.findViewById(R.id.change_password_warning_tv);
         etPassword = fragmentView.findViewById(R.id.change_password_new_pass_et);
         etPasswordConfirmation = fragmentView.findViewById(R.id.change_password_confirm_new_pass_et);
         btnSave = fragmentView.findViewById(R.id.change_password_save_btn);
 
 //        etPasswordOld.setVisibility(View.GONE);
-        forgotPassword.setVisibility(View.GONE);
+        tvForgotPassword.setVisibility(View.GONE);
         btnSave.setOnClickListener(this);
 
 
@@ -88,8 +91,8 @@ public class ChangePasswordFragment extends BaseFragment<ChangePasswordActivity,
     @Override
     public void updatePassword(String newPassword, String oldPassword, final RequestCallback<SuccessMessage> requestCallback) {
         AndroidNetworking.post(myURL.UPDATE_PASSWORD_URL)
-                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
-                .addBodyParameter("password", oldPassword)
+                .addHeaders("Authorization", "Bearer " + sharedPreferencesUtil.getToken())
+                .addBodyParameter("old_password", oldPassword)
                 .addBodyParameter("password", newPassword)
                 .addBodyParameter("password_confirmation", newPassword)
                 .setPriority(Priority.MEDIUM)
@@ -97,18 +100,15 @@ public class ChangePasswordFragment extends BaseFragment<ChangePasswordActivity,
                 .getAsObject(SuccessMessage.class, new ParsedRequestListener<SuccessMessage>() {
                     @Override
                     public void onResponse(SuccessMessage response) {
-                        if (response == null) {
-                            requestCallback.requestFailed("Null Response");
-                        } else {
-                            requestCallback.requestSuccess(response);
-                        }
+                        Log.e("UpdatePassword", "ERROR" + response.getMessage());
+                        showErrorMessage(response.getMessage());
                     }
 
                     @Override
                     public void onError(ANError anError) {
                         if (anError.getErrorCode() == 401) {
                             Log.e("UpdatePassword", "ERROR" + anError);
-                            requestCallback.requestFailed("Please input a valid e-mail");
+//                            requestCallback.requestFailed("Please input a valid e-mail");
                         } else {
                             Log.e("UpdatePassword", String.valueOf(anError.getErrorCode()));
                             Log.e("UpdatePassword", "fdfd" + anError.getErrorBody());
@@ -133,14 +133,16 @@ public class ChangePasswordFragment extends BaseFragment<ChangePasswordActivity,
 
     @Override
     public void showSuccessMessage(SuccessMessage data) {
-        Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT);
+        Toast.makeText(activity, data.getMessage(), Toast.LENGTH_SHORT);
         redirectToProfile();
     }
 
     @Override
     public void showErrorMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT);
-
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT);
+        tvWarning.setVisibility(View.VISIBLE);
+        tvWarning.setText(message);
+        if (message.equalsIgnoreCase("berhasil")) redirectToProfile();
     }
 
 }

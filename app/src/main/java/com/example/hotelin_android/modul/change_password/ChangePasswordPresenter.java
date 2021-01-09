@@ -18,7 +18,7 @@ public class ChangePasswordPresenter implements ChangePasswordContract.Presenter
 
     @Override
     public void performUpdate(String newPassword, String oldPassword) {
-        view.updatePassword(oldPassword, newPassword, new RequestCallback<SuccessMessage>() {
+        view.updatePassword(newPassword, oldPassword, new RequestCallback<SuccessMessage>() {
             @Override
             public void requestSuccess(SuccessMessage data) {
                 view.showSuccessMessage(data);
