@@ -6,4 +6,5 @@ import java.util.List;
 
 public class RoomListResponse {
     List<Room> roomList;
+    Room room;
 }

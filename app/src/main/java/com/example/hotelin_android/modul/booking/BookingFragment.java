@@ -19,6 +19,7 @@ import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.modul.previewBooking.PreviewBookingActivity;
 import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
+import com.example.hotelin_android.util.UtilProvider;
 
 import java.util.Calendar;
 
@@ -37,13 +38,10 @@ public class BookingFragment extends BaseFragment<BookingActivity, BookingContra
     String hotel_name;
     TokenSharedUtil tokenSharedUtil;
 
-    public BookingFragment(TokenSharedUtil tokenSharedUtil, String hotel_name, int room_id, String room_type, String room_price, String check_in) {
-        this.tokenSharedUtil = tokenSharedUtil;
-        this.room_id = room_id;
-        this.room_price = room_price;
-        this.room_type = room_type;
-        this.hotel_name = hotel_name;
+    public BookingFragment(String check_in, String check_out) {
+        this.tokenSharedUtil = UtilProvider.getTokenSharedUtil();
         this.sCheckIn = check_in;
+        this.sCheckOut = check_out;
     }
 
     @Nullable
@@ -61,6 +59,7 @@ public class BookingFragment extends BaseFragment<BookingActivity, BookingContra
         btnNext = fragmentView.findViewById(R.id.next_btn);
 
         tvCheckIn.setText(sCheckIn);
+        tvCheckOut.setText(sCheckOut);
         initCalendar();
 
         btnNext.setOnClickListener(new View.OnClickListener() {

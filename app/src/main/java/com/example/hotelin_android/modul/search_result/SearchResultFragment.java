@@ -32,11 +32,13 @@ import com.example.hotelin_android.util.RecyclerViewAdapter.RecyclerViewAdapterH
 import java.util.List;
 
 public class SearchResultFragment extends BaseFragment<SearchResultActivity, SearchResultContract.Presenter> implements SearchResultContract.View {
-    private final TokenSharedUtil tokenSharedUtil;
-    private final String hotel_location;
     private RecyclerView mRecyclerView;
     private RelativeLayout rlNoResult;
     private Adapter mAdapter;
+
+    private final String hotel_location;
+
+    private final TokenSharedUtil tokenSharedUtil;
     private final HotelSharedUtil hotelSharedUtil;
 
     public SearchResultFragment(String hotel_location) {
@@ -85,6 +87,7 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
     public void setResult(final List<Hotel> hotels){
         mAdapter = new RecyclerViewAdapterHotelList(hotels);
         mRecyclerView.setAdapter(mAdapter);
+
         ((RecyclerViewAdapterHotelList) mAdapter).setOnItemClickListener(new RecyclerViewAdapterHotelList.MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
@@ -139,7 +142,7 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
                         if(response == null){
                             requestCallback.requestFailed(getString(R.string.error_null_response));
                         }else{
-                            requestCallback.requestSuccess(response,getString(R.string.success_message));
+                            requestCallback.requestSuccess(response, getString(R.string.success_message));
                         }
                     }
 

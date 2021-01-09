@@ -38,6 +38,7 @@ public class RegisterFragment extends BaseFragment<RegisterActivity, RegisterCon
     private EditText etFullname;
     private EditText etTelp;
     private EditText etAddress;
+
     private String gender;
 
     public RegisterFragment() {
