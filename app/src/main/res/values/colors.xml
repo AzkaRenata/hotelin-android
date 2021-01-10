@@ -35,7 +35,7 @@
     <color name="hotelinPrimary">#5399af</color>
     <color name="hotelinPrimaryDark">#5399af</color>
     <color name="hotelinText">#707070</color>
-    <color name="hotelinSecondaryText">#5399af</color>
+    <color name="hotelinSecondaryText">#FFFFFF</color>
     <color name="hotelinTextLight">#EEEEEE</color>
     <color name="hotelinLightBackground">#a7e6d7</color>
     <color name="hotelinTransparent">#8c128C7E</color>

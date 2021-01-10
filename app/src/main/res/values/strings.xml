@@ -23,11 +23,13 @@
     <string name="preview_booking_title">Detail Pemesanan</string>
     <string name="booking_history_title">Riwayat Pemesanan</string>
     <string name="booking_detail_title">Detail Pemesanan</string>
+    <string name="cancel_booking_title">Konfirmasi Pembatalan</string>
 
     <string name="success_message">Success</string>
     <string name="login_success_message">Selamat Datang,</string>
     <string name="register_success_message">User Berhasil Didaftarkan</string>
     <string name="booking_success_message">Pemesanan Berhasil</string>
+    <string name="cancel_booking_success_message">Pembatalan Berhasil</string>
 
     <string name="login_title">Selamat Datang,</string>
     <string name="register_title">Informasi Akun</string>
@@ -77,4 +79,9 @@
     <string name="done_text">Done</string>
     <string name="canceled_text">Canceled</string>
     <string name="cancel_text">Cancel</string>
+
+    <string name="cancel_booking_text">Batalkan Pemesanan</string>
+    <string name="already_canceled__text">Dibatalkan</string>
+    <string name="cancel_requirement_text_1">Refund sesuai dengan kesepakatan ketika proses pemesanan.</string>
+    <string name="cancel_requirement_text_2">Refund hanya bisa dilakukan selama masa pemesanan.</string>
 </resources>

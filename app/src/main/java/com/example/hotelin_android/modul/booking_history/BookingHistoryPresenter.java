@@ -1,11 +1,6 @@
 package com.example.hotelin_android.modul.booking_history;
 
-import android.util.Log;
-
-import com.example.hotelin_android.model.BookinghHstorytemp;
 import com.example.hotelin_android.util.RequestCallback;
-
-import java.util.List;
 
 public class BookingHistoryPresenter implements BookingHistoryContract.Presenter{
     private final BookingHistoryActivity activity;
