@@ -199,7 +199,9 @@ public class PreviewBookingFragment extends BaseFragment<PreviewBookingActivity,
                     public void onResponse(PreviewBookingResponse response) {
                         if (response == null) {
                             requestCallback.requestFailed(getString(R.string.error_null_response));
-                        } else {
+                        } else if(response.message != null){
+                            requestCallback.requestFailed(response.message);
+                        }else {
                             requestCallback.requestSuccess(response, getString(R.string.booking_success_message));
                         }
                     }

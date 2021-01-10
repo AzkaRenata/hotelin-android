@@ -2,7 +2,6 @@ package com.example.hotelin_android.modul.preview_booking;
 
 import com.example.hotelin_android.base.BasePresenter;
 import com.example.hotelin_android.base.BaseView;
-import com.example.hotelin_android.model.SuccessMessage;
 import com.example.hotelin_android.util.RequestCallback;
 
 public interface PreviewBookingContract {
