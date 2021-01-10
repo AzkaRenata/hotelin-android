@@ -118,6 +118,8 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
                 checkGender(checkedId);
             }
         });
+
+        setTitle(getString(R.string.edit_profile_title));
     }
 
     @Override

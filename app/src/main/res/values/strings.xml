@@ -16,6 +16,7 @@
     <string name="error_null_response">Null Response</string>
     <string name="error_wrong_date_input">Tanggal Input Salah</string>
     <string name="error_empty_date_input">Masukkan Tanggal Check In dan Check Out</string>
+    <string name="error_password_format">Format Password Baru Salah</string>
 
     <string name="home_toolbar_title">Hotelin</string>
     <string name="search_result_toolbar_title">Hasil Pencarian</string>
@@ -24,6 +25,9 @@
     <string name="booking_history_title">Riwayat Pemesanan</string>
     <string name="booking_detail_title">Detail Pemesanan</string>
     <string name="cancel_booking_title">Konfirmasi Pembatalan</string>
+    <string name="profile_title">Informasi Akun</string>
+    <string name="edit_profile_title">Perbarui Akun</string>
+    <string name="change_password_title">Perbarui Password</string>
 
     <string name="success_message">Success</string>
     <string name="login_success_message">Selamat Datang,</string>
@@ -91,4 +95,7 @@
     <string name="change_password_text">Perbarui Password</string>
     <string name="logout_text">Keluar</string>
     <string name="save_text">Simpan</string>
+    <string name="old_password_text">Password Lama</string>
+    <string name="new_password_text">Password Baru</string>
+    <string name="confirm_new_password_text">Konfirmasi Password Baru</string>
 </resources>

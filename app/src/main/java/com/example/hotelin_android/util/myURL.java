@@ -16,6 +16,7 @@ public class myURL {
     public final static String CANCEL_BOOKING_URL = BASE_URL + "booking/cancel/";
     public final static String EDIT_PROFILE_URL = BASE_URL + "user/update/user";
     public final static String EDIT_PROFILE_PICTURE_URL = BASE_URL + "user/update/picture";
+    public final static String UPDATE_PASSWORD_URL = BASE_URL + "user/update/password";
 
 
     public final static String PROFILE_URL = BASE_URL + "user";
@@ -23,7 +24,6 @@ public class myURL {
     public final static String SEARCH_ROOM_URL = BASE_URL + "room/hotel/";
     public final static String VALIDATE_TIME = BASE_URL + "room/validate-time/";
     public static final String HOTEL_DETAIL_URL = BASE_URL + "hotel/detail/";
-    public final static String UPDATE_PASSWORD_URL = BASE_URL + "user/update-password";
 
     public static String getImageUrl(){
         return IMAGE_URL;

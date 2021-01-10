@@ -1,16 +1,12 @@
 package com.example.hotelin_android.modul.change_password;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -23,46 +19,32 @@ import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
-import com.example.hotelin_android.model.SuccessMessage;
 import com.example.hotelin_android.modul.profile.ProfileActivity;
 import com.example.hotelin_android.util.RequestCallback;
 import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
+import com.example.hotelin_android.util.UtilProvider;
 import com.example.hotelin_android.util.myURL;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class ChangePasswordFragment extends BaseFragment<ChangePasswordActivity, ChangePasswordContract.Presenter> implements ChangePasswordContract.View, View.OnClickListener {
-    EditText etPassword;
-    EditText etPasswordOld;
-    EditText etPasswordConfirmation;
-    TextView tvForgotPassword;
-    TextView tvWarning;
-    Button btnSave;
-    String oldPassword;
-    TokenSharedUtil tokenSharedUtil;
+    private EditText etPassword;
+    private EditText etPasswordOld;
+    private EditText etPasswordConfirmation;
 
-    public ChangePasswordFragment(TokenSharedUtil tokenSharedUtil) {
-        this.tokenSharedUtil = tokenSharedUtil;
+    private final TokenSharedUtil tokenSharedUtil;
+
+
+    public ChangePasswordFragment() {
+        this.tokenSharedUtil = UtilProvider.getTokenSharedUtil();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        fragmentView = inflater.inflate(R.layout.change_password_activity, container, false);
-        mPresenter = new ChangePasswordPresenter(this);
+        fragmentView = inflater.inflate(R.layout.fragment_change_password, container, false);
+        mPresenter = new ChangePasswordPresenter(this, activity);
         mPresenter.start();
-        setTitle("Change Password");
-
-        etPasswordOld = fragmentView.findViewById(R.id.change_password_old_pass_et);
-        tvForgotPassword = fragmentView.findViewById(R.id.change_password_forgot_password);
-        tvWarning = fragmentView.findViewById(R.id.change_password_warning_tv);
-        etPassword = fragmentView.findViewById(R.id.change_password_new_pass_et);
-        etPasswordConfirmation = fragmentView.findViewById(R.id.change_password_confirm_new_pass_et);
-        btnSave = fragmentView.findViewById(R.id.change_password_save_btn);
-
-//        etPasswordOld.setVisibility(View.GONE);
-        tvForgotPassword.setVisibility(View.GONE);
-        btnSave.setOnClickListener(this);
-
 
         return fragmentView;
     }
@@ -72,10 +54,39 @@ public class ChangePasswordFragment extends BaseFragment<ChangePasswordActivity,
         if (v.getId() == R.id.change_password_save_btn) saveBtnClick();
     }
 
+    @Override
+    public void setItems() {
+        etPasswordOld = fragmentView.findViewById(R.id.change_password_old_pass_et);
+        etPassword = fragmentView.findViewById(R.id.change_password_new_pass_et);
+        etPasswordConfirmation = fragmentView.findViewById(R.id.change_password_confirm_new_pass_et);
+        Button btnSave = fragmentView.findViewById(R.id.change_password_save_btn);
+        TextInputLayout tilOldPassword = fragmentView.findViewById(R.id.change_old_password_til);
+        TextInputLayout tilNewPassword = fragmentView.findViewById(R.id.change_new_password_til);
+        TextInputLayout tilConfirmNewPassword = fragmentView.findViewById(R.id.change_confirm_new_password_til);
+
+        tilOldPassword.setHintEnabled(false);
+        tilNewPassword.setHintEnabled(false);
+        tilConfirmNewPassword.setHintEnabled(false);
+
+        btnSave.setOnClickListener(this);
+
+        setTitle(getString(R.string.change_password_title));
+    }
+
     private void saveBtnClick() {
-        String oldPassword = etPasswordOld.getText().toString();
-        String newPassword = etPassword.getText().toString();
-        if (validatePassword()) mPresenter.performUpdate(newPassword, oldPassword);
+        if (validatePassword()){
+            String oldPassword = etPasswordOld.getText().toString();
+            String newPassword = etPassword.getText().toString();
+            String confirmNewPassword = etPasswordConfirmation.getText().toString();
+
+            mPresenter.performUpdate(newPassword, oldPassword, confirmNewPassword);
+        }
+    }
+
+    @Override
+    public void redirectToProfile() {
+        Intent intent = new Intent(activity, ProfileActivity.class);
+        startActivity(intent);
     }
 
     private boolean validatePassword() {
@@ -87,62 +98,38 @@ public class ChangePasswordFragment extends BaseFragment<ChangePasswordActivity,
         return awesomeValidation.validate();
     }
 
-
     @Override
-    public void updatePassword(String newPassword, String oldPassword, final RequestCallback<SuccessMessage> requestCallback) {
+    public void updatePassword(String newPassword, String oldPassword, String confirmNewPassword, final RequestCallback<ChangePasswordResponse> requestCallback) {
         AndroidNetworking.post(myURL.UPDATE_PASSWORD_URL)
                 .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .addBodyParameter("old_password", oldPassword)
                 .addBodyParameter("password", newPassword)
-                .addBodyParameter("password_confirmation", newPassword)
+                .addBodyParameter("password_confirmation", confirmNewPassword)
                 .setPriority(Priority.MEDIUM)
                 .build()
-                .getAsObject(SuccessMessage.class, new ParsedRequestListener<SuccessMessage>() {
+                .getAsObject(ChangePasswordResponse.class, new ParsedRequestListener<ChangePasswordResponse>() {
                     @Override
-                    public void onResponse(SuccessMessage response) {
-                        Log.e("UpdatePassword", "ERROR" + response.getMessage());
-                        showErrorMessage(response.getMessage());
+                    public void onResponse(ChangePasswordResponse response) {
+                        if(!response.success){
+                            requestCallback.requestFailed(response.message);
+                        }else{
+                            requestCallback.requestSuccess(response, response.message);
+                        }
                     }
 
                     @Override
                     public void onError(ANError anError) {
                         if (anError.getErrorCode() == 401) {
-                            Log.e("UpdatePassword", "ERROR" + anError);
-//                            requestCallback.requestFailed("Please input a valid e-mail");
+                            requestCallback.requestFailed(getString(R.string.error_email_valid));
                         } else {
-                            Log.e("UpdatePassword", String.valueOf(anError.getErrorCode()));
-                            Log.e("UpdatePassword", "fdfd" + anError.getErrorBody());
-                            Log.e("UpdatePassword", "fdfdsasa" + anError.getErrorDetail());
-                            requestCallback.requestFailed("Server Error !");
+                            requestCallback.requestFailed(getString(R.string.error_password_format));
                         }
                     }
                 });
     }
 
     @Override
-    public void redirectToProfile() {
-        Intent intent = new Intent(activity, ProfileActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
     public void setPresenter(ChangePasswordContract.Presenter presenter) {
         mPresenter = presenter;
     }
-
-
-    @Override
-    public void showSuccessMessage(SuccessMessage data) {
-        Toast.makeText(activity, data.getMessage(), Toast.LENGTH_SHORT);
-        redirectToProfile();
-    }
-
-    @Override
-    public void showErrorMessage(String message) {
-        Toast.makeText(activity, message, Toast.LENGTH_SHORT);
-        tvWarning.setVisibility(View.VISIBLE);
-        tvWarning.setText(message);
-        if (message.equalsIgnoreCase("berhasil")) redirectToProfile();
-    }
-
 }
