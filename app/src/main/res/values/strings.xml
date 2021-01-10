@@ -30,6 +30,8 @@
     <string name="register_success_message">User Berhasil Didaftarkan</string>
     <string name="booking_success_message">Pemesanan Berhasil</string>
     <string name="cancel_booking_success_message">Pembatalan Berhasil</string>
+    <string name="edit_profile_message">Data Berhasil Diperbarui</string>
+    <string name="edit_profile_pic_message">Foto Berhasil Diperbarui</string>
 
     <string name="login_title">Selamat Datang,</string>
     <string name="register_title">Informasi Akun</string>
@@ -88,4 +90,5 @@
     <string name="edit_profile_text">Perbarui Profile Akun</string>
     <string name="change_password_text">Perbarui Password</string>
     <string name="logout_text">Keluar</string>
+    <string name="save_text">Simpan</string>
 </resources>

@@ -1,16 +1,17 @@
 package com.example.hotelin_android.modul.profile_edit;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -20,15 +21,15 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.androidnetworking.interfaces.UploadProgressListener;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.ObjectKey;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
-import com.example.hotelin_android.model.UserTemp;
+import com.example.hotelin_android.model.User;
 import com.example.hotelin_android.modul.profile.ProfileActivity;
-import com.example.hotelin_android.modul.test.TestResponse;
+import com.example.hotelin_android.util.AsyncTaskLoadImage;
 import com.example.hotelin_android.util.RequestCallback;
 import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.UserSharedUtil;
+import com.example.hotelin_android.util.UtilProvider;
 import com.example.hotelin_android.util.myURL;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 
@@ -40,58 +41,33 @@ import static com.example.hotelin_android.R.id.female_edit_rb;
 import static com.example.hotelin_android.R.id.male_edit_rb;
 
 public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, ProfileEditContract.Presenter> implements ProfileEditContract.View, View.OnClickListener {
-    TokenSharedUtil tokenSharedUtil;
+    private EditText etUsername;
+    private EditText etName;
+    private EditText etEmail;
+    private EditText etTelp;
+    private EditText etAddress;
+    private RadioButton maleRB;
+    private RadioButton femaleRB;
+    private Button btnConfirm;
+    private CircleImageView civPhoto;
 
-    TextView usernameET;
-    TextView nameET;
-    TextView emailET;
-    TextView telpET;
-    TextView addressET;
-    RadioGroup genderRG;
-    RadioButton maleRB;
-    RadioButton femaleRB;
-    Button saveBTN;
-    Button btnConfirm;
-    String gender;
-    String password;
-    File imageUpload;
-    CircleImageView civPhoto;
-    UserTemp userTemp;
+    private String gender;
+    private File imageUpload;
 
-    public ProfileEditFragment(TokenSharedUtil tokenSharedUtil) {
-        this.tokenSharedUtil = tokenSharedUtil;
+    private final TokenSharedUtil tokenSharedUtil;
+    private final UserSharedUtil userSharedUtil;
+
+    public ProfileEditFragment() {
+        tokenSharedUtil = UtilProvider.getTokenSharedUtil();
+        userSharedUtil = UtilProvider.getUserSharedUtil();
     }
 
     @Nullable
     @Override
     public android.view.View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        fragmentView = inflater.inflate(R.layout.edit_profile_activity, container, false);
-        mPresenter = new ProfileEditPresenter(this);
+        fragmentView = inflater.inflate(R.layout.fragment_profile_edit, container, false);
+        mPresenter = new ProfileEditPresenter(this, activity);
         mPresenter.start();
-
-        usernameET = fragmentView.findViewById(R.id.username_edit_et);
-        nameET = fragmentView.findViewById(R.id.name_edit_et);
-        emailET = fragmentView.findViewById(R.id.email_edit_et);
-        telpET = fragmentView.findViewById(R.id.telp_edit_et);
-        addressET = fragmentView.findViewById(R.id.address_edit_et);
-        genderRG = fragmentView.findViewById(R.id.gender_edit_rg);
-        maleRB = fragmentView.findViewById(male_edit_rb);
-        femaleRB = fragmentView.findViewById(female_edit_rb);
-        saveBTN = fragmentView.findViewById(R.id.edit_profile_save_edit_btn);
-        civPhoto = fragmentView.findViewById(R.id.edit_profile_photo_civ);
-        btnConfirm = fragmentView.findViewById(R.id.edit_profile_photoConfirm_btn);
-
-        mPresenter.showData();
-        civPhoto.setOnClickListener(this);
-        saveBTN.setOnClickListener(this);
-        btnConfirm.setOnClickListener(this);
-
-        genderRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                checkGender(group, checkedId);
-            }
-        });
 
         return fragmentView;
     }
@@ -104,6 +80,75 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            imageUpload = ImagePicker.Companion.getFile(data);
+            civPhoto.setImageURI(Uri.parse(imageUpload.getPath()));
+            btnConfirm.setVisibility(View.VISIBLE);
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            Toast.makeText(getContext(), ImagePicker.Companion.getError(data), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), "Task Cancelled", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void setItems() {
+        etUsername = fragmentView.findViewById(R.id.username_edit_et);
+        etName = fragmentView.findViewById(R.id.name_edit_et);
+        etEmail = fragmentView.findViewById(R.id.email_edit_et);
+        etTelp = fragmentView.findViewById(R.id.telp_edit_et);
+        etAddress = fragmentView.findViewById(R.id.address_edit_et);
+        RadioGroup rgGender = fragmentView.findViewById(R.id.gender_edit_rg);
+        maleRB = fragmentView.findViewById(male_edit_rb);
+        femaleRB = fragmentView.findViewById(female_edit_rb);
+        Button btnSave = fragmentView.findViewById(R.id.edit_profile_save_edit_btn);
+        civPhoto = fragmentView.findViewById(R.id.edit_profile_photo_civ);
+        btnConfirm = fragmentView.findViewById(R.id.edit_profile_photoConfirm_btn);
+
+        civPhoto.setOnClickListener(this);
+        btnSave.setOnClickListener(this);
+        btnConfirm.setOnClickListener(this);
+
+        rgGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                checkGender(checkedId);
+            }
+        });
+    }
+
+    @Override
+    public void setProfile() {
+        etUsername.setText(userSharedUtil.getUser().getUsername());
+        etName.setText(userSharedUtil.getUser().getName());
+        etEmail.setText(userSharedUtil.getUser().getEmail());
+        etTelp.setText(userSharedUtil.getUser().getTelp());
+        etAddress.setText(userSharedUtil.getUser().getAddress());
+
+        if (userSharedUtil.getUser().getGender() != null) {
+            if (userSharedUtil.getUser().getGender().equalsIgnoreCase("female")) {
+                femaleRB.setChecked(true);
+                gender = "female";
+            }
+
+            if (userSharedUtil.getUser().getGender().equalsIgnoreCase("male")) {
+                maleRB.setChecked(true);
+                gender = "male";
+            }
+        }
+    }
+
+    @Override
+    public void setPicture() {
+        if(userSharedUtil.getUser().getUser_picture() != null){
+            String url = myURL.getImageUrl() + userSharedUtil.getUser().getUser_picture();
+            new AsyncTaskLoadImage(civPhoto).execute(url);
+        }
+    }
+
     private void uploadImage() {
         mPresenter.performUpdatePicture();
         btnConfirm.setVisibility(View.INVISIBLE);
@@ -111,42 +156,20 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
 
     private void choosePicture() {
         ImagePicker.Companion.with(this)
-                .cropSquare()                    //Crop image(Optional), Check Customization for more option
-                .compress(2048)            //Final image size will be less than 1 MB(Optional)
-                .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
+                .cropSquare()
+                .compress(2048)
+                .maxResultSize(1080, 1080)
                 .start();
-
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == activity.RESULT_OK) {
-//            Uri imageUri = data.getData();
-            imageUpload = ImagePicker.Companion.getFile(data);
-            civPhoto.setImageURI(Uri.parse(imageUpload.getPath()));
-//            Glide.with(fragmentView)
-//                    .load(imageUpload)
-//                    .into(civPhoto);
-        btnConfirm.setVisibility(View.VISIBLE);
-        } else if (resultCode == ImagePicker.RESULT_ERROR) {
-            Toast.makeText(getContext(), ImagePicker.Companion.getError(data), Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getContext(), "Task Cancelled", Toast.LENGTH_SHORT).show();
-        }
-
-
-    }
-
-    public void checkGender(RadioGroup group, int checkedId) {
+    @SuppressLint("NonConstantResourceId")
+    public void checkGender(int checkedId) {
         switch (checkedId) {
             case male_edit_rb:
                 gender = "male";
-                Log.e("tes", gender);
                 break;
             case female_edit_rb:
                 gender = "female";
-                Log.e("tes", gender);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + checkedId);
@@ -154,14 +177,15 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
     }
 
     public void saveBtnClick() {
-        String username = usernameET.getText().toString();
-        String name = nameET.getText().toString();
-        String email = emailET.getText().toString();
-        String address = addressET.getText().toString();
-        String telp = telpET.getText().toString();
+        String username = etUsername.getText().toString();
+        String name = etName.getText().toString();
+        String email = etEmail.getText().toString();
+        String address = etAddress.getText().toString();
+        String telp = etTelp.getText().toString();
 
-        userTemp = new UserTemp(username, name, email, password, 2, gender, telp, address, null);
-        mPresenter.performRegister(userTemp);
+        User user = new User(username, name, email, gender, telp, address);
+
+        mPresenter.performProfileEdit(user);
     }
 
     @Override
@@ -171,45 +195,41 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
     }
 
     @Override
-    public void editUser(final UserTemp newUserTemp, final RequestCallback<UserTemp> requestCallback) {
-        AndroidNetworking.post(myURL.UPDATE_USER_URL)
+    public void requestEditProfile(final User user, final RequestCallback<ProfileEditResponse> requestCallback) {
+        AndroidNetworking.post(myURL.EDIT_PROFILE_URL)
                 .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
-                .addBodyParameter("username", newUserTemp.getUsername())
-                .addBodyParameter("name", newUserTemp.getName())
-                .addBodyParameter("email", newUserTemp.getEmail())
-                .addBodyParameter("gender", newUserTemp.getGender())
-                .addBodyParameter("telp", newUserTemp.getTelp())
-                .addBodyParameter("address", newUserTemp.getAddress())
+                .addBodyParameter("username", user.getUsername())
+                .addBodyParameter("name", user.getName())
+                .addBodyParameter("email", user.getEmail())
+                .addBodyParameter("gender", user.getGender())
+                .addBodyParameter("telp", user.getTelp())
+                .addBodyParameter("address", user.getAddress())
                 .setPriority(Priority.MEDIUM)
                 .build()
-                .getAsObject(TestResponse.class, new ParsedRequestListener<TestResponse>() {
+                .getAsObject(ProfileEditResponse.class, new ParsedRequestListener<ProfileEditResponse>() {
                     @Override
-                    public void onResponse(TestResponse response) {
+                    public void onResponse(ProfileEditResponse response) {
                         if (response == null) {
-                            requestCallback.requestFailed("Null Response");
+                            requestCallback.requestFailed(getString(R.string.error_null_response));
                         } else {
-                            requestCallback.requestSuccess(response.userTemp, "tes");
+                            requestCallback.requestSuccess(response, getString(R.string.edit_profile_message));
                         }
                     }
 
                     @Override
                     public void onError(ANError anError) {
                         if (anError.getErrorCode() == 401) {
-                            Log.e("tesqqq", "ERROR", anError);
-                            requestCallback.requestFailed("Please input a valid e-mail");
+                            requestCallback.requestFailed(getString(R.string.error_email_valid));
                         } else {
-                            Log.e("tesww", String.valueOf(anError.getErrorCode()));
-                            Log.e("teswwwww", "fdfd" + anError.getErrorBody());
-                            Log.e("teswwww", "fdfdsasa" + anError.getErrorDetail());
-                            requestCallback.requestFailed("Server Error !");
+                            requestCallback.requestFailed(anError.getMessage());
                         }
                     }
                 });
     }
 
     @Override
-    public void updatePicture(final RequestCallback<UserTemp> requestCallback) {
-        AndroidNetworking.upload(myURL.UPDATE_USER_PICTURE_URL)
+    public void requestUpdatePicture(final RequestCallback<ProfileEditResponse> requestCallback) {
+        AndroidNetworking.upload(myURL.EDIT_PROFILE_PICTURE_URL)
                 .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
                 .addMultipartFile("user_picture", imageUpload)
                 .setTag("uploadTest")
@@ -217,101 +237,29 @@ public class ProfileEditFragment extends BaseFragment<ProfileEditActivity, Profi
                 .build()
                 .setUploadProgressListener(new UploadProgressListener() {
                     @Override
-                    public void onProgress(long bytesUploaded, long totalBytes) {
-                        // do anything with progress
-                    }
+                    public void onProgress(long bytesUploaded, long totalBytes) {}
                 })
-                .getAsObject(TestResponse.class, new ParsedRequestListener<TestResponse>() {
+                .getAsObject(ProfileEditResponse.class, new ParsedRequestListener<ProfileEditResponse>() {
                     @Override
-                    public void onResponse(TestResponse response) {
+                    public void onResponse(ProfileEditResponse response) {
                         if (response == null) {
-                            requestCallback.requestFailed("Null Response");
-                            Log.d("tag", "response null");
+                            requestCallback.requestFailed(getString(R.string.error_null_response));
                         } else {
-                            requestCallback.requestSuccess(response.userTemp,"tes" );
+                            requestCallback.requestSuccess(response,getString(R.string.edit_profile_pic_message) );
                         }
                     }
 
                     @Override
                     public void onError(ANError anError) {
                         requestCallback.requestFailed(anError.getMessage());
-                        Log.d("tag", "error gan" + anError.getMessage() + anError.getErrorCode());
                     }
                 });
     }
 
-
     @Override
-    public void requestProfile(final RequestCallback<UserTemp> requestCallback) {
-        AndroidNetworking.get(myURL.PROFILE_URL)
-                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
-                .build()
-                .getAsObject(TestResponse.class, new ParsedRequestListener<TestResponse>() {
-                    @Override
-                    public void onResponse(TestResponse response) {
-                        if (response == null) {
-                            requestCallback.requestFailed("Null Response");
-                            Log.d("tag", "response null");
-                        } else {
-                            requestCallback.requestSuccess(response.userTemp, "tes");
-                        }
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        requestCallback.requestFailed(anError.getMessage());
-                        Log.d("tag", "error gan" + anError.getMessage() + anError.getErrorCode());
-                    }
-                });
-    }
-
-    public void setProfile(UserTemp userTemp) {
-        Glide.with(fragmentView)
-                .load(myURL.getImageUrl()+ userTemp.getUser_picture())
-                .signature(new ObjectKey(System.currentTimeMillis()))
-                .error(R.drawable.ic_profile_picture)
-                .into(civPhoto);
-        usernameET.setText(userTemp.getUsername());
-        nameET.setText(userTemp.getName());
-        emailET.setText(userTemp.getEmail());
-        telpET.setText(userTemp.getTelp());
-        addressET.setText(userTemp.getAddress());
-        password = userTemp.getPassword();
-
-        if (userTemp.getGender() != null) {
-            if (userTemp.getGender().equalsIgnoreCase("female")) {
-                femaleRB.setChecked(true);
-                gender = "female";
-            }
-
-            if (userTemp.getGender().equalsIgnoreCase("male")) {
-                maleRB.setChecked(true);
-                gender = "male";
-            }
-        }
-    }
-
-    @Override
-    public void showSuccessMessage() {
-        Toast.makeText(getContext(), "Register Success", Toast.LENGTH_SHORT).show();
-        Log.e("tes", "success");
-        redirectToProfile();
-    }
-
-    @Override
-    public void setPicture(UserTemp userTemp) {
-        Glide.with(fragmentView)
-                .load(myURL.getImageUrl()+ userTemp.getUser_picture())
-                .error(R.drawable.ic_profile_picture)
-                .signature(new ObjectKey(System.currentTimeMillis()))
-                .into(civPhoto);
-        Log.e("setPict", imageUpload.getPath());
-    }
-
-    @Override
-    public void showErrorMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-        Log.e("tes", "failed");
+    public void saveUser(User user) {
+        userSharedUtil.clear();
+        userSharedUtil.setUser(user);
     }
 
     @Override
