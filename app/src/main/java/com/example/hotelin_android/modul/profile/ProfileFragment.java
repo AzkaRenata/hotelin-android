@@ -75,6 +75,8 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
                 setTvLogoutClick();
             }
         });
+
+        setTitle(getString(R.string.profile_title));
     }
 
     @Override
