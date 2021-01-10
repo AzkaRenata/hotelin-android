@@ -2,90 +2,103 @@ package com.example.hotelin_android.modul.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.ParsedRequestListener;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.ObjectKey;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
-import com.example.hotelin_android.model.UserTemp;
-import com.example.hotelin_android.modul.booking_history.BookingHistoryActivity;
 import com.example.hotelin_android.modul.change_password.ChangePasswordActivity;
 import com.example.hotelin_android.modul.login.LoginActivity;
 import com.example.hotelin_android.modul.profile_edit.ProfileEditActivity;
-import com.example.hotelin_android.modul.test.TestResponse;
-import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
+import com.example.hotelin_android.util.AsyncTaskLoadImage;
+import com.example.hotelin_android.util.SharedPreferences.UserSharedUtil;
+import com.example.hotelin_android.util.UtilProvider;
 import com.example.hotelin_android.util.myURL;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContract.ProfilePresenter> implements ProfileContract.ProfileView, View.OnClickListener {
-    TokenSharedUtil tokenSharedUtil;
 
-    TextView tvName;
-    TextView tvEmail;
-    TextView tvEditProfile;
-    TextView tvHistoryBooking;
-    TextView tvChangePassword;
-    TextView tvLogout;
-    CircleImageView civPhoto;
+public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContract.ProfilePresenter> implements ProfileContract.ProfileView {
+    private TextView tvUsername;
+    private TextView tvEmail;
+    private CircleImageView civPhoto;
 
-    ProfilePresenter profilePresenter;
+    private final UserSharedUtil userSharedUtil;
 
-    public ProfileFragment(TokenSharedUtil tokenSharedUtil) {
-        this.tokenSharedUtil = tokenSharedUtil;
+    public ProfileFragment() {
+        userSharedUtil = UtilProvider.getUserSharedUtil();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        fragmentView = inflater.inflate(R.layout.profile_activity, container, false);
-        mPresenter = new ProfilePresenter(this, tokenSharedUtil);
+        fragmentView = inflater.inflate(R.layout.fragment_profile, container, false);
+        mPresenter = new ProfilePresenter(this);
         mPresenter.start();
-
-        tvName = fragmentView.findViewById(R.id.name_tv);
-        tvEmail = fragmentView.findViewById(R.id.email_tv);
-        tvEditProfile = fragmentView.findViewById(R.id.tvAccountInformation);
-        tvHistoryBooking = fragmentView.findViewById(R.id.tvBookingHistory);
-        tvChangePassword = fragmentView.findViewById(R.id.tvChangePassword);
-        tvLogout = fragmentView.findViewById(R.id.tvLogOut);
-        civPhoto = fragmentView.findViewById(R.id.profile_photo_civ);
-
-        tvEditProfile.setOnClickListener(this);
-        tvHistoryBooking.setOnClickListener(this);
-        tvChangePassword.setOnClickListener(this);
-        tvLogout.setOnClickListener(this);
-        mPresenter.showData();
 
         return fragmentView;
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.tvAccountInformation :
-                redirectToEditProfile();
-                break;
-            case R.id.tvBookingHistory :
-                redirectToBookingHistory();
-                break;
-            case R.id.tvChangePassword :
-                redirectToChangePassword();
-                break;
-            case R.id.tvLogOut :
-                mPresenter.performLogOut();
-                break;
+    public void setItems() {
+        TextView tvEditProfile;
+        TextView tvChangePassword;
+        TextView tvLogout;
+
+        tvUsername = fragmentView.findViewById(R.id.profile_username_tv);
+        tvEmail = fragmentView.findViewById(R.id.profile_email_tv);
+        tvEditProfile = fragmentView.findViewById(R.id.profile_edit_account_tv);
+        tvChangePassword = fragmentView.findViewById(R.id.profile_change_password_tv);
+        tvLogout = fragmentView.findViewById(R.id.profile_logout_tv);
+        civPhoto = fragmentView.findViewById(R.id.profile_photo_civ);
+
+        tvEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTvEditProfileClick();
+            }
+        });
+
+        tvChangePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTvChangePasswordClick();
+            }
+        });
+
+        tvLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTvLogoutClick();
+            }
+        });
+    }
+
+    @Override
+    public void setProfile() {
+        tvUsername.setText(userSharedUtil.getUser().getUsername());
+        tvEmail.setText(userSharedUtil.getUser().getEmail());
+
+        if(userSharedUtil.getUser().getUser_picture() != null){
+            String url = myURL.getImageUrl() + userSharedUtil.getUser().getUser_picture();
+            new AsyncTaskLoadImage(civPhoto).execute(url);
         }
+    }
+
+    public void setTvEditProfileClick(){
+        mPresenter.moveToEditProfile();
+    }
+
+    public void setTvChangePasswordClick(){
+        mPresenter.moveToChangePassword();
+    }
+
+    public void setTvLogoutClick(){
+        userSharedUtil.clear();
+        mPresenter.performLogOut();
     }
 
     @Override
@@ -101,60 +114,13 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
     }
 
     @Override
-    public void redirectToBookingHistory() {
-        Intent intent = new Intent(activity, BookingHistoryActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
     public void redirectToLogin() {
         Intent intent = new Intent(activity, LoginActivity.class);
         startActivity(intent);
     }
 
-
     @Override
     public void setPresenter(ProfileContract.ProfilePresenter presenter) {
         mPresenter = presenter;
     }
-
-    @Override
-    public void requestProfile(final RequestCallback<UserTemp> requestCallback) {
-        AndroidNetworking.get(myURL.PROFILE_URL)
-                .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())
-                .build()
-                .getAsObject(TestResponse.class, new ParsedRequestListener<TestResponse>() {
-                    @Override
-                    public void onResponse(TestResponse response) {
-                        if(response == null){
-                            requestCallback.requestFailed("Null Response");
-                            Log.d("tag", "response null");
-                        }else{
-                            requestCallback.requestSuccess(response.userTemp, "tes");
-                        }
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        requestCallback.requestFailed(anError.getMessage());
-                        Log.d("tag", "error gan" + anError.getMessage() + anError.getErrorCode());
-                    }
-                });
-    }
-
-    public void setProfile(UserTemp userTemp){
-        tvName.setText(userTemp.getName());
-        tvEmail.setText(userTemp.getEmail());
-        Glide.with(fragmentView)
-                .load(myURL.getImageUrl()+ userTemp.getUser_picture())
-                .error(R.drawable.ic_profile_picture)
-                .signature(new ObjectKey(System.currentTimeMillis()))
-                .into(civPhoto);
-    }
-
-
-    public void showFailedMessage(String message){
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT);
-    }
-
 }

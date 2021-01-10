@@ -22,9 +22,9 @@ import com.example.hotelin_android.util.UtilProvider;
 import com.example.hotelin_android.util.myURL;
 
 public class CancelBookingFragment extends BaseFragment<CancelBookingActivity, CancelBookingContract.Presenter> implements CancelBookingContract.View{
-    TokenSharedUtil tokenSharedUtil;
-    int booking_id;
-    Button btnCancel;
+    private final int booking_id;
+
+    private final TokenSharedUtil tokenSharedUtil;
 
     public CancelBookingFragment(int booking_id) {
         this.booking_id = booking_id;
@@ -45,7 +45,7 @@ public class CancelBookingFragment extends BaseFragment<CancelBookingActivity, C
 
     @Override
     public void setItems() {
-        btnCancel = fragmentView.findViewById(R.id.cancel_booking_cancel_btn);
+        Button btnCancel = fragmentView.findViewById(R.id.cancel_booking_cancel_btn);
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
