@@ -3,7 +3,6 @@ package com.example.hotelin_android.modul.booking_history;
 import com.example.hotelin_android.base.BasePresenter;
 import com.example.hotelin_android.base.BaseView;
 import com.example.hotelin_android.model.BookingHistory;
-import com.example.hotelin_android.model.BookinghHstorytemp;
 import com.example.hotelin_android.util.RequestCallback;
 
 import java.util.List;

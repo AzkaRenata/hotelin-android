@@ -18,5 +18,6 @@ public class BookingDetailActivity extends BaseFragmentHolderActivity {
     protected void onRestart() {
         super.onRestart();
         bookingDetailFragment = new BookingDetailFragment(booking_id);
+        setCurrentFragment(bookingDetailFragment, false);
     }
 }

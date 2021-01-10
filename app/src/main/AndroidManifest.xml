@@ -17,10 +17,11 @@
         android:theme="@style/Hotelin"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustResize">
-        <activity android:name=".modul.bookingTemp.BookingActivity" />
         <activity android:name=".modul.booking_history.BookingHistoryActivity" />
         <activity android:name=".modul.booking_detail.BookingDetailActivity" />
-        <activity android:name=".modul.cancel_booking.CancelBookingActivity" />
+        <activity
+            android:name=".modul.cancel_booking.CancelBookingActivity"
+            android:noHistory="true"/>
         <activity android:name=".modul.home.HomeActivity" />
         <activity android:name=".modul.hotel_detail.HotelDetailActivity" />
         <activity android:name=".modul.preview_booking.PreviewBookingActivity"/>

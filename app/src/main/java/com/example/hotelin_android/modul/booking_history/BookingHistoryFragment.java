@@ -30,7 +30,6 @@ import java.util.List;
 public class BookingHistoryFragment extends BaseFragment<BookingHistoryActivity, BookingHistoryContract.Presenter> implements BookingHistoryContract.View {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
     private TextView tvOngoing;
     private TextView tvDone;
     private TextView tvCanceled;
@@ -56,7 +55,7 @@ public class BookingHistoryFragment extends BaseFragment<BookingHistoryActivity,
     public void setItems() {
         mRecyclerView = fragmentView.findViewById(R.id.recyclerViewHistoryBooking);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(activity);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         tvOngoing = fragmentView.findViewById(R.id.booking_history_ongoing_btn);

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="30dp"
+    android:layout_margin="15dp"
     tools:context=".MainActivity">
 
 
@@ -19,8 +19,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal" >
             
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,7 +45,7 @@
                     android:layout_marginLeft="7dp"
                     android:drawableStart="@drawable/ic_circle"
                     android:drawablePadding="10dp"
-                    android:text="Refund sesuai dengan kesepakatan ketika bookingTemp"
+                    android:text="@string/cancel_requirement_text_1"
                     android:drawableLeft="@drawable/ic_circle" />
 
                 <TextView
@@ -56,7 +55,7 @@
                     android:layout_marginBottom="10dp"
                     android:drawableStart="@drawable/ic_circle"
                     android:drawablePadding="10dp"
-                    android:text="Pemesan langsung menghubungi hotel yang bersangkutan "
+                    android:text="@string/cancel_requirement_text_2"
                     android:drawableLeft="@drawable/ic_circle" />
 
 
@@ -76,19 +75,15 @@
 
         <Button
             android:id="@+id/cancel_booking_cancel_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cancel Booking"
+            android:text="@string/cancel_booking_text"
             android:textSize="22sp"
+            android:textStyle="bold"
             android:textColor="#ffffff"
-            android:layout_margin="5dp"
-            android:background="@drawable/button_color"
-            android:layout_weight="1"
-
-            >
-
+            android:layout_marginVertical="5dp"
+            android:background="@drawable/bg_btn" >
         </Button>
-
     </LinearLayout>
 
 
