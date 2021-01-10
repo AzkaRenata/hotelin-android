@@ -1,44 +1,30 @@
 package com.example.hotelin_android.modul.profile;
 
-import com.example.hotelin_android.model.UserTemp;
-import com.example.hotelin_android.util.RequestCallback;
-import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
-
 public class ProfilePresenter implements ProfileContract.ProfilePresenter {
-    ProfileContract.ProfileView view;
-    TokenSharedUtil tokenSharedUtil;
+    private final ProfileContract.ProfileView view;
 
-
-    public ProfilePresenter(ProfileContract.ProfileView view, TokenSharedUtil tokenSharedUtil) {
+    public ProfilePresenter(ProfileContract.ProfileView view) {
         this.view = view;
-        this.tokenSharedUtil = tokenSharedUtil;
     }
 
     @Override
     public void start() {
-
+        view.setItems();
+        view.setProfile();
     }
 
     @Override
     public void performLogOut() {
-        if (tokenSharedUtil.getToken() != null) {
-            tokenSharedUtil.clear();
-            view.redirectToLogin();
-        }
+        view.redirectToLogin();
     }
 
     @Override
-    public void showData() {
-        view.requestProfile(new RequestCallback<UserTemp>() {
-            @Override
-            public void requestSuccess(UserTemp data, String message) {
-                view.setProfile(data);
-            }
+    public void moveToEditProfile() {
+        view.redirectToEditProfile();
+    }
 
-            @Override
-            public void requestFailed(String message) {
-                view.showFailedMessage(message);
-            }
-        });
+    @Override
+    public void moveToChangePassword() {
+        view.redirectToChangePassword();
     }
 }

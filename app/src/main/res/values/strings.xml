@@ -84,4 +84,8 @@
     <string name="already_canceled__text">Dibatalkan</string>
     <string name="cancel_requirement_text_1">Refund sesuai dengan kesepakatan ketika proses pemesanan.</string>
     <string name="cancel_requirement_text_2">Refund hanya bisa dilakukan selama masa pemesanan.</string>
+
+    <string name="edit_profile_text">Perbarui Profile Akun</string>
+    <string name="change_password_text">Perbarui Password</string>
+    <string name="logout_text">Keluar</string>
 </resources>
