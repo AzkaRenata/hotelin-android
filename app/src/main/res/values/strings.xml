@@ -22,6 +22,7 @@
     <string name="booking_title">Data Pemesanan</string>
     <string name="preview_booking_title">Detail Pemesanan</string>
     <string name="booking_history_title">Riwayat Pemesanan</string>
+    <string name="booking_detail_title">Detail Pemesanan</string>
 
     <string name="success_message">Success</string>
     <string name="login_success_message">Selamat Datang,</string>
@@ -75,4 +76,5 @@
     <string name="ongoing_text">On Going</string>
     <string name="done_text">Done</string>
     <string name="canceled_text">Canceled</string>
+    <string name="cancel_text">Cancel</string>
 </resources>

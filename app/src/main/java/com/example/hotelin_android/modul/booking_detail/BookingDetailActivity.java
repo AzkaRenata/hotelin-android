@@ -1,21 +1,22 @@
 package com.example.hotelin_android.modul.booking_detail;
 
 import com.example.hotelin_android.base.BaseFragmentHolderActivity;
-import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
-import com.example.hotelin_android.util.UtilProvider;
 
 public class BookingDetailActivity extends BaseFragmentHolderActivity {
-    BookingDetailFragment bookingDetailFragment;
-    private final int UPDATE_REQUEST = 2019;
-    TokenSharedUtil tokenSharedUtil;
+    private BookingDetailFragment bookingDetailFragment;
+    private int booking_id;
 
     @Override
     protected void initializeFragment() {
         initializeView();
-        int booking_id = getIntent().getIntExtra("booking_id",0);
-        tokenSharedUtil = UtilProvider.getTokenSharedUtil();
-        bookingDetailFragment = new BookingDetailFragment(tokenSharedUtil, booking_id);
+        booking_id = getIntent().getIntExtra("booking_id",0);
+        bookingDetailFragment = new BookingDetailFragment(booking_id);
         setCurrentFragment(bookingDetailFragment, false);
+    }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        bookingDetailFragment = new BookingDetailFragment(booking_id);
     }
 }

@@ -3,7 +3,6 @@ package com.example.hotelin_android.modul.preview_booking;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,14 +120,8 @@ public class PreviewBookingFragment extends BaseFragment<PreviewBookingActivity,
             Date checkIn = sdf.parse(strCheckIn);
             Date checkOut = sdf.parse(strCheckOut);
 
-            Log.e("checkin", String.valueOf(checkIn));
-            Log.e("checkout", String.valueOf(checkOut));
-
             long differenceInTime = checkOut.getTime() - checkIn.getTime();
             long differenceInDays = TimeUnit.MILLISECONDS.toDays(differenceInTime) % 365;
-
-            Log.e("time", String.valueOf(differenceInTime));
-            Log.e("day", String.valueOf(differenceInDays));
 
             daysCount = (int) differenceInDays;
         } catch (ParseException e) {
@@ -181,6 +174,12 @@ public class PreviewBookingFragment extends BaseFragment<PreviewBookingActivity,
     public void redirectToBookingHistory() {
         Intent intent = new Intent(activity, BookingHistoryActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void clearSharedPreferences() {
+        hotelSharedUtil.clear();
+        roomSharedUtil.clear();
     }
 
     @Override

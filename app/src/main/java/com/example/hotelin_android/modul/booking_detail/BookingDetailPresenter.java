@@ -1,29 +1,43 @@
 package com.example.hotelin_android.modul.booking_detail;
 
-import com.example.hotelin_android.model.BookinghHstorytemp;
 import com.example.hotelin_android.util.RequestCallback;
 
 public class BookingDetailPresenter implements BookingDetailContract.Presenter {
+    private final BookingDetailActivity activity;
     private final BookingDetailContract.View view;
 
-    public BookingDetailPresenter(BookingDetailContract.View view) {
+    public BookingDetailPresenter(BookingDetailContract.View view, BookingDetailActivity activity) {
         this.view = view;
+        this.activity = activity;
     }
 
     @Override
-    public void start() {}
+    public void start() {
+        view.setItems();
+        getBookingDetail();
+    }
 
     @Override
-    public void getData(int booking_id){
-        view.searchBooking(booking_id, new RequestCallback<BookinghHstorytemp>() {
+    public void moveToCancelBooking() {
+        view.redirectToCancelBooking();
+    }
+
+    @Override
+    public void getBookingDetail(){
+        activity.startLoading();
+        view.requestBookingDetail(new RequestCallback<BookingDetailResponse>() {
             @Override
-            public void requestSuccess(BookinghHstorytemp data, String message) {
-                view.setResult(data);
+            public void requestSuccess(BookingDetailResponse response, String message) {
+                view.setBookingDetail(response);
+                view.setResult();
+                view.checkBookingStatus();
+                activity.stopLoading();
             }
 
             @Override
             public void requestFailed(String message) {
-                view.showFailedMessage(message);
+                activity.stopLoading();
+                activity.showMessage(message);
             }
         });
     }
