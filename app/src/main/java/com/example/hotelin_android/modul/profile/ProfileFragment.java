@@ -112,7 +112,7 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
         hotelSharedUtil.clear();
         roomSharedUtil.clear();
         tokenSharedUtil.clear();
-        
+
         mPresenter.performLogOut();
     }
 

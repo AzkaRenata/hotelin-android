@@ -10,7 +10,7 @@ import java.util.List;
 public interface SearchResultContract {
     interface View extends BaseView<Presenter> {
         void setItems();
-        void redirectToRoomList();
+        void redirectToHotelDetail();
         void setResult(List<Hotel> data);
         void checkResult();
         void saveHotel(Hotel hotel);
