@@ -43,7 +43,7 @@ public class SearchResultPresenter implements SearchResultContract.Presenter{
             public void requestSuccess(SearchResultResponse data, String message) {
                 view.saveHotel(data.hotel);
                 activity.stopLoading();
-                view.redirectToRoomList();
+                view.redirectToHotelDetail();
             }
 
             @Override

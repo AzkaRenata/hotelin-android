@@ -1,5 +1,7 @@
 package com.example.hotelin_android.model;
 
+import java.util.List;
+
 public class Hotel {
     private int id;
     private String hotel_name;
@@ -7,14 +9,16 @@ public class Hotel {
     private String hotel_desc;
     private String hotel_picture;
     private double hotel_price;
+    private List<Facility> facility;
 
-    public Hotel(int id, String hotel_name, String hotel_location, String hotel_desc, String  hotel_picture, double hotel_price) {
+    public Hotel(int id, String hotel_name, String hotel_location, String hotel_desc, String  hotel_picture, double hotel_price, List<Facility> facility) {
         this.id = id;
         this.hotel_name = hotel_name;
         this.hotel_location = hotel_location;
         this.hotel_desc = hotel_desc;
         this.hotel_picture = hotel_picture;
         this.hotel_price = hotel_price;
+        this.facility = facility;
     }
 
     public void setId(int id) {
@@ -63,5 +67,13 @@ public class Hotel {
 
     public double getHotel_price() {
         return hotel_price;
+    }
+
+    public List<Facility> getFacility() {
+        return facility;
+    }
+
+    public void setFacility(List<Facility> facility) {
+        this.facility = facility;
     }
 }

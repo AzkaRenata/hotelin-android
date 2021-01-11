@@ -21,7 +21,7 @@ import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.example.hotelin_android.R;
 import com.example.hotelin_android.base.BaseFragment;
 import com.example.hotelin_android.model.Hotel;
-import com.example.hotelin_android.modul.room_list.RoomListActivity;
+import com.example.hotelin_android.modul.hotel_detail.HotelDetailActivity;
 import com.example.hotelin_android.util.RequestCallback;
 import com.example.hotelin_android.util.SharedPreferences.HotelSharedUtil;
 import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
@@ -78,8 +78,8 @@ public class SearchResultFragment extends BaseFragment<SearchResultActivity, Sea
     }
 
     @Override
-    public void redirectToRoomList(){
-        Intent intent = new Intent(activity, RoomListActivity.class);
+    public void redirectToHotelDetail(){
+        Intent intent = new Intent(activity, HotelDetailActivity.class);
         startActivity(intent);
     }
 

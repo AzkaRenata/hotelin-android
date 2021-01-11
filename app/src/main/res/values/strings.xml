@@ -28,6 +28,7 @@
     <string name="profile_title">Informasi Akun</string>
     <string name="edit_profile_title">Perbarui Akun</string>
     <string name="change_password_title">Perbarui Password</string>
+    <string name="hotel_detail_title">Detail Hotel</string>
 
     <string name="success_message">Success</string>
     <string name="login_success_message">Selamat Datang,</string>
@@ -103,4 +104,7 @@
     <string name="old_password_text">Password Lama</string>
     <string name="new_password_text">Password Baru</string>
     <string name="confirm_new_password_text">Konfirmasi Password Baru</string>
+    <string name="hotel_desc_text">Tentang Hotel</string>
+    <string name="starts_from_text">Mulai Dari</string>
+    <string name="no_facility_text">Tidak Ada Fasilitas yang Terdaftar</string>
 </resources>

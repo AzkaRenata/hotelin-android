@@ -5,10 +5,12 @@ import com.example.hotelin_android.base.BaseView;
 
 public interface HotelDetailContract {
     interface HotelDetailView extends BaseView<HotelDetailPresenter> {
-        void setHotelDetailData(HotelDetail hotelDetail);
+        void setItems();
+        void redirectToRoomList();
+        void setHotelDetail();
     }
 
     interface HotelDetailPresenter extends BasePresenter {
-        void fetchHotelDetail(int hotelID, String bearerToken);
+        void moveToRoomList();
     }
 }
