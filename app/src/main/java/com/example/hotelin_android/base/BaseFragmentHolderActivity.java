@@ -1,11 +1,11 @@
 package com.example.hotelin_android.base;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,21 +14,20 @@ import com.example.hotelin_android.R;
 import com.example.hotelin_android.modul.booking_history.BookingHistoryActivity;
 import com.example.hotelin_android.modul.home.HomeActivity;
 import com.example.hotelin_android.modul.profile.ProfileActivity;
-import com.example.hotelin_android.modul.register.RegisterActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public abstract class BaseFragmentHolderActivity extends BaseActivity {
-
     protected TextView tvToolbarTitle;
     protected FrameLayout flFragmentContainer;
-    protected ImageButton btOptionMenu;
-    protected ImageButton btBack;
     protected ImageButton btSearch;
     protected ImageButton btBooking;
     protected ImageButton btProfile;
     protected View vMenuBarShadow;
     protected RelativeLayout rlActivityFragmentHolder;
     protected RelativeLayout loading;
+    protected LinearLayout topLayout;
+    protected BottomNavigationView bottomLayout;
 
     @Override
     protected void initializeView() {
@@ -41,6 +40,12 @@ public abstract class BaseFragmentHolderActivity extends BaseActivity {
         vMenuBarShadow = findViewById(R.id.vMenuBarShadow);
         rlActivityFragmentHolder = (RelativeLayout) findViewById(R.id.rlActivityFragmentHolder);
         loading = (RelativeLayout) findViewById(R.id.loading_screen);
+        topLayout = findViewById(R.id.toolbarLayout);
+        bottomLayout = findViewById(R.id.bottomNavigationView);
+
+        vMenuBarShadow.setVisibility(View.VISIBLE);
+        topLayout.setVisibility(View.VISIBLE);
+        bottomLayout.setVisibility(View.VISIBLE);
 
         btSearch.setOnClickListener(new View.OnClickListener() {
             @Override
