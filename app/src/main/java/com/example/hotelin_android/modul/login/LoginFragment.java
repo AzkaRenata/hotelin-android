@@ -108,8 +108,10 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
     }
 
     public void setTvAboutUsClick() {
+        activity.startLoading();
         Intent intent = new Intent(activity, AboutUsActivity.class);
         startActivity(intent);
+        activity.stopLoading();
     }
 
     public boolean validateLogin() {
