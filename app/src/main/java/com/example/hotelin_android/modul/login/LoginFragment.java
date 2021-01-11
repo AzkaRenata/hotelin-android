@@ -34,7 +34,6 @@ import com.google.android.material.textfield.TextInputLayout;
 public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Presenter> implements LoginContract.View {
     private EditText etEmail;
     private EditText etPassword;
-    private TextView tvAboutUs;
 
     private final TokenSharedUtil tokenSharedUtil;
     private final UserSharedUtil userSharedUtil;
@@ -65,7 +64,6 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
         etPassword = fragmentView.findViewById(R.id.login_password_et);
         btnLogin = fragmentView.findViewById(R.id.login_btn);
         tvRegister = fragmentView.findViewById(R.id.register);
-        tvAboutUs = fragmentView.findViewById(R.id.about_us_tv);
         tilEmail = fragmentView.findViewById(R.id.login_email_til);
         tilPassword = fragmentView.findViewById(R.id.login_password_til);
 
@@ -85,13 +83,6 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
                 setTvRegisterClick();
             }
         });
-
-        tvAboutUs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setTvAboutUsClick();
-            }
-        });
     }
 
     public void setBtLoginClick() {
@@ -105,13 +96,6 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
     public void setTvRegisterClick() {
         Intent intent = new Intent(activity, RegisterActivity.class);
         startActivity(intent);
-    }
-
-    public void setTvAboutUsClick() {
-        activity.startLoading();
-        Intent intent = new Intent(activity, AboutUsActivity.class);
-        startActivity(intent);
-        activity.stopLoading();
     }
 
     public boolean validateLogin() {

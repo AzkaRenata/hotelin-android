@@ -9,8 +9,5 @@ public class AboutUsPresenter implements AboutUsContract.HotelDetailPresenter {
     }
 
     @Override
-    public void start() {
-        view.setItems();
-        view.setPictures();
-    }
+    public void start() {}
 }

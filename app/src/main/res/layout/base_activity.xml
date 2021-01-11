@@ -27,8 +27,6 @@
         android:background="@drawable/custom_shadow_bottom"
         app:layout_constraintTop_toBottomOf="@id/toolbarLayout"/>
 
-
-
     <include
         android:id="@+id/bottomNavigationView"
         layout="@layout/base_toolbar_bottom_layout" />

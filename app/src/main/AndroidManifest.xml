@@ -32,7 +32,8 @@
         <activity android:name=".modul.profile_edit.ProfileEditActivity"/>
         <activity android:name=".modul.profile.ProfileActivity" />
         <activity android:name=".modul.change_password.ChangePasswordActivity"/>
-        <activity android:name=".modul.login.LoginActivity" >
+        <activity android:name=".modul.login.LoginActivity" />
+        <activity android:name=".modul.splash_screen.SplashScreenActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
