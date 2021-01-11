@@ -74,6 +74,11 @@
     <string name="guest_capacity_text">Kapasitas</string>
     <string name="select_room_text">Pilih Kamar</string>
     <string name="not_available_text">Tidak Tersedia</string>
+    <string name="facility_text">Fasilitas</string>
+    <string name="wifi_text">Free Wifi</string>
+    <string name="breakfast_text">Sarapan Gratis</string>
+    <string name="ac_text">Air Conditioner</string>
+    <string name="tv_text">TV Kabel</string>
 
     <string name="next_text">Selanjutnya</string>
     <string name="booking_detail_text">Detail Pemesanan</string>

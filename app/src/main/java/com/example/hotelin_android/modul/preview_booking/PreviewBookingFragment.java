@@ -177,12 +177,6 @@ public class PreviewBookingFragment extends BaseFragment<PreviewBookingActivity,
     }
 
     @Override
-    public void clearSharedPreferences() {
-        hotelSharedUtil.clear();
-        roomSharedUtil.clear();
-    }
-
-    @Override
     public void requestBooking(final RequestCallback<PreviewBookingResponse> requestCallback) {
         AndroidNetworking.post(myURL.BOOKING_URL)
                 .addHeaders("Authorization", "Bearer " + tokenSharedUtil.getToken())

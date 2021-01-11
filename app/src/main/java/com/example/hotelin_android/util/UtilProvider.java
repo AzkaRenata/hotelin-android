@@ -3,7 +3,6 @@ package com.example.hotelin_android.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.hotelin_android.util.SharedPreferences.BookingSharedUtil;
 import com.example.hotelin_android.util.SharedPreferences.HotelSharedUtil;
 import com.example.hotelin_android.util.SharedPreferences.RoomSharedUtil;
 import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
@@ -14,7 +13,6 @@ public class UtilProvider {
     private static UserSharedUtil userSharedUtil;
     private static HotelSharedUtil hotelSharedUtil;
     private static RoomSharedUtil roomSharedUtil;
-    private static BookingSharedUtil bookingSharedUtil;
 
     public static void initialize(Context context){
         initSharedPreferencesUtil(context);
@@ -26,7 +24,6 @@ public class UtilProvider {
         userSharedUtil = new UserSharedUtil(sharedPreferences);
         hotelSharedUtil = new HotelSharedUtil(sharedPreferences);
         roomSharedUtil = new RoomSharedUtil(sharedPreferences);
-        bookingSharedUtil = new BookingSharedUtil(sharedPreferences);
     }
 
     public static TokenSharedUtil getTokenSharedUtil(){
@@ -43,9 +40,5 @@ public class UtilProvider {
 
     public static RoomSharedUtil getRoomSharedUtil(){
         return roomSharedUtil;
-    }
-
-    public static BookingSharedUtil getBookingSharedUtil(){
-        return bookingSharedUtil;
     }
 }

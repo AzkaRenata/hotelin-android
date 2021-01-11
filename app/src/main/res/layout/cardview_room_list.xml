@@ -35,7 +35,7 @@
                 <TextView
                     android:id="@+id/room_list_item_room_type_tv"
                     android:layout_marginVertical="10dp"
-                    android:text="Kode Kamar - Tipe Kamar"
+                    android:text="@string/room_title_text"
                     android:fontFamily="@font/bold"
                     android:textColor="#707070"
                     android:textSize="18sp"
@@ -71,35 +71,74 @@
                     android:layout_height="wrap_content"/>
 
                 <TextView
-                    android:id="@+id/room_list_fac1_tv"
+                    android:id="@+id/room_list_item_facility_title_tv"
+                    android:layout_marginVertical="10dp"
                     android:layout_below="@id/room_list_capacity_tv"
-                    android:fontFamily="@font/regular"
-                    android:layout_marginBottom="5dp"
-                    android:drawableLeft="@drawable/icon_breakfast"
-                    android:drawablePadding="10dp"
-                    android:text="@string/not_available_text"
-                    android:layout_gravity="center_vertical"
+                    android:text="@string/facility_text"
+                    android:fontFamily="@font/bold"
                     android:textColor="#707070"
                     android:textSize="14sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <TextView
-                    android:id="@+id/room_list_fac2_tv"
-                    android:layout_below="@+id/room_list_fac1_tv"
+                    android:id="@+id/room_list_fac_wifi_tv"
+                    android:layout_below="@id/room_list_item_facility_title_tv"
                     android:fontFamily="@font/regular"
+                    android:layout_marginBottom="10dp"
                     android:drawableLeft="@drawable/icon_wifi"
+                    android:drawablePadding="10dp"
+                    android:text="@string/not_available_text"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="#CC0000"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/room_list_fac_breakfast_tv"
+                    android:layout_below="@+id/room_list_fac_wifi_tv"
+                    android:fontFamily="@font/regular"
+                    android:drawableLeft="@drawable/icon_breakfast"
                     android:drawablePadding="10dp"
                     android:layout_marginBottom="10dp"
                     android:text="@string/not_available_text"
                     android:layout_gravity="center_vertical"
-                    android:textColor="#707070"
+                    android:textColor="#CC0000"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/room_list_fac_ac_tv"
+                    android:layout_below="@+id/room_list_fac_breakfast_tv"
+                    android:fontFamily="@font/regular"
+                    android:drawableLeft="@drawable/icon_ac"
+                    android:drawablePadding="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/not_available_text"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="#CC0000"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/room_list_fac_tv_tv"
+                    android:layout_below="@+id/room_list_fac_ac_tv"
+                    android:fontFamily="@font/regular"
+                    android:drawableLeft="@drawable/icon_tv"
+                    android:drawablePadding="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/not_available_text"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="#CC0000"
                     android:textSize="14sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <RelativeLayout
-                    android:layout_below="@id/room_list_fac2_tv"
+                    android:layout_below="@id/room_list_fac_tv_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp">
