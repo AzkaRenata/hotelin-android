@@ -9,7 +9,6 @@ public interface PreviewBookingContract {
         void setItems();
         void setBookingDetails();
         void redirectToBookingHistory();
-        void clearSharedPreferences();
         void requestBooking(final RequestCallback<PreviewBookingResponse> requestCallback);
     }
 

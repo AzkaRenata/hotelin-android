@@ -1,5 +1,7 @@
 package com.example.hotelin_android.model;
 
+import java.util.List;
+
 public class Room {
     private int id;
     private String room_code;
@@ -10,8 +12,9 @@ public class Room {
     private int guest_capacity;
     private String room_picture;
     private boolean is_booked;
+    private List<Facility> facility;
 
-    public Room(int id, String room_code, String room_type, String bed_type, int bed_count, Double room_price, int guest_capacity, String room_picture, boolean is_booked) {
+    public Room(int id, String room_code, String room_type, String bed_type, int bed_count, Double room_price, int guest_capacity, String room_picture, boolean is_booked, List<Facility> facility) {
         this.id = id;
         this.room_code = room_code;
         this.room_type = room_type;
@@ -21,6 +24,7 @@ public class Room {
         this.guest_capacity = guest_capacity;
         this.room_picture = room_picture;
         this.is_booked = is_booked;
+        this.facility = facility;
     }
 
     public int getId() {
@@ -93,5 +97,13 @@ public class Room {
 
     public void setIs_booked(boolean is_booked) {
         this.is_booked = is_booked;
+    }
+
+    public List<Facility> getFacility() {
+        return facility;
+    }
+
+    public void setFacility(List<Facility> facility) {
+        this.facility = facility;
     }
 }

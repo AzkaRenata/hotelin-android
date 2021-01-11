@@ -23,7 +23,6 @@ public class PreviewBookingPresenter implements PreviewBookingContract.Presenter
         view.requestBooking(new RequestCallback<PreviewBookingResponse>() {
             @Override
             public void requestSuccess(PreviewBookingResponse data, String message) {
-                view.clearSharedPreferences();
                 activity.stopLoading();
                 activity.showMessage(message);
                 view.redirectToBookingHistory();

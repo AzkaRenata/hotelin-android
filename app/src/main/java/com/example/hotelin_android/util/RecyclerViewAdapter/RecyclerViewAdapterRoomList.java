@@ -1,6 +1,7 @@
 package com.example.hotelin_android.util.RecyclerViewAdapter;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hotelin_android.R;
+import com.example.hotelin_android.model.Facility;
 import com.example.hotelin_android.model.Room;
 import com.example.hotelin_android.util.AsyncTaskLoadImage;
 import com.example.hotelin_android.util.myURL;
@@ -30,16 +32,25 @@ public class RecyclerViewAdapterRoomList extends RecyclerView.Adapter<RecyclerVi
         TextView room_bed_tv;
         TextView room_capacity_tv;
         TextView room_price_tv;
+        TextView fac_wifi_tv;
+        TextView fac_breakfast_tv;
+        TextView fac_ac_tv;
+        TextView fac_tv_tv;
         Button select_btn;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            room_iv = (ImageView) itemView.findViewById(R.id.room_list_item_room_iv);
-            room_type_tv = (TextView) itemView.findViewById(R.id.room_list_item_room_type_tv);
+            room_iv = itemView.findViewById(R.id.room_list_item_room_iv);
+            room_type_tv = itemView.findViewById(R.id.room_list_item_room_type_tv);
             room_bed_tv = itemView.findViewById(R.id.room_list_bed_tv);
             room_capacity_tv = itemView.findViewById(R.id.room_list_capacity_tv);
-            room_price_tv = (TextView) itemView.findViewById(R.id.room_list_price_tv);
-            select_btn = (Button) itemView.findViewById(R.id.room_list_item_select_btn);
+            room_price_tv = itemView.findViewById(R.id.room_list_price_tv);
+            fac_wifi_tv = itemView.findViewById(R.id.room_list_fac_wifi_tv);
+            fac_breakfast_tv = itemView.findViewById(R.id.room_list_fac_breakfast_tv);
+            fac_ac_tv = itemView.findViewById(R.id.room_list_fac_ac_tv);
+            fac_tv_tv = itemView.findViewById(R.id.room_list_fac_tv_tv);
+            select_btn = itemView.findViewById(R.id.room_list_item_select_btn);
+
             select_btn.setOnClickListener(this);
             itemView.setOnClickListener(this);
         }
@@ -80,6 +91,30 @@ public class RecyclerViewAdapterRoomList extends RecyclerView.Adapter<RecyclerVi
         if(mDataset.get(position).getRoom_picture() != null){
             String url = myURL.getImageUrl()+mDataset.get(position).getRoom_picture();
             new AsyncTaskLoadImage(holder.room_iv).execute(url);
+        }
+
+        List<Facility> facility = mDataset.get(position).getFacility();
+
+        for(int i = 0; i < facility.size(); i++){
+            if(facility.get(i).getFacility_name().equalsIgnoreCase("free wifi")){
+                holder.fac_wifi_tv.setText(R.string.wifi_text);
+                holder.fac_wifi_tv.setTextColor(Color.parseColor("#707070"));
+            }
+
+            if(facility.get(i).getFacility_name().equalsIgnoreCase("sarapan")){
+                holder.fac_breakfast_tv.setText(R.string.breakfast_text);
+                holder.fac_breakfast_tv.setTextColor(Color.parseColor("#707070"));
+            }
+
+            if(facility.get(i).getFacility_name().equalsIgnoreCase("ac")){
+                holder.fac_ac_tv.setText(R.string.ac_text);
+                holder.fac_ac_tv.setTextColor(Color.parseColor("#707070"));
+            }
+
+            if(facility.get(i).getFacility_name().equalsIgnoreCase("tv")){
+                holder.fac_tv_tv.setText(R.string.tv_text);
+                holder.fac_tv_tv.setTextColor(Color.parseColor("#707070"));
+            }
         }
     }
 

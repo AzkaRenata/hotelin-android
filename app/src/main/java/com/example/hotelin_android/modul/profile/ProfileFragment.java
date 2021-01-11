@@ -15,6 +15,9 @@ import com.example.hotelin_android.modul.change_password.ChangePasswordActivity;
 import com.example.hotelin_android.modul.login.LoginActivity;
 import com.example.hotelin_android.modul.profile_edit.ProfileEditActivity;
 import com.example.hotelin_android.util.AsyncTaskLoadImage;
+import com.example.hotelin_android.util.SharedPreferences.HotelSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.RoomSharedUtil;
+import com.example.hotelin_android.util.SharedPreferences.TokenSharedUtil;
 import com.example.hotelin_android.util.SharedPreferences.UserSharedUtil;
 import com.example.hotelin_android.util.UtilProvider;
 import com.example.hotelin_android.util.myURL;
@@ -27,9 +30,15 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
     private CircleImageView civPhoto;
 
     private final UserSharedUtil userSharedUtil;
+    private final HotelSharedUtil hotelSharedUtil;
+    private final RoomSharedUtil roomSharedUtil;
+    private final TokenSharedUtil tokenSharedUtil;
 
     public ProfileFragment() {
         userSharedUtil = UtilProvider.getUserSharedUtil();
+        hotelSharedUtil = UtilProvider.getHotelSharedUtil();
+        roomSharedUtil = UtilProvider.getRoomSharedUtil();
+        tokenSharedUtil = UtilProvider.getTokenSharedUtil();
     }
 
     @Nullable
@@ -100,6 +109,10 @@ public class ProfileFragment extends BaseFragment<ProfileActivity, ProfileContra
 
     public void setTvLogoutClick(){
         userSharedUtil.clear();
+        hotelSharedUtil.clear();
+        roomSharedUtil.clear();
+        tokenSharedUtil.clear();
+        
         mPresenter.performLogOut();
     }
 
