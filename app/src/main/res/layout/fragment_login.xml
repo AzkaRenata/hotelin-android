@@ -102,7 +102,6 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:fontFamily="@font/semibold"
-                    android:onClick="performMove"
                     android:paddingLeft="10dp"
                     android:text="@string/register_text"
                     android:textColor="#5399af"
